@@ -3,7 +3,7 @@ import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
 import CustomPassword from "@/components/form/CustomPassword";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import useCustomForm from "@/hooks/useCustomForm";
 import { loginFormDefaultValue, loginSchema } from "@/schemas/auth/austhSchema";
 import { Link } from "react-router-dom";
@@ -18,36 +18,33 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
-      <Card className="bg-primary-bg-light dark:bg-primary-bg-dark shadow-card-shadow-light dark:shadow-card-shadow-dark border-none">
-        <CardHeader>
-          <CardTitle className="mx-auto">Logo</CardTitle>
-          <CardDescription className="text-center text-sm font-medium text-slate-800 dark:text-slate-200">
-            Welcome back! Log in to access your account and stay connected.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CustomForm onSubmit={onSubmit} form={form}>
-            <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
-            <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
-            <p className="text-sm font-semibold text-primary-text hover:underline mt-2">
-              <Link to="/account/reset-password-link">Forgot password?</Link>
-            </p>
+    <div className="bg-primary-bg-light min-h-screen">
+      <div className="grid place-items-center py-10 lg:py-28 mx-5 md:mx-0 ">
+        <Card className="bg-white shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
+          <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
+            <CardTitle className="mx-auto">Logo</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <h1 className="mt-5 text-2xl font-bold text-slate-800 text-center">Welcome back</h1>
+            <CustomForm onSubmit={onSubmit} form={form}>
+              <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
+              <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
 
-            <Button type="submit" className="w-full mt-8">
-              Sign In
-            </Button>
-          </CustomForm>
-        </CardContent>
-        <CardFooter>
-          <p className="text-sm font-medium text-center text-slate-700 dark:text-slate-300">
-            <Link to="/account/register">
-              Don&apos;t have an Account? <span className="font-semibold text-primary-text hover:underline">Sign Up</span>
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
-      {/* </TabsContent> */}
+              <Button type="submit" className="w-full mt-8">
+                Sign In
+              </Button>
+            </CustomForm>
+          </CardContent>
+          <CardFooter className="text-sm font-medium text-slate-700 flex items-center justify-center">
+            <div>
+              Don&apos;t have an Account?
+              <Link to="/register">
+                <span className="font-semibold text-primary-text hover:underline ml-1">Sign Up</span>
+              </Link>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 };

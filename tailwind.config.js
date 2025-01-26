@@ -3,63 +3,39 @@ export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
+    screens: {
+      xsm: "360px",
+      xs: "476px",
+      // xs: "425px",
+      sm: "640px",
+      md: "768px",
+      bs: "900px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1550px",
+
+      "2xl-mx": { max: "1535px" },
+      "xl-mx": { max: "1279px" },
+      "lg-mx": { max: "1023px" },
+      "bs-mx": { max: "899px" },
+      "md-mx": { max: "767px" },
+      "sm-mx": { max: "639px" },
+      "xs-mx": { max: "475px" },
+      "xsm-mx": { max: "349px" },
+    },
     extend: {
-      backgroundImage: {
-        "grid-light": `
-          linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-        `,
-        "radial-overlay-light": `
-          radial-gradient(circle, transparent, rgba(255, 255, 255, 0.8))
-        `,
+      colors: {
+        "primary-text": "#b50c37",
+        "primary-bg-dark": "#030817",
+        "secondary-bg-dark": "#15162F",
+        "primary-bg-light": "#f9fbfd",
+        "secondary-bg-light": "#e4eafc",
       },
-      // borderRadius: {
-      //   lg: "var(--radius)",
-      //   md: "calc(var(--radius) - 2px)",
-      //   sm: "calc(var(--radius) - 4px)",
-      // },
-      // colors: {
-      //   background: "hsl(var(--background))",
-      //   foreground: "hsl(var(--foreground))",
-      //   card: {
-      //     DEFAULT: "hsl(var(--card))",
-      //     foreground: "hsl(var(--card-foreground))",
-      //   },
-      //   popover: {
-      //     DEFAULT: "hsl(var(--popover))",
-      //     foreground: "hsl(var(--popover-foreground))",
-      //   },
-      //   primary: {
-      //     DEFAULT: "hsl(var(--primary))",
-      //     foreground: "hsl(var(--primary-foreground))",
-      //   },
-      //   secondary: {
-      //     DEFAULT: "hsl(var(--secondary))",
-      //     foreground: "hsl(var(--secondary-foreground))",
-      //   },
-      //   muted: {
-      //     DEFAULT: "hsl(var(--muted))",
-      //     foreground: "hsl(var(--muted-foreground))",
-      //   },
-      //   accent: {
-      //     DEFAULT: "hsl(var(--accent))",
-      //     foreground: "hsl(var(--accent-foreground))",
-      //   },
-      //   destructive: {
-      //     DEFAULT: "hsl(var(--destructive))",
-      //     foreground: "hsl(var(--destructive-foreground))",
-      //   },
-      //   border: "hsl(var(--border))",
-      //   input: "hsl(var(--input))",
-      //   ring: "hsl(var(--ring))",
-      //   chart: {
-      //     1: "hsl(var(--chart-1))",
-      //     2: "hsl(var(--chart-2))",
-      //     3: "hsl(var(--chart-3))",
-      //     4: "hsl(var(--chart-4))",
-      //     5: "hsl(var(--chart-5))",
-      //   },
-      // },
+      boxShadow: {
+        "card-shadow-dark": "rgb(21, 22, 47) 0px 1px 0px 1px, rgb(21, 22, 47) 0px 1px 0px 1px",
+        "card-shadow-light": "rgba(17, 17, 26, 0.05) 0px 1px 0px 1px, rgba(17, 17, 26, 0.1) 0px 1px 0px 1px",
+        "box-shadow": "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -1,10 +1,8 @@
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import React from "react";
-import Logo from "../Logo";
-import Link from "next/link";
 import NavItem from "./NavItem";
 import { TNavMenuItem } from "@/constants/navbar.constant";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { NavLink } from "react-router-dom";
 
 const NavSidebar = ({ menuItems }: { menuItems: TNavMenuItem }) => {
   return (
@@ -19,14 +17,15 @@ const NavSidebar = ({ menuItems }: { menuItems: TNavMenuItem }) => {
         >
           <SheetHeader>
             <SheetTitle>
-              <Logo width={200} />
+              {/* <Logo width={200} /> */}
+              Logo
             </SheetTitle>
             <SheetDescription className="flex flex-col gap-4 items-start justify-start pl-7">
               {menuItems.map((menuItem) =>
                 menuItem.show ? (
-                  <Link key={menuItem.label} href={menuItem.path}>
+                  <NavLink key={menuItem.label} to={menuItem.path}>
                     <NavItem label={menuItem.label} active={true} />
-                  </Link>
+                  </NavLink>
                 ) : null
               )}
             </SheetDescription>

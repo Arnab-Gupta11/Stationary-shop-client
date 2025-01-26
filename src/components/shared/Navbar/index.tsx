@@ -33,7 +33,7 @@ const Navbar = () => {
           <div className="xs:hidden flex">Logo</div>
         </div>
         <div className="flex gap-5 items-center">
-          <div className="hidden lg:flex gap-8 items-center font-medium ">
+          <div className="hidden lg:flex gap-6 items-center font-medium ">
             {menuItems.map((menuItem) =>
               menuItem.show ? (
                 <NavLink key={menuItem.label} to={menuItem.path} className=" py-2 text-base font-medium">
@@ -43,7 +43,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="flex gap-3 sm:gap-6 items-center">
+          <div className="flex  items-center">
             <ProfileAvatar />
             <NavSidebar menuItems={menuItems} />
           </div>

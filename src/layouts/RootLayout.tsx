@@ -6,7 +6,7 @@ const RootLayout = () => {
     <>
       <div className="" />
       <Navbar />
-      <div className="max-w-[90%] mx-auto bg-green-500">
+      <div>
         <Outlet />
       </div>
     </>

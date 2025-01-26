@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/Routes";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 function App() {
-  const [state, setState] = useState(1);
-  const logging = () => {
-    console.log("hello");
-  };
-  useEffect(() => {
-    setState(state + 1);
-  }, [state]);
-  logging();
   return (
     <>
-      <h1>Home</h1>
-      <h1 className="Hello w-auto"></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
-      <h1></h1>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </>
   );
 }

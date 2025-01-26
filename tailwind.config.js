@@ -27,8 +27,6 @@ export default {
       colors: {
         "primary-bg": "#D51243",
         "primary-text": "#b50c37",
-        "primary-bg-dark": "#030817",
-        "secondary-bg-dark": "#15162F",
         "primary-bg-light": "#f9fbfd",
         "secondary-bg-light": "#e4eafc",
       },

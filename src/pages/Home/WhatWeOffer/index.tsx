@@ -40,7 +40,7 @@ const WhatWeOffer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {offers.map((item) => {
             return (
-              <div className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-lg py-6 px-8 bg-white">
+              <div key={item.title} className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-lg py-6 px-8 bg-white">
                 <div>
                   <img src={item.logo} alt={item.title} />
                 </div>

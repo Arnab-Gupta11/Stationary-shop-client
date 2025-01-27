@@ -51,7 +51,7 @@ export const NavMenuOption = () => {
     },
     {
       label: "Login",
-      path: "/account/login",
+      path: "/login",
       show: !user,
     },
   ];

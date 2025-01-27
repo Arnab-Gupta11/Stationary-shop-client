@@ -24,19 +24,19 @@ const Navbar = () => {
   return (
     <div
       className={`${
-        scrolled ? "backdrop-blur-md shadow-md" : "bg-none border-b border-secondary-bg-light dark:border-secondary-bg-dark"
-      } transition-colors duration-500 sticky top-0 w-full h-20 z-10 `}
+        scrolled ? "backdrop-blur-md shadow-md" : "bg-none border-b border-secondary-bg-light"
+      } transition-colors duration-500 sticky top-0 w-full h-20 z-10`}
     >
-      <div className="max-w-[90%]  py-2  mx-auto flex justify-between items-center  xs-mx:pt-5">
+      <div className="max-w-[90%]  mx-auto flex justify-between items-center  xs-mx:pt-5 my-auto h-full">
         <div>
           <div className="hidden xs:flex">Logo</div>
           <div className="xs:hidden flex">Logo</div>
         </div>
         <div className="flex gap-5 items-center">
           <div className="hidden lg:flex gap-6 items-center font-medium ">
-            {menuItems.map((menuItem) =>
+            {menuItems.map((menuItem, idx) =>
               menuItem.show ? (
-                <NavLink key={menuItem.label} to={menuItem.path} className=" py-2 text-base font-medium">
+                <NavLink key={idx} to={menuItem.path} className=" py-2 text-base font-medium">
                   <NavItem label={menuItem.label} active={true} />
                 </NavLink>
               ) : null

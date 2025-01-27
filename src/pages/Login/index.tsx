@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
@@ -5,17 +6,48 @@ import CustomPassword from "@/components/form/CustomPassword";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import useCustomForm from "@/hooks/useCustomForm";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { loginFormDefaultValue, loginSchema } from "@/schemas/auth/austhSchema";
-import { Link } from "react-router-dom";
+import { verifyToken } from "@/utils/verifyToken";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { BiLoaderCircle } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [loginUser] = useLoginMutation(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = useCustomForm(loginSchema, loginFormDefaultValue);
   // console.log(form);
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     console.log(values);
-    form.reset();
-  }
+    try {
+      setIsLoading(true);
+      const userInfo = {
+        email: values.email,
+        password: values.password,
+      };
+      const res = await loginUser(userInfo).unwrap();
+      console.log(res);
+      console.log(res.success);
+      if (res?.success === true) {
+        const user = verifyToken(res.data?.token) as TUser;
+        dispatch(setUser({ user: user, token: res.data?.token }));
+        toast.success(res?.message);
+        form.reset();
+        navigate("/");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="bg-primary-bg-light min-h-screen">
@@ -31,7 +63,7 @@ const LoginPage = () => {
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
 
               <Button type="submit" className="w-full mt-8">
-                Sign In
+                {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign In"}
               </Button>
             </CustomForm>
           </CardContent>

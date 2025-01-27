@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BiLoaderCircle } from "react-icons/bi";
 import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
 import CustomPassword from "@/components/form/CustomPassword";
@@ -5,14 +7,43 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import useCustomForm from "@/hooks/useCustomForm";
 import { registerFormDefaultValue, registerSchema } from "@/schemas/auth/austhSchema";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAddUserMutation } from "@/redux/features/auth/authApi";
 
 const RegisterPage = () => {
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
-  }
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
+  const [registerUser] = useAddUserMutation(undefined);
   const [form] = useCustomForm(registerSchema, registerFormDefaultValue);
+
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    console.log(values);
+    try {
+      setIsLoading(true);
+      const userInfo = {
+        fullName: values.fullName,
+        email: values.email,
+        password: values.password,
+        confirmedPassword: values.confirmedPassword,
+      };
+      const res = await registerUser(userInfo).unwrap();
+      console.log(res);
+      if (res?.success === true) {
+        toast.success(res?.message);
+        form.reset();
+        navigate("/login");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-primary-bg-light min-h-screen">
       <div className="grid place-items-center py-10 lg:py-20 mx-5 md:mx-0 ">
@@ -34,7 +65,7 @@ const RegisterPage = () => {
                 placeholder={"Confirm your password"}
               />
               <Button className="w-full mt-8" type="submit">
-                Sign Up
+                {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign Up"}
               </Button>
             </CustomForm>
           </CardContent>

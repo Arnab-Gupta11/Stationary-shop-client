@@ -7,14 +7,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
 
 const ProfileAvatar = () => {
+  const user = useAppSelector(useCurrentUser);
   return (
     <div className="mt-2">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
             <AvatarFallback>DP</AvatarFallback>
           </Avatar>
           <div></div>

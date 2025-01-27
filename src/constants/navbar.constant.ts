@@ -6,7 +6,7 @@ export type TNavMenuItem = {
 export const NavMenuOption = () => {
   const user = null;
   const profileInfo = {
-    role: "recruiter",
+    role: "user",
   };
   const menuItems = [
     {
@@ -15,9 +15,9 @@ export const NavMenuOption = () => {
       show: true,
     },
     {
-      label: "Applied Jobs",
-      path: "/applied-jobs",
-      show: profileInfo?.role === "jobSeeker",
+      label: "Shop",
+      path: "/shop",
+      show: true,
     },
     {
       label: "Find Works",

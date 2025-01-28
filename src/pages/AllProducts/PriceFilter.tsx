@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TFilterParams } from ".";
+import { formatPrice } from "@/utils/formatePrice";
 
 type PriceFilterProps = {
   queryParams: TFilterParams[];
@@ -48,8 +49,8 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, i
     <div className="space-y-4 mt-6">
       <h3 className="font-semibold text-slate-800 text-base pb-4 border-b-[1px] border-b-[#f1f1f1]">Filter by Price</h3>
       <div className="flex items-center justify-between">
-        <span className="text-slate-800 text-sm">Min: ${minPrice}</span>
-        <span className="text-slate-800 text-sm">Max: ${maxPrice}</span>
+        <span className="text-slate-800 text-sm">Min: {formatPrice(minPrice)}</span>
+        <span className="text-slate-800 text-sm">Max: {formatPrice(maxPrice)}</span>
       </div>
       <div className="space-y-2">
         <div>

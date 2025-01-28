@@ -4,10 +4,12 @@ import { GoArrowRight } from "react-icons/go";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import img1 from "../../../public/images/banner/banner1.png";
 import { TProduct } from "@/types/product.types";
+import { formatPrice } from "@/utils/formatePrice";
 type TProductProp = {
   product: TProduct;
 };
 const ProductCard = ({ product }: TProductProp) => {
+  const price = formatPrice(product?.price);
   return (
     <div className="rounded-lg group product-card hover:shadow-md">
       <div className="bg-[#F7F7F7] h-72 flex justify-center items-center relative  px-10 rounded-t-lg">
@@ -26,7 +28,7 @@ const ProductCard = ({ product }: TProductProp) => {
         </div>
         <h1 className="text-lg font-semibold text-slate-800">{product?.name}</h1>
         <div className="flex items-start justify-between mt-2">
-          <h4 className="font-medium text-slate-700 group-hover:text-primary-bg">Tk {product?.price}</h4>
+          <h4 className="font-medium text-slate-700 group-hover:text-primary-bg">{price}</h4>
           <Button className="group flex items-center gap-1 py-1 text-xs opacity-0 group-hover:opacity-100 translate-y-2 group-hover:-translate-y-1 transition-all duration-700">
             <span>View</span>
             <GoArrowRight className="group-hover:-rotate-45 font-semibold transition-all duration-700" />

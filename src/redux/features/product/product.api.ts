@@ -26,6 +26,14 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getMaxPrice: builder.query({
+      query: () => {
+        return {
+          url: "/products/maxPrice",
+          method: "GET",
+        };
+      },
+    }),
 
     //Add new Register Semester
     // addRegisteredSemester: builder.mutation({
@@ -68,6 +76,4 @@ const productManagementApi = baseApi.injectEndpoints({
     // }),
   }),
 });
-export const {
-  useGetAllProductsQuery
-} = productManagementApi;
+export const { useGetAllProductsQuery ,useGetMaxPriceQuery} = productManagementApi;

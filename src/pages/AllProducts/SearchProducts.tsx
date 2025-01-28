@@ -19,7 +19,7 @@ const SearchProducts = ({ queryParams, setQuerParams }: TSearchProductsProps) =>
         type="text"
         onChange={handleSearchProducts}
         placeholder="Search Products..."
-        className="rounded-lg focus-visible:ring-0 w-56 pl-8 text-slate-700 font-normal"
+        className="rounded-lg focus-visible:ring-0 w-full sm:w-56 pl-8 text-slate-700 font-normal"
       />
     </div>
   );

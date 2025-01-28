@@ -57,7 +57,7 @@ const SortProduct = ({ queryParams, setQuerParams }: TSortProductProps) => {
 
   return (
     <Select onValueChange={handleSortChange}>
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="w-full sm:w-[200px]">
         <SelectValue placeholder="Sort Products" className="text-slate-500" />
       </SelectTrigger>
       <SelectContent className="bg-white">

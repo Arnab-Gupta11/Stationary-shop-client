@@ -1,7 +1,7 @@
 import Section from "@/components/shared/Section";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PriceFilter from "./PriceFilter";
 import AvailabilityFilter from "./AvailabilityFilter";
 import FilterByCategory from "./FilterByCategory";
@@ -13,6 +13,8 @@ import ProductCard from "./ProductCard";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { PaginationProduct } from "./Pagination";
 import { TMeta } from "@/types/global";
+import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
 export type TFilterParams = {
   name: string;
   value: string | number | boolean;
@@ -21,13 +23,16 @@ const AllProductsPage = () => {
   const [page, setPage] = useState(1);
   const [queryParams, setQuerParams] = useState<TFilterParams[]>([]);
   const { data: productData, isLoading } = useGetAllProductsQuery([...queryParams, { name: "page", value: page }]);
-  console.log("isLoading----> ", isLoading);
-  console.log(productData);
 
+  const filterRef = useRef<HTMLDivElement>(null); // Create a ref for the filter section
+  const handleScrollToFilter = () => {
+    if (filterRef.current) {
+      filterRef.current.scrollIntoView({ behavior: "smooth" }); // Smoothly scroll to the filter section
+    }
+  };
   useEffect(() => {
-    console.log("Indide UseEffect :", page);
-  }, [page]);
-
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div className="h-40  bg-secondary-bg-light flex items-center justify-center my-auto">
@@ -52,20 +57,23 @@ const AllProductsPage = () => {
       </div>
       <Section>
         <div className="grid grid-cols-1 bs:grid-cols-12 gap-5 pt-20 pb-24">
-          <div className="bs:col-span-9">
+          <div className="bs:col-span-8 xl:col-span-9">
             {/* search option  */}
-            <div className="flex items-center justify-between pb-2 border-b-[1px] border-b-[#f1f1f1]">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between pb-2 border-b-[1px] border-b-[#f1f1f1]">
               <div>
                 <SearchProducts queryParams={queryParams} setQuerParams={setQuerParams} />
               </div>
-              <div>
+              <div className="flex items-center gap-4">
                 <SortProduct queryParams={queryParams} setQuerParams={setQuerParams} />
+                <Button className="block bs:hidden" onClick={handleScrollToFilter}>
+                  <Filter />
+                </Button>
               </div>
             </div>
             {isLoading ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 bs:grid-cols-3 gap-5 pt-6 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pt-6 w-full">
                 {productData?.data && productData?.data?.length > 0 ? (
                   productData?.data?.map((product) => <ProductCard key={product._id} product={product} />)
                 ) : (
@@ -82,7 +90,7 @@ const AllProductsPage = () => {
             <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />
           </div>
 
-          <div className="bs:col-span-3 px-5">
+          <div ref={filterRef} className="bs:col-span-4 xl:col-span-3 px-5 ">
             <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
               <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
               {/* {queryParams.length > 0 && (
@@ -92,7 +100,7 @@ const AllProductsPage = () => {
               )} */}
             </div>
             <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
-            <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={500} />
+            <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={10000} />
             <AvailabilityFilter queryParams={queryParams} setQuerParams={setQuerParams} />
           </div>
         </div>

@@ -1,13 +1,9 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useState } from "react";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { TFilterParams } from ".";
 type TFilterByCategoryProps = {
   queryParams: TFilterParams[];
   setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
 };
 const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const categories = ["Writing", "Office Supplies", "Art Supplies", "Educational", "Technology"];
   const handleCategoryChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
     if (input.checked) {
@@ -19,14 +15,11 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
     }
   };
   return (
-    <Collapsible>
-      <CollapsibleTrigger className="w-full" onClick={() => setIsOpen(!isOpen)}>
-        <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]  mt-6">
-          <div className="font-semibold text-slate-800 text-base">Filter By Category</div>
-          <div>{isOpen ? <FaAngleUp /> : <FaAngleDown />}</div>
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="mt-5">
+    <div>
+      <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]  mt-6">
+        <div className="font-semibold text-slate-800 text-base">Filter By Category</div>
+      </div>
+      <div className="mt-5">
         {categories.map((item) => (
           <li key={item} className="relative flex w-full items-center justify-center gap-2.5 mb-2.5">
             <input
@@ -41,8 +34,8 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
             </label>
           </li>
         ))}
-      </CollapsibleContent>
-    </Collapsible>
+      </div>
+    </div>
   );
 };
 

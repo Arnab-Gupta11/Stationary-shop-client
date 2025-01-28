@@ -8,11 +8,14 @@ export type TUser = {
   profilePicture: string;
 };
 
-type TCartItem = {
+export type TCartItem = {
+  productName: string;
+  brand: string;
   product: string;
-  price: number; // Price of a single unit of the product
+  inStock: number;
+  price: number;
   quantity: number;
-  totalPrice: number; // Total price = price * quantity
+  totalPrice: number;
 };
 
 type TAuthState = {
@@ -41,8 +44,11 @@ const authSlice = createSlice({
       state.token = null;
       state.cart = []; // Clear cart on logout
     },
-    addProductIntoCart: (state, action: PayloadAction<{ product: string; price: number; quantity: number }>) => {
-      const { product, price, quantity } = action.payload;
+    addProductIntoCart: (
+      state,
+      action: PayloadAction<{ product: string; price: number; quantity: number; productName: string; inStock: number; brand: string }>
+    ) => {
+      const { product, price, quantity, productName, brand, inStock } = action.payload;
       const existingItem = state.cart.find((item) => item.product === product);
 
       if (existingItem) {
@@ -52,6 +58,9 @@ const authSlice = createSlice({
       } else {
         // Add new product to the cart
         state.cart.push({
+          productName,
+          brand,
+          inStock,
           product,
           price,
           quantity,
@@ -78,6 +87,16 @@ const authSlice = createSlice({
         }
       }
     },
+    increaseProductQuantity: (state, action: PayloadAction<{ product: string; quantity: number }>) => {
+      const { product, quantity } = action.payload;
+      const existingItem = state.cart.find((item) => item.product === product);
+
+      if (existingItem) {
+        // Increase the quantity and update the total price
+        existingItem.quantity += quantity;
+        existingItem.totalPrice = existingItem.quantity * existingItem.price;
+      }
+    },
     clearCart: (state) => {
       state.cart = []; // Clear all products from the cart
     },
@@ -93,8 +112,16 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, logout, addProductIntoCart, removeProductFromCart, reduceProductQuantity, clearCart, updateProductQuantity } =
-  authSlice.actions;
+export const {
+  setUser,
+  logout,
+  addProductIntoCart,
+  removeProductFromCart,
+  reduceProductQuantity,
+  clearCart,
+  updateProductQuantity,
+  increaseProductQuantity,
+} = authSlice.actions;
 export default authSlice.reducer;
 
 // Selectors

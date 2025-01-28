@@ -36,7 +36,8 @@ const ProductDetails = () => {
     }
   };
   const addProductToCart = () => {
-    dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price }));
+    dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
+    toast.success("Item added to your cart successfully!");
   };
 
   return (

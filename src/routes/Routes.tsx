@@ -2,6 +2,7 @@ import RootLayout from "@/layouts/RootLayout";
 import AboutPage from "@/pages/About";
 import AllProductsPage from "@/pages/AllProducts";
 import ProductDetails from "@/pages/AllProducts/ProductDetails";
+import CartPage from "@/pages/Cart/Cart";
 import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/Home";
 import LoginPage from "@/pages/Login";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
     ],
   },

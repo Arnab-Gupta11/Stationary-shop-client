@@ -1,37 +1,27 @@
 import Section from "@/components/shared/Section";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 import PriceFilter from "./PriceFilter";
 import AvailabilityFilter from "./AvailabilityFilter";
 import FilterByCategory from "./FilterByCategory";
+import SortProduct from "./SortProduct";
+import SearchProducts from "./SearchProducts";
+import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import Loader from "@/components/shared/Loader";
+import ProductCard from "./ProductCard";
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { Button } from "@/components/ui/button";
+export type TFilterParams = {
+  name: string;
+  value: string | number | boolean;
+};
 const AllProductsPage = () => {
-  const categories = ["fsaf", "faff", "fsdfasf"];
+  const [queryParams, setQuerParams] = useState<TFilterParams[]>([]);
+  const { data: productData, isLoading } = useGetAllProductsQuery(queryParams);
+  console.log("isLoading----> ", isLoading);
+  console.log(productData);
 
-  const [filterCategory, setFilterCategory] = useState<string[]>([]);
-  const handleCategoryChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
-    if (input.checked) {
-      const state: string[] = [...filterCategory, input.value];
-      setFilterCategory(state);
-      console.log(state.toString());
-    } else {
-      const state = filterCategory.filter((val) => val !== input.value);
-      setFilterCategory(state);
-      console.log(state.toString());
-    }
-  };
-  const handlePriceChange = (min: number, max: number) => {
-    console.log("Selected Price Range:", min, max);
-  };
-  const [selectedOption, setSelectedOption] = useState<"all" | "inStock" | "outOfStock">("all");
-
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as "all" | "inStock" | "outOfStock";
-    setSelectedOption(value);
-  };
-  console.log(selectedOption);
   return (
     <>
       <div className="h-40  bg-secondary-bg-light flex items-center justify-center my-auto">
@@ -56,22 +46,46 @@ const AllProductsPage = () => {
       </div>
       <Section>
         <div className="grid grid-cols-1 bs:grid-cols-12 gap-5 pt-20 pb-24">
-          <div className="bs:col-span-9 border">
-            <div>
-              <div className="relative">
-                <Search className="absolute top-3 left-2 text-slate-500" size={14} />
-                <Input
-                  type="text"
-                  placeholder="Search Products..."
-                  className="rounded-lg focus-visible:ring-0 w-56 pl-8 text-slate-700 font-normal"
-                />
+          <div className="bs:col-span-9">
+            {/* search option  */}
+            <div className="flex items-center justify-between pb-2 border-b-[1px] border-b-[#f1f1f1]">
+              <div>
+                <SearchProducts queryParams={queryParams} setQuerParams={setQuerParams} />
+              </div>
+              <div>
+                <SortProduct queryParams={queryParams} setQuerParams={setQuerParams} />
               </div>
             </div>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 bs:grid-cols-3 gap-5 pt-6 w-full">
+                {productData?.data && productData?.data?.length > 0 ? (
+                  productData?.data?.map((product) => <ProductCard key={product._id} product={product} />)
+                ) : (
+                  <div className="min-h-[calc(100vh-100px)] col-span-3 flex  items-center justify-center">
+                    <div className="text-center w-full">
+                      <div className="text-slate-500 font-semibold text-2xl flex items-center justify-center gap-5">
+                        <MdProductionQuantityLimits /> <span> No products match your selection.</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="bs:col-span-3 px-5">
-            <FilterByCategory categories={categories} handleCategoryChange={handleCategoryChange} />
-            <PriceFilter onPriceChange={handlePriceChange} initialMinPrice={0} initialMaxPrice={500} />
-            <AvailabilityFilter selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
+            <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
+              <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
+              {queryParams.length > 0 && (
+                <Button variant={"primary"} onClick={() => setQuerParams([])}>
+                  Clear Filter
+                </Button>
+              )}
+            </div>
+            <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
+            <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={500} />
+            <AvailabilityFilter queryParams={queryParams} setQuerParams={setQuerParams} />
           </div>
         </div>
       </Section>

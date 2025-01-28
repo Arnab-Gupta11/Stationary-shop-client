@@ -1,14 +1,16 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import React, { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { TFilterParams } from ".";
 
 interface AvailabilityFilterProps {
-  handleOptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selectedOption: string;
+  queryParams: TFilterParams[];
+  setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
 }
 
-const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ handleOptionChange, selectedOption }) => {
+const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ queryParams, setQuerParams }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<"all" | "inStock" | "outOfStock">("all");
   const availability = [
     {
       label: "All",
@@ -23,6 +25,25 @@ const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ handleOptionCha
       value: "outOfStock",
     },
   ];
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as "all" | "inStock" | "outOfStock";
+    if (value === "all") {
+      const state = queryParams.filter((item) => item.name !== "inStock");
+      setQuerParams(state);
+    } else if (value === "inStock") {
+      const filterOutOldMaxPriceFromQuery = queryParams.filter((item) => item.name !== "inStock");
+      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: true }];
+      setQuerParams(state);
+    } else if (value === "outOfStock") {
+      const filterOutOldMaxPriceFromQuery = queryParams.filter((item) => item.name !== "inStock");
+      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: false }];
+      setQuerParams(state);
+    }
+
+    setSelectedOption(value);
+
+    // setSelectedOption(value);
+  };
   return (
     <div className="mt-6">
       <Collapsible>

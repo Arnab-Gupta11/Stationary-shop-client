@@ -1,20 +1,29 @@
 import React, { useState } from "react";
+import { TFilterParams } from ".";
 
-interface PriceFilterProps {
-  onPriceChange: (min: number, max: number) => void;
+type PriceFilterProps = {
+  queryParams: TFilterParams[];
+  setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
   initialMinPrice?: number;
   initialMaxPrice?: number;
-}
+};
 
-const PriceFilter: React.FC<PriceFilterProps> = ({ onPriceChange, initialMinPrice = 0, initialMaxPrice = 100 }) => {
+const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, initialMinPrice = 0, initialMaxPrice = 100 }) => {
   const [minPrice, setMinPrice] = useState<number>(initialMinPrice);
   const [maxPrice, setMaxPrice] = useState<number>(initialMaxPrice);
-
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     if (value < maxPrice) {
       setMinPrice(value);
-      onPriceChange(value, maxPrice); // Update parent with new min and max
+      const isMinPriceAvailable = queryParams?.find((item) => item.name === "minPrice");
+      if (!isMinPriceAvailable) {
+        const state: TFilterParams[] = [...queryParams, { name: "minPrice", value: value }];
+        setQuerParams(state);
+      } else {
+        const filterOutOldMinPriceFromQuery = queryParams.filter((item) => item.name !== "minPrice");
+        const state: TFilterParams[] = [...filterOutOldMinPriceFromQuery, { name: "minPrice", value: value }];
+        setQuerParams(state);
+      }
     }
   };
 
@@ -22,7 +31,16 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ onPriceChange, initialMinPric
     const value = Number(e.target.value);
     if (value > minPrice) {
       setMaxPrice(value);
-      onPriceChange(minPrice, value); // Update parent with new min and max
+      //Checking for maximum value
+      const isMaxPriceAvailable = queryParams?.find((item) => item.name === "maxPrice");
+      if (!isMaxPriceAvailable) {
+        const state: TFilterParams[] = [...queryParams, { name: "maxPrice", value: value }];
+        setQuerParams(state);
+      } else {
+        const filterOutOldMaxPriceFromQuery = queryParams.filter((item) => item.name !== "maxPrice");
+        const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "maxPrice", value: value }];
+        setQuerParams(state);
+      }
     }
   };
 

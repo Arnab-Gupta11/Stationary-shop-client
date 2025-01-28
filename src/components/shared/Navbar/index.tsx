@@ -18,9 +18,6 @@ const Navbar = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleChangeBackgroundOnScroll);
   }, []);
-  useEffect(() => {
-    console.log(scrolled);
-  }, [scrolled]);
   return (
     <div
       className={`${
@@ -36,7 +33,13 @@ const Navbar = () => {
           <div className="hidden lg:flex gap-6 items-center font-medium ">
             {menuItems.map((menuItem, idx) =>
               menuItem.show ? (
-                <NavLink key={idx} to={menuItem.path} className=" py-2 text-base font-medium">
+                <NavLink
+                  key={idx}
+                  to={menuItem.path}
+                  className={({ isActive }) =>
+                    isActive ? "border-b-[3px] border-primary-text px-2 py-2 text-slate-800 font-medium" : " py-2 text-slate-800 font-medium"
+                  }
+                >
                   <NavItem label={menuItem.label} active={true} />
                 </NavLink>
               ) : null

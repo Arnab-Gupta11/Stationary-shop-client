@@ -26,10 +26,10 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
-    getMaxPrice: builder.query({
-      query: () => {
+    getProductDetails: builder.query({
+      query: (args) => {
         return {
-          url: "/products/maxPrice",
+          url: `/products/${args.id}`,
           method: "GET",
         };
       },
@@ -76,4 +76,4 @@ const productManagementApi = baseApi.injectEndpoints({
     // }),
   }),
 });
-export const { useGetAllProductsQuery ,useGetMaxPriceQuery} = productManagementApi;
+export const { useGetAllProductsQuery, useGetProductDetailsQuery } = productManagementApi;

@@ -1,7 +1,7 @@
 import Section from "@/components/shared/Section";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PriceFilter from "./PriceFilter";
 import AvailabilityFilter from "./AvailabilityFilter";
 import FilterByCategory from "./FilterByCategory";
@@ -11,16 +11,22 @@ import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import Loader from "@/components/shared/Loader";
 import ProductCard from "./ProductCard";
 import { MdProductionQuantityLimits } from "react-icons/md";
-import { Button } from "@/components/ui/button";
+import { PaginationProduct } from "./Pagination";
+import { TMeta } from "@/types/global";
 export type TFilterParams = {
   name: string;
   value: string | number | boolean;
 };
 const AllProductsPage = () => {
+  const [page, setPage] = useState(1);
   const [queryParams, setQuerParams] = useState<TFilterParams[]>([]);
-  const { data: productData, isLoading } = useGetAllProductsQuery(queryParams);
+  const { data: productData, isLoading } = useGetAllProductsQuery([...queryParams, { name: "page", value: page }]);
   console.log("isLoading----> ", isLoading);
   console.log(productData);
+
+  useEffect(() => {
+    console.log("Indide UseEffect :", page);
+  }, [page]);
 
   return (
     <>
@@ -73,15 +79,17 @@ const AllProductsPage = () => {
                 )}
               </div>
             )}
+            <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />
           </div>
+
           <div className="bs:col-span-3 px-5">
             <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
               <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
-              {queryParams.length > 0 && (
+              {/* {queryParams.length > 0 && (
                 <Button variant={"primary"} onClick={() => setQuerParams([])}>
                   Clear Filter
                 </Button>
-              )}
+              )} */}
             </div>
             <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
             <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={500} />

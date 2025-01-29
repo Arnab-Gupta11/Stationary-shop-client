@@ -1,17 +1,27 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useCurrentUser } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hooks";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useLogoutMutation } from "@/redux/features/auth/authApi";
+import { logout, useCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileAvatar = () => {
+  const navigate = useNavigate();
   const user = useAppSelector(useCurrentUser);
+  const [logoutUser] = useLogoutMutation(undefined);
+  const dispatch = useAppDispatch();
+  const handleLogout = async () => {
+    dispatch(logout());
+    const res = await logoutUser(undefined).unwrap();
+    console.log(res);
+    console.log(res.success);
+    if (res?.success === true) {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="mt-2">
       <DropdownMenu>
@@ -26,12 +36,15 @@ const ProfileAvatar = () => {
           side="bottom"
           className="bg-primary-bg-light dark:bg-primary-bg-dark border-none shadow-md shadow-secondary-bg-light dark:shadow-secondary-bg-dark outline-none"
         >
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profileasdfgfdgfdggdgshghshhshs</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+
+          <DropdownMenuItem>{user?.userEmail}</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Button onClick={handleLogout} variant={"outline"} className="w-full border-primary-text text-primary-bg flex items-center gap-2">
+              <LogOut size={8} />
+              <span className="text-base">Logout</span>
+            </Button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

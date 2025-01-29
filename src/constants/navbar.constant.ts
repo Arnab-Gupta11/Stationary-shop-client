@@ -1,13 +1,13 @@
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
+
 export type TNavMenuItem = {
   label: string;
   path: string;
   show: boolean;
 }[];
 export const NavMenuOption = () => {
-  const user = null;
-  const profileInfo = {
-    role: "user",
-  };
+  const user = useAppSelector(useCurrentUser);
   const menuItems = [
     {
       label: "Home",
@@ -20,39 +20,14 @@ export const NavMenuOption = () => {
       show: true,
     },
     {
-      label: "Find Works",
-      path: "/find-works",
-      show: profileInfo?.role === "jobSeeker",
+      label: "Dashboard",
+      path: "/dashboard",
+      show: user?.role === "user" || user?.role === "user",
     },
     {
-      label: "Saved Jobs",
-      path: "/saved-jobs",
-      show: profileInfo?.role === "jobSeeker",
-    },
-    {
-      label: "Companies",
-      path: "/companies",
-      show: profileInfo?.role === "jobSeeker",
-    },
-    {
-      label: "My Jobs",
-      path: "/my-jobs",
-      show: profileInfo?.role === "recruiter",
-    },
-    {
-      label: "Applicants",
-      path: "/applicants",
-      show: profileInfo?.role === "recruiter",
-    },
-    {
-      label: "Post a Job",
-      path: "/post-job",
-      show: profileInfo?.role === "recruiter",
-    },
-    {
-      label: "Login",
-      path: "/login",
-      show: !user,
+      label: "About",
+      path: "/about",
+      show: true,
     },
   ];
   return menuItems;

@@ -6,10 +6,47 @@ import img1 from "../../../public/images/banner/banner1.png";
 import { TProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
+import toast from "react-hot-toast";
 type TProductProp = {
   product: TProduct;
 };
 const ProductCard = ({ product }: TProductProp) => {
+  const cartItems = useAppSelector(useCartItems);
+  const dispatch = useAppDispatch();
+  const addProductToCart = () => {
+    if (cartItems.length > 0) {
+      const existingItem = cartItems.find((item) => item.product === product._id);
+      if (!existingItem) {
+        dispatch(
+          addProductIntoCart({
+            product: product._id,
+            quantity: 1,
+            price: product.price,
+            productName: product.name,
+            brand: product.brand,
+            inStock: product.quantity,
+          })
+        );
+        toast.success("Item added to your cart successfully!");
+      } else {
+        toast.error("This Item is already in the cart.");
+      }
+    } else {
+      dispatch(
+        addProductIntoCart({
+          product: product._id,
+          quantity: 1,
+          price: product.price,
+          productName: product.name,
+          brand: product.brand,
+          inStock: product.quantity,
+        })
+      );
+      toast.success("Item added to your cart successfully!");
+    }
+  };
   const price = formatPrice(product?.price);
   return (
     <div className="rounded-lg group product-card hover:shadow-md">
@@ -19,7 +56,10 @@ const ProductCard = ({ product }: TProductProp) => {
           {product?.inStock ? "In Stock" : "Out Of Stock"}
         </span>
         <div className="flex flex-col items-center justify-center gap-3 absolute right-1 bottom-1 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700">
-          <MdOutlineShoppingCart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 shadow-sm p-1 w-8 h-8" />
+          <MdOutlineShoppingCart
+            onClick={addProductToCart}
+            className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 shadow-sm p-1 w-8 h-8"
+          />
           <FaRegHeart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 shadow-sm p-1 w-8 h-8" />
         </div>
       </div>

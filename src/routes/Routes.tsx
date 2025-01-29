@@ -6,6 +6,7 @@ import CartPage from "@/pages/Cart/Cart";
 import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/Home";
 import LoginPage from "@/pages/Login";
+import OrderVerification from "@/pages/OrderVerification/OrderVerification";
 import RegisterPage from "@/pages/Register";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage />,
+      },
+      {
+        path: "/order/verification",
+        element: <OrderVerification />,
       },
     ],
   },

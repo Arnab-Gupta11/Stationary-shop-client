@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import img from "../../../public/images/banner/banner1.png";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
-import { useSelector } from "react-redux";
 import {
   getTotalPrice,
   getTotalQuantity,
@@ -10,6 +10,7 @@ import {
   removeProductFromCart,
   TCartItem,
   useCartItems,
+  useCurrentUser,
 } from "@/redux/features/auth/authSlice";
 import { MdDelete, MdProductionQuantityLimits } from "react-icons/md";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -17,12 +18,24 @@ import { Link } from "react-router-dom";
 import Section from "@/components/shared/Section";
 import { formatPrice } from "@/utils/formatePrice";
 import toast from "react-hot-toast";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import CustomForm from "@/components/form/CustomForm";
+import CustomInput from "@/components/form/CustomInput";
+import { useState } from "react";
+import { billingInfoSchema } from "@/schemas/BillingInfoSchema";
+import { z } from "zod";
+import useCustomForm from "@/hooks/useCustomForm";
+
+import { useCreateOrderMutation } from "@/redux/features/order/order.api";
+import { BiLoaderCircle } from "react-icons/bi";
 const CartPage = () => {
+  const loginUser = useAppSelector(useCurrentUser);
+  const [createOrder] = useCreateOrderMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const cartItems = useSelector(useCartItems);
-  const totalPrice = useSelector(getTotalPrice);
-  const totalQuantity = useSelector(getTotalQuantity);
+  const cartItems = useAppSelector(useCartItems);
+  const totalPrice = useAppSelector(getTotalPrice);
+  const totalQuantity = useAppSelector(getTotalQuantity);
   const handleDecreaseQuantity = ({ product }: { product: string }) => {
     dispatch(reduceProductQuantity({ product, quantity: 1 }));
   };
@@ -36,6 +49,49 @@ const CartPage = () => {
   const handleProductRemove = (product: string) => {
     dispatch(removeProductFromCart({ product }));
   };
+  const billingInfoValue = {
+    phone: loginUser?.phone,
+    address: loginUser?.address,
+    city: loginUser?.city,
+    fullName: loginUser?.name,
+    email: loginUser?.userEmail,
+  };
+  //Update Billing information
+  const [form] = useCustomForm(billingInfoSchema, billingInfoValue);
+  const formattedProducts = cartItems.map((item) => {
+    return {
+      product: item.product,
+      quantity: item.quantity,
+    };
+  });
+  const onSubmit = async (values: z.infer<typeof billingInfoSchema>) => {
+    try {
+      setIsLoading(true);
+      const userInfo = {
+        userInfo: {
+          fullName: values.fullName,
+          email: values.email,
+          address: values.address,
+          city: values.city,
+          phone: values.phone,
+        },
+        products: formattedProducts,
+      };
+      const res = await createOrder(userInfo).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+
+        setTimeout(() => {
+          window.location.href = res?.data;
+        }, 1000);
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div>
       <div className="h-40  bg-secondary-bg-light flex items-center justify-center my-auto">
@@ -126,24 +182,51 @@ const CartPage = () => {
             <div>
               {cartItems?.length > 0 && (
                 <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-                  <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                    <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
+                  <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm ">
+                    <p className="text-xl font-semibold text-gray-900 dark:text-white">Billing details</p>
 
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
-                        <div className="text-base font-bold text-gray-900 dark:text-white">Total Price</div>
-                        <div className="text-base font-medium text-slate-800">{formatPrice(totalPrice)}</div>
-                      </div>
-                      <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 ">
-                        <div className="text-base font-bold text-slate-900 ">Total Quantity</div>
-                        <div className="text-base font-medium text-slate-800">{totalQuantity}</div>
-                      </div>
-                    </div>
+                      <CustomForm onSubmit={onSubmit} form={form}>
+                        <div className=" gap-4 border-t border-gray-200 pt-2">
+                          <CustomInput
+                            form={form}
+                            fieldName={"fullName"}
+                            label={"Full Name"}
+                            inputType={"text"}
+                            placeholder={"Enter your FullName"}
+                          />
+                          <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
+                          <CustomInput form={form} fieldName={"phone"} label={"Phone No"} inputType={"text"} placeholder={"Enter your phone no"} />
+                          <CustomInput form={form} fieldName={"address"} label={"Address"} inputType={"text"} placeholder={"Enter your address"} />
+                          <CustomInput form={form} fieldName={"city"} label={"City"} inputType={"text"} placeholder={"Enter your city"} />
 
-                    <Button className="w-full">Proceed to Checkout</Button>
-                    <Button variant={"outline"} className="w-full">
-                      Proceed to Checkout
-                    </Button>
+                          {/* <Button type="submit" className="w-full mt-8">
+                            {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign In"}
+                          </Button> */}
+                        </div>
+                        <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm mt-6">
+                          <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
+
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
+                              <div className="text-base font-bold text-gray-900 dark:text-white">Total Price</div>
+                              <div className="text-base font-medium text-slate-800">{formatPrice(totalPrice)}</div>
+                            </div>
+                            <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 ">
+                              <div className="text-base font-bold text-slate-900 ">Total Quantity</div>
+                              <div className="text-base font-medium text-slate-800">{totalQuantity}</div>
+                            </div>
+                          </div>
+
+                          <Button type="submit" disabled={isLoading} className="w-full">
+                            {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Order Now"}
+                          </Button>
+                          <Button type="button" variant={"outline"} className="w-full">
+                            Proceed to Checkout
+                          </Button>
+                        </div>
+                      </CustomForm>
+                    </div>
                   </div>
                 </div>
               )}

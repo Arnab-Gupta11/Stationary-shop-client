@@ -2,10 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export type TUser = {
+  name: string;
   userId: string;
   userEmail: string;
   role: string;
   profilePicture: string;
+  city: string;
+  phone: string;
+  address: string;
 };
 
 export type TCartItem = {
@@ -34,10 +38,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ user: TUser; token: string }>) => {
+    setUser: (state, action: PayloadAction<{ user: TUser | null; token: string | null }>) => {
       const { user, token } = action.payload;
       state.user = user;
       state.token = token;
+    },
+    updateUser: (state, action: PayloadAction<{ user: TUser | null }>) => {
+      const { user } = action.payload;
+      state.user = user;
     },
     logout: (state) => {
       state.user = null;
@@ -49,24 +57,16 @@ const authSlice = createSlice({
       action: PayloadAction<{ product: string; price: number; quantity: number; productName: string; inStock: number; brand: string }>
     ) => {
       const { product, price, quantity, productName, brand, inStock } = action.payload;
-      const existingItem = state.cart.find((item) => item.product === product);
-
-      if (existingItem) {
-        // Update quantity and recalculate total price
-        existingItem.quantity += quantity;
-        existingItem.totalPrice = existingItem.quantity * existingItem.price;
-      } else {
-        // Add new product to the cart
-        state.cart.push({
-          productName,
-          brand,
-          inStock,
-          product,
-          price,
-          quantity,
-          totalPrice: price * quantity,
-        });
-      }
+      // Add new product to the cart
+      state.cart.push({
+        productName,
+        brand,
+        inStock,
+        product,
+        price,
+        quantity,
+        totalPrice: price * quantity,
+      });
     },
     removeProductFromCart: (state, action: PayloadAction<{ product: string }>) => {
       const { product } = action.payload;
@@ -100,15 +100,15 @@ const authSlice = createSlice({
     clearCart: (state) => {
       state.cart = []; // Clear all products from the cart
     },
-    updateProductQuantity: (state, action: PayloadAction<{ product: string; quantity: number }>) => {
-      const { product, quantity } = action.payload;
-      const existingItem = state.cart.find((item) => item.product === product);
+    // updateProductQuantity: (state, action: PayloadAction<{ product: string; quantity: number }>) => {
+    //   const { product, quantity } = action.payload;
+    //   const existingItem = state.cart.find((item) => item.product === product);
 
-      if (existingItem) {
-        existingItem.quantity = quantity;
-        existingItem.totalPrice = existingItem.quantity * existingItem.price;
-      }
-    },
+    //   if (existingItem) {
+    //     existingItem.quantity = quantity;
+    //     existingItem.totalPrice = existingItem.quantity * existingItem.price;
+    //   }
+    // },
   },
 });
 
@@ -119,7 +119,7 @@ export const {
   removeProductFromCart,
   reduceProductQuantity,
   clearCart,
-  updateProductQuantity,
+  // updateProductQuantity,
   increaseProductQuantity,
 } = authSlice.actions;
 export default authSlice.reducer;

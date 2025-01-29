@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAppDispatch } from "@/redux/hooks";
-import { addProductIntoCart } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
 const ProductDetails = () => {
+  const cartItems = useAppSelector(useCartItems);
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const [productQuantity, setProductQuantity] = useState(1);
@@ -36,8 +37,18 @@ const ProductDetails = () => {
     }
   };
   const addProductToCart = () => {
-    dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
-    toast.success("Item added to your cart successfully!");
+    if (cartItems.length > 0) {
+      const existingItem = cartItems.find((item) => item.product === _id);
+      if (!existingItem) {
+        dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
+        toast.success("Item added to your cart successfully!");
+      } else {
+        toast.error("This Item is already in the cart.");
+      }
+    } else {
+      dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
+      toast.success("Item added to your cart successfully!");
+    }
   };
 
   return (

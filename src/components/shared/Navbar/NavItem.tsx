@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const NavItem = ({ label, active }: { label: string; active: boolean }) => {
+const NavItem = ({ label }: { label: string; active: boolean }) => {
   // console.log(active);
   return (
     <>

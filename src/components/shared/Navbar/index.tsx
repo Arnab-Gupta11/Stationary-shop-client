@@ -42,7 +42,7 @@ const Navbar = () => {
                   key={idx}
                   to={menuItem.path}
                   className={({ isActive }) =>
-                    isActive ? "border-b-[3px] border-primary-text  text-slate-800 font-medium" : " py-2 text-slate-800 font-medium"
+                    isActive ? "border-b-[3px] border-primary-text  text-slate-900 font-medium" : " py-2 text-slate-800 font-medium"
                   }
                 >
                   <NavItem label={menuItem.label} active={true} />

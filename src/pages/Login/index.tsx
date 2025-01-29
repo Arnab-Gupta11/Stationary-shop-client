@@ -14,18 +14,18 @@ import { verifyToken } from "@/utils/verifyToken";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const [loginUser] = useLoginMutation(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [form] = useCustomForm(loginSchema, loginFormDefaultValue);
   // console.log(form);
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
     try {
       setIsLoading(true);
       const userInfo = {
@@ -40,7 +40,7 @@ const LoginPage = () => {
         dispatch(setUser({ user: user, token: res.data?.token }));
         toast.success(res?.message);
         form.reset();
-        navigate("/");
+        navigate(location?.state ? location.state : "/");
       }
     } catch (err: any) {
       toast.error(err?.data?.message);

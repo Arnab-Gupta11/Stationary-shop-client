@@ -21,8 +21,8 @@ export const NavMenuOption = () => {
     },
     {
       label: "Dashboard",
-      path: "/dashboard",
-      show: user?.role === "user" || user?.role === "user",
+      path: `${user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}`,
+      show: user?.role === "user" || user?.role === "admin",
     },
     {
       label: "About",

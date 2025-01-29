@@ -10,7 +10,7 @@ const CartIcon = () => {
     <Link to={"/cart"}>
       <div className="relative">
         {/* Cart Icon */}
-        <AiOutlineShoppingCart className="text-2xl text-gray-700 cursor-pointer hover:text-gray-900 transition" />
+        <AiOutlineShoppingCart className="text-2xl text-slate-800 cursor-pointer hover:text-gray-900 transition hover:scale-105" />
 
         {/* Product Count Badge */}
         {totalQuantity > 0 && (

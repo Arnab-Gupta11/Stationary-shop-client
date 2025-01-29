@@ -1,3 +1,4 @@
+import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
 import RootLayout from "@/layouts/RootLayout";
 import AboutPage from "@/pages/About";
 import AllProductsPage from "@/pages/AllProducts";
@@ -9,6 +10,14 @@ import LoginPage from "@/pages/Login";
 import OrderVerification from "@/pages/OrderVerification/OrderVerification";
 import RegisterPage from "@/pages/Register";
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
+import ManageOrders from "@/pages/Dashboard/Admin/ManageOrders/ManageOrders";
+import ManageProducts from "@/pages/Dashboard/Admin/ManageProducts/ManageProducts";
+import ManageUsers from "@/pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
+import AdminRoute from "./AdminRoute";
+import UserRoutes from "./UserRoutes";
 
 const router = createBrowserRouter([
   {
@@ -34,18 +43,68 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <CartPage />,
+        element: (
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/order/verification",
-        element: <OrderVerification />,
+        element: (
+          <PrivateRoute>
+            <OrderVerification />
+          </PrivateRoute>
+        ),
       },
     ],
   },
-  // {
-  //   path: "/unauthorize",
-  //   element: <Unauthorize></Unauthorize>,
-  // },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "manage-products",
+        element: (
+          <AdminRoute>
+            <ManageProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: (
+          <AdminRoute>
+            <ManageOrders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "view-orders",
+        element: (
+          <UserRoutes>
+            <ViewOrders />
+          </UserRoutes>
+        ),
+      },
+      {
+        path: "manage-profile",
+        element: (
+          <UserRoutes>
+            <ManageProfile />
+          </UserRoutes>
+        ),
+      },
+    ],
+  },
   {
     path: "/login",
     element: <LoginPage />,
@@ -54,55 +113,6 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />,
   },
-  // {
-  //   path: "/dashboard",
-  //   element: <Dashboard></Dashboard>,
-  //   children: [
-  //     {
-  //       path: "manage-shop",
-  //       element: <ManageShop></ManageShop>,
-  //     },
-  //     {
-  //       path: "admin-summary",
-  //       element: <AdminSummary></AdminSummary>,
-  //     },
-  //     //* <----------------------Manager-Route----------------------->*/
-  //     {
-  //       path: "manage-product",
-  //       element: <ManageProduct></ManageProduct>,
-  //     },
-  //     {
-  //       path: "manage-product/addProduct",
-  //       element: <AddProduct></AddProduct>,
-  //     },
-  //     {
-  //       path: "manage-product/:id",
-  //       element: <UpdateProduct></UpdateProduct>,
-  //     },
-
-  //     {
-  //       path: "sales-collection",
-  //       element: <SalesCollection></SalesCollection>,
-  //     },
-  //     {
-  //       path: "check-out",
-  //       element: <CheckOut></CheckOut>,
-  //     },
-  //     {
-  //       path: "subscription",
-  //       element: <Subscription></Subscription>,
-  //     },
-  //     {
-  //       path: "subscription/:id",
-  //       element: <Payment></Payment>,
-  //       loader: ({ params }) => fetch(`https://inventohub.vercel.app/subscription/${params.id}`),
-  //     },
-  //     {
-  //       path: "sales-summary",
-  //       element: <SalesSummary></SalesSummary>,
-  //     },
-  //   ],
-  // },
 ]);
 
 export default router;

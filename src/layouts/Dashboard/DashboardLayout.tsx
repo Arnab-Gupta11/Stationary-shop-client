@@ -45,11 +45,11 @@ export default function DashboardLayout() {
       <aside
         className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-white text-slate-800 transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-64"
-        } md:translate-x-0 md:static`}
+        } lg:translate-x-0 lg:fixed`}
       >
         <div className="flex items-center justify-between p-4 b">
           <h1 className="text-xl font-semibold">Dashboard</h1>
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X className="w-6 h-6" />
           </Button>
         </div>
@@ -69,7 +69,7 @@ export default function DashboardLayout() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex flex-col flex-1 min-w-0">
+      <div className="flex flex-col flex-1 min-w-0 lg:ml-64">
         {/* Navbar */}
         <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-4 bg-white shadow-md">
           <div>

@@ -18,6 +18,7 @@ import ManageUsers from "@/pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
 import AdminRoute from "./AdminRoute";
 import UserRoutes from "./UserRoutes";
+import AddNewProduct from "@/pages/Dashboard/Admin/ManageProducts/AddNewProduct";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-products/add-product",
+        element: (
+          <AdminRoute>
+            <AddNewProduct />
           </AdminRoute>
         ),
       },

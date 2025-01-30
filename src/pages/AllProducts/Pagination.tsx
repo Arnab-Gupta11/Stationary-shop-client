@@ -34,7 +34,7 @@ export function PaginationProduct({ meta, page, setPage }: TPaginationProductPro
   };
 
   return (
-    <div className="mt-16 flex justify-center">
+    <div className="flex justify-center">
       <Pagination>
         <PaginationContent>
           {/* Previous Button */}

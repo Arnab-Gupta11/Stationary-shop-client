@@ -73,7 +73,7 @@ const AllProductsPage = () => {
             {isLoading ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pt-6 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pt-6 w-full mb-16">
                 {productData?.data && productData?.data?.length > 0 ? (
                   productData?.data?.map((product) => <ProductCard key={product._id} product={product} />)
                 ) : (

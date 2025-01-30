@@ -19,6 +19,7 @@ const productManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
+      providesTags: ["product"],
       transformResponse: (response: TResponseRedux<TProduct[]>) => {
         return {
           data: response.data,
@@ -35,15 +36,15 @@ const productManagementApi = baseApi.injectEndpoints({
       },
     }),
 
-    //Add new Register Semester
-    // addRegisteredSemester: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/semester-registrations/create-semester-registration",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["semester"],
-    // }),
+    // Add new Product
+    addNewProduct: builder.mutation({
+      query: (data) => ({
+        url: "/products",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["product"],
+    }),
 
     //Update Registered Semester
     // updateRegisteredSemester: builder.mutation({
@@ -76,4 +77,4 @@ const productManagementApi = baseApi.injectEndpoints({
     // }),
   }),
 });
-export const { useGetAllProductsQuery, useGetProductDetailsQuery } = productManagementApi;
+export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation } = productManagementApi;

@@ -11,7 +11,7 @@ export type TCustomSelect = {
 };
 
 //Custom Input Component type
-export type TCustomInput = { form: any; fieldName: string; inputType: string; label: string; placeholder: string };
+export type TCustomInput = { form: any; fieldName: string; inputType?: string; label: string; placeholder: string };
 
 //Custom Form Component type
 export type TCustomForm = {

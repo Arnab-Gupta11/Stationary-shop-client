@@ -64,16 +64,7 @@ const productManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
-
-    //Add Faculty
-    // addFaculties: builder.mutation({
-    //   query: (args) => ({
-    //     url: `/courses/${args.courseId}/assign-faculties`,
-    //     method: "PUT",
-    //     body: args.data,
-    //   }),
-    //   invalidatesTags: ["cousers"],
-    // }),
   }),
 });
-export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation, useUpdateProductMutation,useDeleteProductMutation } = productManagementApi;
+export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation, useUpdateProductMutation, useDeleteProductMutation } =
+  productManagementApi;

@@ -46,25 +46,24 @@ const productManagementApi = baseApi.injectEndpoints({
       invalidatesTags: ["product"],
     }),
 
-    //Update Registered Semester
-    // updateRegisteredSemester: builder.mutation({
-    //   query: (args) => ({
-    //     url: `/semester-registrations/${args.id}`,
-    //     method: "PATCH",
-    //     body: args.data,
-    //   }),
-    //   invalidatesTags: ["semester"],
-    // }),
+    // Update Registered Semester
+    updateProduct: builder.mutation({
+      query: (args) => ({
+        url: `/products/${args.id}`,
+        method: "PUT",
+        body: args.data,
+      }),
+      invalidatesTags: ["product"],
+    }),
 
-    //Add Course.
-    // addCourse: builder.mutation({
-    //   query: (data) => ({
-    //     url: `/courses/create-course`,
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["cousers"],
-    // }),
+    //Delete Product
+    deleteProduct: builder.mutation({
+      query: (args) => ({
+        url: `/products/${args.id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["product"],
+    }),
 
     //Add Faculty
     // addFaculties: builder.mutation({
@@ -77,4 +76,4 @@ const productManagementApi = baseApi.injectEndpoints({
     // }),
   }),
 });
-export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation } = productManagementApi;
+export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation, useUpdateProductMutation,useDeleteProductMutation } = productManagementApi;

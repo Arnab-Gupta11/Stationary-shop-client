@@ -19,6 +19,7 @@ import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
 import AdminRoute from "./AdminRoute";
 import UserRoutes from "./UserRoutes";
 import AddNewProduct from "@/pages/Dashboard/Admin/ManageProducts/AddNewProduct";
+import UpdateProduct from "@/pages/Dashboard/Admin/ManageProducts/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AddNewProduct />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-products/:id",
+        element: (
+          <AdminRoute>
+            <UpdateProduct />
           </AdminRoute>
         ),
       },

@@ -1,4 +1,4 @@
-import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import { BsThreeDots } from "react-icons/bs";
 import { TProduct } from "@/types/product.types";
 import img from "../../../../../public/images/banner/banner3.png";
@@ -9,9 +9,10 @@ import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
 import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import AddProduct from "./AddProduct";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 const ManageProducts = () => {
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -22,6 +23,28 @@ const ManageProducts = () => {
   const handleSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+  const [deleteProduct] = useDeleteProductMutation(undefined);
+
+  const handleDelete = (_id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteProduct({ id: _id }).unwrap();
+        console.log(res);
+        if (res?.success === true) {
+          Swal.fire("Your Product has been Deleted!", "success");
+        }
+      }
+    });
+  };
+
   return (
     <div>
       <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
@@ -74,7 +97,23 @@ const ManageProducts = () => {
                     )}
                   </td>
                   <td className="px-4 py-2 border w-20 border-[#f1f1f1]">
-                    <BsThreeDots className="mt-2" />
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
+                        <BsThreeDots className="mt-2" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        side="bottom"
+                        className="bg-white border-none shadow-md shadow-secondary-bg-light outline-none p-2 flex flex-col gap-2"
+                      >
+                        <Link to={`/dashboard/manage-products/${item?._id}`}>
+                          <span className="text-slate-700 hover:text-slate-900 ">Update</span>
+                        </Link>
+
+                        <span onClick={() => handleDelete(item?._id)} className="text-slate-700 hover:text-slate-900 hover:cursor-pointer">
+                          Delete
+                        </span>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </td>
                 </tr>
               ))}

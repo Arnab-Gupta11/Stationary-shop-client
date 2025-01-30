@@ -9,17 +9,13 @@ import { IOrder } from "@/types/order.type";
 import { formatMongoDateToDate } from "@/utils/formateDate";
 import { formatPrice } from "@/utils/formatePrice";
 import toast from "react-hot-toast";
-import { BiLoaderCircle } from "react-icons/bi";
 const ManageOrders = () => {
   const [page, setPage] = useState(1);
   const [updateStatus] = useUpdateOrderStatusMutation(undefined);
   const { data: orderData, isLoading } = useGetAllOrdersQuery([{ name: "page", value: page }]);
-  console.log(orderData);
-  const [loading, setLoading] = useState(false);
 
   const handleUpdateOrderStatus = async (_id: string) => {
     try {
-      setLoading(true);
       const statusInfo = {
         status: "Shipping",
       };
@@ -29,8 +25,6 @@ const ManageOrders = () => {
       }
     } catch (err: any) {
       toast.error(err?.data?.message);
-    } finally {
-      setLoading(false);
     }
   };
 

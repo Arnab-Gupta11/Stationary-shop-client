@@ -19,6 +19,26 @@ const userManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+
+    getAllUsers: builder.query({
+      query: () => {
+        return {
+          url: "/user",
+          method: "GET",
+        };
+      },
+      providesTags: ["user"],
+    }),
+
+    // Update Ordered Status
+    updateUserStatus: builder.mutation({
+      query: (args) => ({
+        url: `/user/userStatus/${args.id}`,
+        method: "PUT",
+        body: args.data,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
-export const { useGetUserDetailsQuery, useUpdateUserInfoMutation } = userManagementApi;
+export const { useGetUserDetailsQuery, useUpdateUserInfoMutation, useGetAllUsersQuery, useUpdateUserStatusMutation } = userManagementApi;

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import img from "../../../public/images/banner/banner1.png";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import {
   getTotalPrice,
@@ -12,7 +11,8 @@ import {
   useCartItems,
   useCurrentUser,
 } from "@/redux/features/auth/authSlice";
-import { MdDelete, MdProductionQuantityLimits } from "react-icons/md";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdProductionQuantityLimits } from "react-icons/md";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import Section from "@/components/shared/Section";
@@ -21,13 +21,16 @@ import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { billingInfoSchema } from "@/schemas/BillingInfoSchema";
 import { z } from "zod";
 import useCustomForm from "@/hooks/useCustomForm";
 
 import { useCreateOrderMutation } from "@/redux/features/order/order.api";
 import { BiLoaderCircle } from "react-icons/bi";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import PageHeader from "@/components/shared/PageHeader";
 const CartPage = () => {
   const loginUser = useAppSelector(useCurrentUser);
   const [createOrder] = useCreateOrderMutation();
@@ -64,6 +67,7 @@ const CartPage = () => {
       quantity: item.quantity,
     };
   });
+  //Order Product.
   const onSubmit = async (values: z.infer<typeof billingInfoSchema>) => {
     try {
       setIsLoading(true);
@@ -92,26 +96,25 @@ const CartPage = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div>
-      <div className="h-40  bg-secondary-bg-light flex items-center justify-center my-auto">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900">Shopping Cart</h1>
-          <div className="flex justify-center mt-3">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <Link to="/">Home</Link>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Cart</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </div>
-      </div>
+    <>
+      <PageHeader>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <Link to="/">Home</Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Cart</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </PageHeader>
       <Section>
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl"></h2>
@@ -128,7 +131,7 @@ const CartPage = () => {
                       >
                         <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                           <div className="shrink-0 md:order-1 bg-[#F7F7F7] rounded-lg h-24 w-24 flex items-center justify-center">
-                            <img className="h-20 w-20" src={img} alt="imac image" />
+                            <img className="h-20 w-20" src={item?.image} alt="imac image" />
                           </div>
                           <div className="flex flex-col xsm:flex-row xsm:items-center xsm:justify-between md:order-3 md:justify-end gap-8">
                             {/* price */}
@@ -155,7 +158,7 @@ const CartPage = () => {
                             <div className="text-end md:order-4  flex items-center gap-5">
                               <p className="text-base font-bold text-gray-900 ">{formatPrice(item.totalPrice)}</p>
                               <div onClick={() => handleProductRemove(item.product)}>
-                                <MdDelete className="text-red-600 hover:scale-110 active:scale-95 duration-700 cursor-pointer text-xl  sm:text-2xl shadow-md rounded-lg " />
+                                <MdOutlineDeleteForever className="text-red-600 hover:scale-110 active:scale-95 duration-700 cursor-pointer text-xl  sm:text-2xl shadow-md rounded-lg " />
                               </div>
                             </div>
                           </div>
@@ -186,14 +189,32 @@ const CartPage = () => {
                     <div className="space-y-4">
                       <CustomForm onSubmit={onSubmit} form={form}>
                         <div className=" gap-4 border-t border-gray-200 pt-2">
-                          <CustomInput
-                            form={form}
-                            fieldName={"fullName"}
-                            label={"Full Name"}
-                            inputType={"text"}
-                            placeholder={"Enter your FullName"}
+                          <FormField
+                            control={form.control}
+                            name={"fullName"}
+                            render={({ field }) => (
+                              <FormItem className="mt-4">
+                                <FormLabel className="text-slate-800 dark:text-slate-200 text-start">{"Full Name"}</FormLabel>
+                                <FormControl>
+                                  <Input readOnly type={"text"} placeholder={"Enter your FullName"} {...field} />
+                                </FormControl>
+                                <FormMessage className="text-red-500" />
+                              </FormItem>
+                            )}
                           />
-                          <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
+                          <FormField
+                            control={form.control}
+                            name={"email"}
+                            render={({ field }) => (
+                              <FormItem className="mt-4">
+                                <FormLabel className="text-slate-800 dark:text-slate-200 text-start">{"Email"}</FormLabel>
+                                <FormControl>
+                                  <Input readOnly type={"text"} placeholder={"Enter your email"} {...field} />
+                                </FormControl>
+                                <FormMessage className="text-red-500" />
+                              </FormItem>
+                            )}
+                          />
                           <CustomInput form={form} fieldName={"phone"} label={"Phone No"} inputType={"text"} placeholder={"Enter your phone no"} />
                           <CustomInput form={form} fieldName={"address"} label={"Address"} inputType={"text"} placeholder={"Enter your address"} />
                           <CustomInput form={form} fieldName={"city"} label={"City"} inputType={"text"} placeholder={"Enter your city"} />
@@ -232,7 +253,7 @@ const CartPage = () => {
           </div>
         </div>
       </Section>
-    </div>
+    </>
   );
 };
 

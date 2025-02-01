@@ -2,7 +2,6 @@ import Loader from "@/components/shared/Loader";
 import Section from "@/components/shared/Section";
 import { useGetProductDetailsQuery } from "@/redux/features/product/product.api";
 import { useParams } from "react-router-dom";
-import img from "../../../public/images/banner/banner1.png";
 import { TProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Heart, Minus, Plus } from "lucide-react";
@@ -22,7 +21,7 @@ const ProductDetails = () => {
   if (isLoading) {
     return <Loader />;
   }
-  const { _id, brand, category, description, inStock, name, price, quantity } = productData?.data as TProduct;
+  const { _id, brand, category, description, inStock, name, price, quantity, image } = productData?.data as TProduct;
 
   const handleReduceQuantity = () => {
     if (productQuantity > 1) {
@@ -37,26 +36,28 @@ const ProductDetails = () => {
     }
   };
   const addProductToCart = () => {
-    if (cartItems.length > 0) {
+    if (!inStock) {
+      toast.error(`This item is out of stock. Check back soon or explore similar products!`);
+    } else if (cartItems.length > 0) {
       const existingItem = cartItems.find((item) => item.product === _id);
       if (!existingItem) {
-        dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
+        dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity, image }));
         toast.success("Item added to your cart successfully!");
       } else {
         toast.error("This Item is already in the cart.");
       }
     } else {
-      dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity }));
+      dispatch(addProductIntoCart({ product: _id, quantity: productQuantity, price, productName: name, brand, inStock: quantity, image }));
       toast.success("Item added to your cart successfully!");
     }
   };
 
   return (
-    <div className="">
+    <div className="mb-20">
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-10">
           <div className="bg-[#F7F7F7] rounded-t-lg h-[450px] flex justify-center rounded-lg">
-            <img src={img} alt={name} className="h-full" />
+            <img src={image} alt={name} className="h-full" />
           </div>
           <div>
             <div>

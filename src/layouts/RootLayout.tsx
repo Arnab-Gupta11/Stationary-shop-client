@@ -1,11 +1,12 @@
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 import { Outlet } from "react-router";
 
 const RootLayout = () => {
   return (
     <>
-      <div className="" />
+      <ScrollToTop />
       <Navbar />
       <div>
         <Outlet />

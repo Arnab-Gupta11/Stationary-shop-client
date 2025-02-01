@@ -20,6 +20,7 @@ export type TCartItem = {
   price: number;
   quantity: number;
   totalPrice: number;
+  image: string;
 };
 
 type TAuthState = {
@@ -54,9 +55,9 @@ const authSlice = createSlice({
     },
     addProductIntoCart: (
       state,
-      action: PayloadAction<{ product: string; price: number; quantity: number; productName: string; inStock: number; brand: string }>
+      action: PayloadAction<{ product: string; price: number; quantity: number; productName: string; inStock: number; brand: string; image: string }>
     ) => {
-      const { product, price, quantity, productName, brand, inStock } = action.payload;
+      const { product, price, quantity, productName, brand, inStock, image } = action.payload;
       // Add new product to the cart
       state.cart.push({
         productName,
@@ -66,6 +67,7 @@ const authSlice = createSlice({
         price,
         quantity,
         totalPrice: price * quantity,
+        image,
       });
     },
     removeProductFromCart: (state, action: PayloadAction<{ product: string }>) => {
@@ -77,13 +79,15 @@ const authSlice = createSlice({
       const existingItem = state.cart.find((item) => item.product === product);
 
       if (existingItem) {
-        if (existingItem.quantity > quantity) {
-          // Reduce quantity and recalculate total price
-          existingItem.quantity -= quantity;
-          existingItem.totalPrice = existingItem.quantity * existingItem.price;
-        } else {
-          // Remove item if quantity reaches zero or below
-          state.cart = state.cart.filter((item) => item.product !== product);
+        if (existingItem.quantity > 1) {
+          if (existingItem.quantity > quantity) {
+            // Reduce quantity and recalculate total price
+            existingItem.quantity -= quantity;
+            existingItem.totalPrice = existingItem.quantity * existingItem.price;
+          } else {
+            // Remove item if quantity reaches zero or below
+            state.cart = state.cart.filter((item) => item.product !== product);
+          }
         }
       }
     },

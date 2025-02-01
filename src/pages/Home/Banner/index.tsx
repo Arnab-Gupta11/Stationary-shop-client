@@ -21,7 +21,8 @@ const Banner = () => {
                 </h2>
                 <div className=" flex bs-mx:justify-center">
                   <span className="text-slate-700 font-semibold text-[10px] xsm:text-xs md:text-base py-1 mb-8 text-center bs:text-left">
-                    Discover premium stationery for work, school, and creativity. Shop now for quality you can trust!
+                    Discover premium stationery for work, school, and creativity.
+                    <br /> Shop now for quality you can trust!
                   </span>
                 </div>
                 <div className="flex justify-center bs:justify-start">

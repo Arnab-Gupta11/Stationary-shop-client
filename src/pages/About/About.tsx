@@ -7,28 +7,24 @@ import AboutLeftSection from "./AboutLeftSection";
 import AboutRightSection from "./AboutRightSection";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import PageHeader from "@/components/shared/PageHeader";
 
 const About = () => {
   return (
     <>
-      <div className="h-40  bg-secondary-bg-light flex items-center justify-center my-auto">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900">All Products</h1>
-          <div className="flex justify-center mt-3">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <Link to="/">Home</Link>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>About</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </div>
-      </div>
+      <PageHeader>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <Link to="/">Home</Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>About</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </PageHeader>
       <div className="bg-light-bg-100 dark:bg-dark-bg-200 my-20">
         <Section>
           {/* First section */}

@@ -48,7 +48,11 @@ export default function DashboardLayout() {
         } lg:translate-x-0 lg:fixed`}
       >
         <div className="flex items-center justify-between p-4 b">
-          <h1 className="text-xl font-semibold">Dashboard</h1>
+          <h1 className="text-xl font-semibold">
+            <h1 className="text-black text-2xl font-bold ml-2">
+              Note<span className="text-primary-bg">fy</span>
+            </h1>
+          </h1>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X className="w-6 h-6" />
           </Button>

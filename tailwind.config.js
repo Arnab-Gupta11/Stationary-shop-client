@@ -23,6 +23,9 @@ export default {
       "xs-mx": { max: "475px" },
       "xsm-mx": { max: "349px" },
     },
+    fontFamily: {
+      sora: ["Sora", "serif"],
+    },
     extend: {
       colors: {
         "primary-bg": "#D51243",

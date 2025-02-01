@@ -1,6 +1,6 @@
 import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
 import RootLayout from "@/layouts/RootLayout";
-import AboutPage from "@/pages/About";
+
 import AllProductsPage from "@/pages/AllProducts";
 import ProductDetails from "@/pages/AllProducts/ProductDetails";
 import CartPage from "@/pages/Cart/Cart";
@@ -20,6 +20,7 @@ import AdminRoute from "./AdminRoute";
 import UserRoutes from "./UserRoutes";
 import AddNewProduct from "@/pages/Dashboard/Admin/ManageProducts/AddNewProduct";
 import UpdateProduct from "@/pages/Dashboard/Admin/ManageProducts/UpdateProduct";
+import About from "@/pages/About/About";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <AboutPage />,
+        element: <About />,
       },
       {
         path: "/shop",

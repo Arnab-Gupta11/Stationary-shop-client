@@ -38,12 +38,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ user: TUser | null; token: string | null }>) => {
+    setUser: (state, action) => {
       const { user, token } = action.payload;
       state.user = user;
       state.token = token;
     },
-    updateUser: (state, action: PayloadAction<{ user: TUser | null }>) => {
+    updateUser: (state, action) => {
       const { user } = action.payload;
       state.user = user;
     },
@@ -121,6 +121,7 @@ export const {
   clearCart,
   // updateProductQuantity,
   increaseProductQuantity,
+  updateUser,
 } = authSlice.actions;
 export default authSlice.reducer;
 

@@ -21,7 +21,6 @@ const RegisterPage = () => {
   const [form] = useCustomForm(registerSchema, registerFormDefaultValue);
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
     try {
       setIsLoading(true);
       const userInfo = {
@@ -31,7 +30,6 @@ const RegisterPage = () => {
         confirmedPassword: values.confirmedPassword,
       };
       const res = await registerUser(userInfo).unwrap();
-      console.log(res);
       if (res?.success === true) {
         toast.success(res?.message);
         form.reset();

@@ -33,7 +33,7 @@ const BannerSlider = () => {
       <CarouselContent>
         {bannerImages.map((item, idx) => (
           <CarouselItem key={idx}>
-            <img src={item.src} alt={item.alt} className=" object-contain" />
+            <img src={item.src} alt={item.alt} className="w-full bs:h-[450px] lg:h-[500px] xl:h-[600px]" />
             {/* <span>{name}</span> */}
           </CarouselItem>
         ))}

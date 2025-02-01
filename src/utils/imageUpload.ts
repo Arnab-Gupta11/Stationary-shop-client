@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -14,11 +15,9 @@ const imageUpload = async (img: any) => {
 
     const res = await axios.post(api, data);
     const { secure_url } = res.data;
-    console.log(secure_url);
     return secure_url;
   } catch (error) {
     toast.error("Image upload failed. Try again later.");
-    console.error(error);
   }
 };
 

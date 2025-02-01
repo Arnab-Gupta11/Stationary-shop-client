@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavMenuOption } from "@/constants/navbar.constant";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import NavItem from "./NavItem";
 import ProfileAvatar from "./ProfileAvatar";
 import NavSidebar from "./NavSidebar";
@@ -10,6 +10,7 @@ import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+  const location = useLocation();
   const user = useAppSelector(useCurrentUser);
   const [scrolled, setScrolled] = useState(false);
   const menuItems = NavMenuOption();
@@ -25,14 +26,17 @@ const Navbar = () => {
   }, []);
   return (
     <div
-      className={`${
-        scrolled ? "backdrop-blur-md shadow-md" : "bg-none border-b border-secondary-bg-light"
-      } transition-colors duration-500 sticky top-0 w-full h-20 z-10`}
+      className={`${scrolled ? "backdrop-blur-md shadow-md" : "bg-none border-b border-slate-300"} transition-colors duration-500 ${
+        location.pathname === "/" ? "fixed" : "sticky"
+      } top-0 w-full h-20 z-20`}
     >
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
-          <div className="hidden xs:flex">Logo</div>
-          <div className="xs:hidden flex">Logo</div>
+          <div className="hidden xs:flex">
+            <h1 className="text-black text-2xl font-bold">
+              Note<span className="text-primary-bg">fy</span>
+            </h1>
+          </div>
         </div>
         <div className="flex gap-5 items-center">
           <div className="hidden lg:flex gap-6 items-center font-medium ">
@@ -51,13 +55,13 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center">
             <CartIcon />
             {user ? (
               <ProfileAvatar />
             ) : (
               <Link to={"/login"}>
-                <Button>Login</Button>
+                <Button className="ml-5">Login</Button>
               </Link>
             )}
 

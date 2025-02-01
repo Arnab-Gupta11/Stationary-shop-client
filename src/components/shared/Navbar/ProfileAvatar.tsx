@@ -15,18 +15,16 @@ const ProfileAvatar = () => {
   const handleLogout = async () => {
     dispatch(logout());
     const res = await logoutUser(undefined).unwrap();
-    console.log(res);
-    console.log(res.success);
     if (res?.success === true) {
       navigate("/");
     }
   };
 
   return (
-    <div className="mt-2">
+    <div className="ml-5">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
-          <Avatar>
+          <Avatar className="border border-[#f1f1f1]">
             <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
             <AvatarFallback>DP</AvatarFallback>
           </Avatar>

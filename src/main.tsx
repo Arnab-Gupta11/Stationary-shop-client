@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { Toaster } from "react-hot-toast";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <div>
+    <div className="font-sora">
       <Toaster position="top-right" />
       <App />
     </div>

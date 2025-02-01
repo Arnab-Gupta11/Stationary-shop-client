@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TFilterParams } from ".";
 import { formatPrice } from "@/utils/formatePrice";
+import { useSearchParams } from "react-router-dom";
 
 type PriceFilterProps = {
   queryParams: TFilterParams[];
@@ -10,8 +11,10 @@ type PriceFilterProps = {
 };
 
 const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, initialMinPrice = 0, initialMaxPrice = 100 }) => {
-  const [minPrice, setMinPrice] = useState<number>(initialMinPrice);
-  const [maxPrice, setMaxPrice] = useState<number>(initialMaxPrice);
+  const [searchParams] = useSearchParams();
+  // Get initial price from URL or default values
+  const [minPrice, setMinPrice] = useState<number>(Number(searchParams.get("minPrice")) || initialMinPrice);
+  const [maxPrice, setMaxPrice] = useState<number>(Number(searchParams.get("maxPrice")) || initialMaxPrice);
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     if (value < maxPrice) {

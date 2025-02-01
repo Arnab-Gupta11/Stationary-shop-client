@@ -43,10 +43,7 @@ const AddNewProduct = () => {
         description: data.details,
         image: imageData,
       };
-      console.log(productInfo);
       const res = await addNewProduct(productInfo).unwrap();
-      console.log(res);
-      console.log(res.success);
       if (res?.success === true) {
         toast.success(res?.message);
         reset();

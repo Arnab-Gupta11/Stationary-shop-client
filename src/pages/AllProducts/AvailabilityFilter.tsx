@@ -7,7 +7,18 @@ interface AvailabilityFilterProps {
 }
 
 const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ queryParams, setQuerParams }) => {
-  const [selectedOption, setSelectedOption] = useState<"all" | "inStock" | "outOfStock">("all");
+  // Determine initial selected option from queryParams
+  const inStockParam = queryParams.find((param) => param.name === "inStock");
+  let initialSelected: "all" | "inStock" | "outOfStock";
+  if (inStockParam?.value == "true") {
+    initialSelected = "inStock";
+  } else if (inStockParam?.value == "false") {
+    initialSelected = "outOfStock";
+  } else {
+    initialSelected = "all";
+  }
+
+  const [selectedOption, setSelectedOption] = useState<"all" | "inStock" | "outOfStock">(initialSelected);
   const availability = [
     {
       label: "All",
@@ -29,17 +40,15 @@ const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ queryParams, se
       setQuerParams(state);
     } else if (value === "inStock") {
       const filterOutOldMaxPriceFromQuery = queryParams.filter((item) => item.name !== "inStock");
-      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: true }];
+      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: "true" }];
       setQuerParams(state);
     } else if (value === "outOfStock") {
       const filterOutOldMaxPriceFromQuery = queryParams.filter((item) => item.name !== "inStock");
-      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: false }];
+      const state: TFilterParams[] = [...filterOutOldMaxPriceFromQuery, { name: "inStock", value: "false" }];
       setQuerParams(state);
     }
 
     setSelectedOption(value);
-
-    // setSelectedOption(value);
   };
   return (
     <div className="mt-6">

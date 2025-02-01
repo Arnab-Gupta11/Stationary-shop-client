@@ -50,7 +50,7 @@ const ProductCard = ({ product }: TProductProp) => {
   const price = formatPrice(product?.price);
   return (
     <div className="rounded-lg group product-card hover:shadow-md">
-      <div className="bg-[#F7F7F7] h-72 flex justify-center items-center relative  px-10 rounded-t-lg">
+      <div className="bg-[#f8fafa] h-72 flex justify-center items-center relative  px-10 rounded-t-lg">
         <img src={img1} alt="img1" className="object-contain h-full group-hover:scale-110 transition-all duration-1000" />
         <span className="bg-primary-bg text-xs font-semibold text-white px-2 py-0.5 absolute top-2 right-1 rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700">
           {product?.inStock ? "In Stock" : "Out Of Stock"}

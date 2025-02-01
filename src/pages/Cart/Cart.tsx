@@ -13,7 +13,7 @@ import {
   useCurrentUser,
 } from "@/redux/features/auth/authSlice";
 import { MdDelete, MdProductionQuantityLimits } from "react-icons/md";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import Section from "@/components/shared/Section";
 import { formatPrice } from "@/utils/formatePrice";
@@ -101,9 +101,7 @@ const CartPage = () => {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
+                  <Link to="/">Home</Link>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -218,7 +216,7 @@ const CartPage = () => {
                             </div>
                           </div>
 
-                          <Button type="submit" disabled={isLoading} className="w-full">
+                          <Button type="submit" disabled={isLoading || loginUser?.role === "admin"} className="w-full">
                             {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Order Now"}
                           </Button>
                           <Button type="button" variant={"outline"} className="w-full">

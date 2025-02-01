@@ -1,0 +1,20 @@
+.underline-small::after {
+  content: "";
+  height: 3.5px;
+  width: 60%;
+  background: #ff792e;
+  position: absolute;
+  left: 0px;
+  bottom: -5px;
+  border-radius: 6px;
+}
+.underline-small-right::after {
+  content: "";
+  height: 3.5px;
+  width: 60%;
+  background: #ff792e;
+  position: absolute;
+  right: 0px;
+  bottom: -5px;
+  border-radius: 6px;
+}

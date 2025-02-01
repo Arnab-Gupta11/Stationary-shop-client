@@ -44,6 +44,28 @@ const orderApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllOrdersOfAUser: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/orders/user-order",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["order"],
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
 
     // Update Ordered Status
     updateOrderStatus: builder.mutation({
@@ -57,4 +79,5 @@ const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateOrderMutation, useVerifyOrderQuery, useGetAllOrdersQuery, useUpdateOrderStatusMutation } = orderApi;
+export const { useCreateOrderMutation, useVerifyOrderQuery, useGetAllOrdersQuery, useUpdateOrderStatusMutation, useGetAllOrdersOfAUserQuery } =
+  orderApi;

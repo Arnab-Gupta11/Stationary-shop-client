@@ -37,7 +37,6 @@ const ManageProducts = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await deleteProduct({ id: _id }).unwrap();
-        console.log(res);
         if (res?.success === true) {
           Swal.fire("Your Product has been Deleted!", "success");
         }

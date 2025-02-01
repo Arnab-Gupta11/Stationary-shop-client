@@ -5,6 +5,8 @@ type TFilterByCategoryProps = {
 };
 const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps) => {
   const categories = ["Writing", "Office Supplies", "Art Supplies", "Educational", "Technology"];
+
+  //Update the query params.
   const handleCategoryChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
     if (input.checked) {
       const state: TFilterParams[] = [...queryParams, { name: "category", value: input.value }];
@@ -26,6 +28,7 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
               type="checkbox"
               id={item}
               value={item}
+              checked={queryParams.some((param) => param.name === "category" && param.value === item)}
               onChange={handleCategoryChange}
               className="peer relative h-3 w-3 rounded-sm shrink-0 appearance-none focus:outline-none bg-[#E3E3E3] checked:bg-primary-bg checkbox-icon"
             />

@@ -25,7 +25,7 @@ export interface IProduct {
   updatedAt: string;
 }
 
-interface OrderItem {
+export interface IOrderItem {
   product: IProduct;
   quantity: number;
   totalPrice: number;

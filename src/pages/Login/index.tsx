@@ -24,7 +24,6 @@ const LoginPage = () => {
   const [loginUser] = useLoginMutation(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [form] = useCustomForm(loginSchema, loginFormDefaultValue);
-  // console.log(form);
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       setIsLoading(true);
@@ -33,8 +32,6 @@ const LoginPage = () => {
         password: values.password,
       };
       const res = await loginUser(userInfo).unwrap();
-      console.log(res);
-      console.log(res.success);
       if (res?.success === true) {
         const user = verifyToken(res.data?.token) as TUser;
         dispatch(setUser({ user: user, token: res.data?.token }));

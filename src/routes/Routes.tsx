@@ -2,7 +2,7 @@ import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
 import RootLayout from "@/layouts/RootLayout";
 
 import AllProductsPage from "@/pages/AllProducts";
-import ProductDetails from "@/pages/AllProducts/ProductDetails";
+import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import CartPage from "@/pages/Cart/Cart";
 import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/Home";

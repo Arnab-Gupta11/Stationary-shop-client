@@ -11,6 +11,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
+import Review from "./Review";
 const ProductDetails = () => {
   const cartItems = useAppSelector(useCartItems);
   const dispatch = useAppDispatch();
@@ -77,22 +78,25 @@ const ProductDetails = () => {
               <span className="font-semibold text-slate-800">Brand:</span> {brand}
             </h4>
             <div className="border-t-2 border-[#f1f1f1] mt-5" />
-            <div className="mt-5 flex items-center gap-4">
-              <div className="flex w-32 border-[2px] items-center justify-around py-3 text-xl border-[#e5e5e5] rounded-lg">
+            <div className="mt-5 flex flex-col xsm:flex-row items-center gap-4">
+              <div className="flex w-full xsm:w-36 border-[2px] items-center justify-around py-3 text-xl border-[#e5e5e5] rounded-lg">
                 <Minus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-slate-700" onClick={handleReduceQuantity} />
                 <span className="font-medium text-slate-800 select-none">{productQuantity}</span>
                 <Plus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-slate-700" onClick={handleIncreaseQuantity} />
               </div>
-              <Button className="flex items-center justify-center gap-3 py-7 rounded-lg select-none" onClick={addProductToCart}>
-                <MdOutlineShoppingCart />
-                <span>Add To Cart</span>
-              </Button>
-              <Button className="py-7 rounded-lg group  bg-none border-[#e5e5e5] border-[2px] hover:bg-none hover:border-primary-bg duration-700 ">
-                <Heart size={234} className="text-[#d1c6c6] font-bold text-2xl group-hover:text-primary-bg duration-700" />
-              </Button>
+              <div className="flex items-center gap-4 w-full">
+                <Button className="flex xsm-mx:w-full items-center justify-center gap-3 py-7 rounded-lg select-none" onClick={addProductToCart}>
+                  <MdOutlineShoppingCart />
+                  <span>Add To Cart</span>
+                </Button>
+                <Button className="py-7 rounded-lg group  bg-none border-[#e5e5e5] border-[2px] hover:bg-none hover:border-primary-bg duration-700 ">
+                  <Heart size={234} className="text-[#d1c6c6] font-bold text-2xl group-hover:text-primary-bg duration-700" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
+        <Review />
       </Section>
     </div>
   );

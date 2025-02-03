@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
 import Review from "./Review";
+import StarRating from "./StarRating";
 const ProductDetails = () => {
   const cartItems = useAppSelector(useCartItems);
   const dispatch = useAppDispatch();
@@ -69,6 +70,10 @@ const ProductDetails = () => {
               )}
             </div>
             <h1 className="text-3xl font-bold text-slate-900 mt-2">{name}</h1>
+            <div className="flex items-center gap-2 flex-wrap mt-1">
+              <StarRating rating={rating} />
+              <span className="text-sm text-slate-600">({totalReviews} customer reviews)</span>
+            </div>
             <p className="text-xl font-semibold text-primary-bg mt-3">{formatPrice(price)}</p>
             <p className="text-slate-700 mt-5">{description}</p>
             <h4 className="text-slate-700 mt-2">

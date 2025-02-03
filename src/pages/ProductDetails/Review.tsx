@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ReviewChart from "./ReviewChart";
 import StarRating from "./StarRating";
 import ReviewForm from "./ReviewForm";
@@ -6,7 +7,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { formateDateTime } from "@/utils/formateDateTime";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
-import { useGetAllReviewsQuery } from "@/redux/features/review/review.api";
+import { useDeleteReviewMutation, useGetAllReviewsQuery } from "@/redux/features/review/review.api";
 import { useParams } from "react-router-dom";
 import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
@@ -14,6 +15,7 @@ import { TReview } from "@/types/review.types";
 import Loader from "@/components/shared/Loader";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import UpdateReviewForm from "./UpdateReviewForm";
+import Swal from "sweetalert2";
 
 const Review = ({ totalRating, totalReviews }: { totalRating: number; totalReviews: number }) => {
   const { id } = useParams();
@@ -27,6 +29,31 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
     yourReview = reviewData.data.find((review: TReview) => review?.user?._id === user?.userId) || null;
     publicReviews = reviewData.data.filter((review: TReview) => review?.user?._id !== user?.userId) || [];
   }
+
+  const [deleteReview] = useDeleteReviewMutation(undefined);
+
+  const handleDelete = (_id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deleteReview({ id: _id }).unwrap();
+          if (res?.success) {
+            Swal.fire("Deleted!", "Your review has been successfully deleted.", "success");
+          }
+        } catch (error) {
+          Swal.fire("Error!", "Failed to delete review. Please try again later.", "error");
+        }
+      }
+    });
+  };
 
   return (
     <div>
@@ -81,7 +108,13 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
                               </DialogContent>
                             </Dialog>
 
-                            <MdDeleteOutline size={20} />
+                            <MdDeleteOutline
+                              onClick={() => {
+                                handleDelete(yourReview?._id);
+                              }}
+                              size={20}
+                              className="hover:scale-110 active:scale-95 hover:text-primary-bg hover:cursor-pointer duration-700"
+                            />
                           </div>
                         </div>
                       </div>
@@ -95,7 +128,7 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
                   reviewData.data.map((item: TReview) => <ReviewCard item={item} key={item._id} />)
                 ) : (
                   <div className="min-h-[calc(100vh-200px)] flex items-center justify-center">
-                    <span className="text-slate-500 font-semibold text-xl sm:text-2xl">No reviews yet. Be the first to write one!</span>
+                    <span className="text-slate-500 font-semibold text-lg sm:text-2xl text-center">No reviews yet. Be the first to write one!</span>
                   </div>
                 )}
               </>
@@ -104,7 +137,7 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
         </div>
 
         <div className="md:col-span-5 bs:col-span-4 xl:col-span-3 border border-[#f1f1f1] rounded-lg p-3 order-1 md:order-2">
-          <h1 className="text-2xl font-semibold border-b border-[#f1f1f1] pb-2">Review Summary</h1>
+          <h1 className="terxt-2xl font-semibold border-b border-[#f1f1f1] pb-2">Review Summary</h1>
           <div className="border border-gray-200 mt-3 flex items-center gap-3 rounded-lg p-3 shadow-md">
             <h1 className="text-6xl font-bold text-primary-text">{totalRating || 0}</h1>
             <div>

@@ -47,7 +47,7 @@ const reviewManagementApi = baseApi.injectEndpoints({
     updateReview: builder.mutation({
       query: (args) => ({
         url: `/review/${args.id}`,
-        method: "PUT",
+        method: "PATCH",
         body: args.data,
       }),
       invalidatesTags: ["review"],

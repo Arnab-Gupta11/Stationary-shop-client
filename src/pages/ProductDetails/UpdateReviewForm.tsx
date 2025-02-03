@@ -3,21 +3,20 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
-import { useAppSelector } from "@/redux/hooks";
-import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { BiLoaderCircle } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { useAddNewReviewMutation } from "@/redux/features/review/review.api";
+import { useUpdateReviewMutation } from "@/redux/features/review/review.api";
 import { TReview } from "@/types/review.types";
+import { useNavigate } from "react-router-dom";
 
-const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: TReview | null }) => {
-  const loginUser = useAppSelector(useCurrentUser);
-  const [createReview] = useAddNewReviewMutation(undefined);
-  const [rating, setRating] = useState(0);
+const UpdateReviewForm = ({ yourReview }: { yourReview: TReview | null }) => {
+  const [updateReview] = useUpdateReviewMutation(undefined);
+  const [rating, setRating] = useState(yourReview?.rating as number);
   const [hoverRating, setHoverRating] = useState(0);
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(yourReview?.review as string);
   const [errors, setErrors] = useState({ rating: "", review: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Handle Star Click
   const handleStarClick = (star: number) => {
@@ -48,19 +47,16 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
       setErrors(formErrors);
       return;
     }
-    const reviewData = {
-      product: productId,
+    const updatedReviewData = {
       rating: rating,
       review: review,
     };
     try {
       setLoading(true);
-      const res = await createReview(reviewData).unwrap();
+      const res = await updateReview({ id: yourReview?._id, data: updatedReviewData }).unwrap();
       if (res?.success === true) {
         toast.success(res?.message);
-        // Reset form
-        setRating(0);
-        setReview("");
+        navigate(`/products/${yourReview?.product}`);
       }
     } catch (err: any) {
       toast.error("We couldn't submit your review. Please check your connection and try again.");
@@ -70,8 +66,8 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
   };
 
   return (
-    <div className="mt-3">
-      <h1 className="terxt-2xl font-semibold border-b border-[#f1f1f1] pb-2">Leave a Review</h1>
+    <div className="mt-2">
+      {/* <h1 className="terxt-2xl font-semibold border-b border-[#f1f1f1] pb-2">Update Your Review</h1> */}
 
       <div className="border border-gray-200 mt-3 rounded-lg p-3">
         <form onSubmit={handleSubmit}>
@@ -100,12 +96,8 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
           {errors.review && <p className="text-red-500 text-sm">{errors.review}</p>}
 
           {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={loading || loginUser?.role === "admin" || loginUser?.role !== "user" || yourReview?.user?._id === loginUser?.userId}
-            className="w-full"
-          >
-            {loading ? <BiLoaderCircle className="animate-spin" /> : "Submit Review"}
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading ? <BiLoaderCircle className="animate-spin" /> : "Update Review"}
           </Button>
         </form>
       </div>
@@ -113,4 +105,4 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
   );
 };
 
-export default ReviewForm;
+export default UpdateReviewForm;

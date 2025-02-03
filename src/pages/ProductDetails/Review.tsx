@@ -12,6 +12,8 @@ import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { TReview } from "@/types/review.types";
 import Loader from "@/components/shared/Loader";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import UpdateReviewForm from "./UpdateReviewForm";
 
 const Review = ({ totalRating, totalReviews }: { totalRating: number; totalReviews: number }) => {
   const { id } = useParams();
@@ -61,7 +63,24 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
                         <div className="flex items-start justify-between flex-wrap gap-4">
                           <p className="text-sm sm:text-base mt-4 text-slate-700">{yourReview?.review}</p>
                           <div className="flex items-center gap-3">
-                            <CiEdit size={20} />
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <CiEdit
+                                  size={20}
+                                  className="hover:scale-110 active:scale-95 hover:text-primary-bg hover:cursor-pointer duration-700"
+                                />
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px] bg-white">
+                                <DialogHeader>
+                                  <DialogTitle className="text-lg font-semibold text-slate-900">Update Your Review.</DialogTitle>
+                                  <DialogDescription className="text-sm font-medium text-slate-600">
+                                    Edit your review and share your updated thoughts.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <UpdateReviewForm yourReview={yourReview} />
+                              </DialogContent>
+                            </Dialog>
+
                             <MdDeleteOutline size={20} />
                           </div>
                         </div>
@@ -94,7 +113,7 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
             </div>
           </div>
           <ReviewChart review={reviewData?.data} />
-          {yourReview ? "" : <ReviewForm productId={id as string} />}
+          <ReviewForm productId={id as string} yourReview={yourReview} />
         </div>
       </div>
     </div>

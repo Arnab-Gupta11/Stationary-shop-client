@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
+import { BiLoaderCircle } from "react-icons/bi";
+import toast from "react-hot-toast";
+import { useAddNewReviewMutation } from "@/redux/features/review/review.api";
 
-const ReviewForm = () => {
+const ReviewForm = ({ productId }: { productId: string }) => {
+  const loginUser = useAppSelector(useCurrentUser);
+  const [createReview] = useAddNewReviewMutation(undefined);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [review, setReview] = useState("");
   const [errors, setErrors] = useState({ rating: "", review: "" });
+  const [loading, setLoading] = useState(false);
 
   // Handle Star Click
   const handleStarClick = (star: number) => {
@@ -25,8 +35,9 @@ const ReviewForm = () => {
   };
 
   // Handle Form Submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const formErrors = { rating: "", review: "" };
 
     if (rating === 0) formErrors.rating = "Rating is required.";
@@ -36,13 +47,25 @@ const ReviewForm = () => {
       setErrors(formErrors);
       return;
     }
-
-    // If no errors, submit the data
-    console.log("Submitted Data:", { rating, review });
-
-    // Reset form
-    setRating(0);
-    setReview("");
+    const reviewData = {
+      product: productId,
+      rating: rating,
+      review: review,
+    };
+    try {
+      setLoading(true);
+      const res = await createReview(reviewData).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+        // Reset form
+        setRating(0);
+        setReview("");
+      }
+    } catch (err: any) {
+      toast.error("We couldn't submit your review. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,8 +99,8 @@ const ReviewForm = () => {
           {errors.review && <p className="text-red-500 text-sm">{errors.review}</p>}
 
           {/* Submit Button */}
-          <Button type="submit" className="mt-4 w-full">
-            Submit Review
+          <Button type="submit" disabled={loading || loginUser?.role === "admin" || loginUser?.role !== "user"} className="w-full">
+            {loading ? <BiLoaderCircle className="animate-spin" /> : "Submit Review"}
           </Button>
         </form>
       </div>

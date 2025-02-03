@@ -10,4 +10,7 @@ export type TProduct = {
   image: string;
   createdAt: string;
   updatedAt: string;
+  rating: number;
+  totalReviews: number;
+  totalRating: number;
 };

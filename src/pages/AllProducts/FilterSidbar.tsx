@@ -24,11 +24,6 @@ const FilterSidbar = ({ queryParams, setQuerParams, initialMinPrice = 0, initial
           <SheetDescription>
             <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
               <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
-              {/* {queryParams.length > 0 && (
-                <Button variant={"primary"} onClick={() => setQuerParams([])}>
-                  Clear Filter
-                </Button>
-              )} */}
             </div>
             <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
             <PriceFilter

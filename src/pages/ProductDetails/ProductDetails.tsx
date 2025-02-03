@@ -22,7 +22,7 @@ const ProductDetails = () => {
   if (isLoading) {
     return <Loader />;
   }
-  const { _id, brand, category, description, inStock, name, price, quantity, image } = productData?.data as TProduct;
+  const { _id, brand, category, description, inStock, name, price, quantity, image, rating, totalReviews } = productData?.data as TProduct;
 
   const handleReduceQuantity = () => {
     if (productQuantity > 1) {
@@ -96,7 +96,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-        <Review />
+        <Review totalRating={rating} totalReviews={totalReviews} />
       </Section>
     </div>
   );

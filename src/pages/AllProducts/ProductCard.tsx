@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { FaRegHeart } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
 import { MdOutlineShoppingCart } from "react-icons/md";
-// import img1 from "../../../public/images/banner/banner1.png";
 import { TProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
 import toast from "react-hot-toast";
+import StarRating from "../ProductDetails/StarRating";
 type TProductProp = {
   product: TProduct;
 };
@@ -68,12 +68,13 @@ const ProductCard = ({ product }: TProductProp) => {
         </div>
       </div>
       <div className="p-2.5">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold text-slate-600 text-sm">{product?.brand}</span>
+        <div className="flex items-center justify-between flex-wrap">
+          <StarRating rating={product?.rating} starSize={12} />
+          <h4 className="font-medium text-slate-700 group-hover:text-primary-bg">{price}</h4>
         </div>
         <h1 className="text-lg font-semibold text-slate-800">{product?.name}</h1>
-        <div className="flex items-start justify-between mt-2">
-          <h4 className="font-medium text-slate-700 group-hover:text-primary-bg">{price}</h4>
+        <div className="flex items-start justify-between mt-2 flex-wrap">
+          <span className="font-semibold text-slate-600 text-sm">{product?.brand}</span>
           <Link to={`/products/${product?._id}`}>
             <Button className="group flex items-center gap-1 py-1 text-xs opacity-0 group-hover:opacity-100 translate-y-2 group-hover:-translate-y-1 transition-all duration-700">
               <span>View</span>

@@ -32,21 +32,21 @@ const WhatWeOffer = () => {
     <div className="bg-primary-bg-light pt-20 pb-24">
       <Section>
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-3 text-slate-900">
+          <h1 className="text-base xsm:text-lg md:text-2xl font-bold mb-3 text-slate-900">
             What We <span className="text-primary-bg">Offer</span>
           </h1>
-          <p className="text-base font-medium text-slate-700 mb-10">Making shopping simple, secure, and stress-free.</p>
+          <p className="text-xs xsm:text-sm md:text-base font-medium text-slate-700 mb-10">Making shopping simple, secure, and stress-free.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {offers.map((item) => {
             return (
               <div key={item.title} className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-lg py-6 px-8 bg-white">
-                <div>
-                  <img src={item.logo} alt={item.title} />
+                <div className="flex-shrink-0">
+                  <img src={item.logo} alt={item.title} className="w-10 h-10" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-slate-800">{item.title}</h1>
-                  <p className="text-base text-slate-600 font-medium">{item.description}</p>
+                  <h1 className="text-base font-bold text-slate-800">{item.title}</h1>
+                  <p className="text-sm text-slate-600 font-medium">{item.description}</p>
                 </div>
               </div>
             );

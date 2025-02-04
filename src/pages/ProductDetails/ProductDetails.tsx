@@ -71,7 +71,7 @@ const ProductDetails = () => {
             </div>
             <h1 className="text-3xl font-bold text-slate-900 mt-2">{name}</h1>
             <div className="flex items-center gap-2 flex-wrap mt-1">
-              <StarRating rating={rating} />
+              <StarRating rating={rating} starSize={15}/>
               <span className="text-sm text-slate-600">({totalReviews} customer reviews)</span>
             </div>
             <p className="text-xl font-semibold text-primary-bg mt-3">{formatPrice(price)}</p>

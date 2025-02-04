@@ -15,7 +15,7 @@ const ReviewCard = ({ item }: { item: TReview }) => {
               <h1 className="text-lg sm:text-xl font-semibold text-slate-900">{item?.user?.fullName}</h1>
               <span className="text-xs sm:text-sm font-medium text-slate-500">{formateDateTime(item?.updatedAt)}</span>
             </div>
-            <StarRating rating={item?.rating} />
+            <StarRating rating={item?.rating} starSize={15}/>
           </div>
           <div>
             <p className="text-sm sm:text-base mt-4 text-slate-700">{item?.review}</p>

@@ -85,7 +85,7 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
                             <h1 className="text-lg sm:text-xl font-semibold text-slate-900">{yourReview?.user?.fullName}</h1>
                             <span className="text-xs sm:text-sm font-medium text-slate-500">{formateDateTime(yourReview?.updatedAt)}</span>
                           </div>
-                          <StarRating rating={yourReview?.rating} />
+                          <StarRating rating={yourReview?.rating} starSize={15}/>
                         </div>
                         <div className="flex items-start justify-between flex-wrap gap-4">
                           <p className="text-sm sm:text-base mt-4 text-slate-700">{yourReview?.review}</p>
@@ -141,7 +141,7 @@ const Review = ({ totalRating, totalReviews }: { totalRating: number; totalRevie
           <div className="border border-gray-200 mt-3 flex items-center gap-3 rounded-lg p-3 shadow-md">
             <h1 className="text-6xl font-bold text-primary-text">{totalRating || 0}</h1>
             <div>
-              <StarRating rating={totalRating || 0} />
+              <StarRating rating={totalRating || 0} starSize={15}/>
               <span className="text-sm text-slate-700 font-medium">Based on {totalReviews || 0} reviews</span>
             </div>
           </div>

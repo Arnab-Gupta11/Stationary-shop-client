@@ -11,9 +11,6 @@ const orderApi = baseApi.injectEndpoints({
         body: userInfo,
       }),
     }),
-    // getOrders: builder.query({
-    //   query: () => "/order",
-    // }),
     verifyOrder: builder.query({
       query: (order_id) => ({
         url: "/orders/verify",

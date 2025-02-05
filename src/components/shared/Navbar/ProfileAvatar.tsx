@@ -28,7 +28,6 @@ const ProfileAvatar = () => {
             <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
             <AvatarFallback>DP</AvatarFallback>
           </Avatar>
-          <div></div>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           side="bottom"

@@ -48,16 +48,15 @@ export default function DashboardLayout() {
         } lg:translate-x-0 lg:fixed`}
       >
         <div className="flex items-center justify-between p-4 b">
-          <h1 className="text-xl font-semibold">
-            <h1 className="text-black text-2xl font-bold ml-2">
-              Note<span className="text-primary-bg">fy</span>
-            </h1>
+          <h1 className="text-black text-2xl font-bold ml-2">
+            Note<span className="text-primary-bg">fy</span>
           </h1>
+
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X className="w-6 h-6" />
           </Button>
         </div>
-        <nav className="flex flex-col p-4 space-y-3">
+        <nav className="flex flex-col p-4 space-y-1.5">
           {menuItems.map((menuItem, idx) =>
             menuItem.show ? (
               <NavLink
@@ -77,14 +76,14 @@ export default function DashboardLayout() {
         {/* Navbar */}
         <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-4 bg-white shadow-md">
           <div>
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(true)}>
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
             </Button>
-            <h2 className="text-lg font-semibold">Welcome</h2>
+            {/* <h2 className="text-lg font-semibold">Welcome</h2> */}
           </div>
-          <div className="flex items-center gap-5 pr-5">
-            <Link to={"/"}>
-              <BiHome className="text-2xl text-slate-800 hover:scale-105 hover:cursor-pointer" />
+          <div className="flex items-center pl-5">
+            <Link className="pr-5" to={"/"}>
+              <BiHome className="text-xl text-slate-800 hover:scale-105 hover:cursor-pointer" />
             </Link>
             <CartIcon />
             <ProfileAvatar />
@@ -92,7 +91,7 @@ export default function DashboardLayout() {
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 p-6 bg-gray-100">
+        <main className="flex-1 p-6 bg-gray-100 rounded-lg">
           <div className="p-4 bg-white rounded-lg shadow-md">
             <Outlet />
           </div>

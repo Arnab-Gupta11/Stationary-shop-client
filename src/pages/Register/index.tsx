@@ -62,7 +62,7 @@ const RegisterPage = () => {
                 inputType={"password"}
                 placeholder={"Confirm your password"}
               />
-              <Button className="w-full mt-8" type="submit">
+              <Button type="submit" disabled={isLoading} className=" w-full mt-8">
                 {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign Up"}
               </Button>
             </CustomForm>

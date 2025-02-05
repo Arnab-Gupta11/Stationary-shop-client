@@ -41,7 +41,7 @@ interface User {
 export interface IOrder {
   transaction: ITransaction;
   _id: string;
-  products: OrderItem[];
+  products: IOrderItem[];
   totalOrderPrice: number;
   user: User;
   status: OrderStatus;

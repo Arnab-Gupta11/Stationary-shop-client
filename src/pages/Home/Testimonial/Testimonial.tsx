@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { A11y, Navigation, Pagination } from "swiper/modules";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import testimonialsData from "@/data/testimonial.data";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useRef, useState } from "react";
@@ -86,6 +86,10 @@ const Testimonial = () => {
             slidesPerView={1}
             spaceBetween={0}
             className="mySwiper"
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
             onSwiper={(swiper) => (SlideRef.current = swiper)}
             onSlideChange={onSlideChange}
             pagination={{
@@ -93,7 +97,7 @@ const Testimonial = () => {
               type: "fraction",
             }}
             navigation={false}
-            modules={[Pagination, Navigation, A11y]}
+            modules={[Pagination, Navigation, A11y, Autoplay]}
             breakpoints={{
               0: { slidesPerView: 1 },
               390: { slidesPerView: 1.2 },
@@ -104,7 +108,7 @@ const Testimonial = () => {
             }}
           >
             {testimonialsData?.map((item) => (
-              <SwiperSlide className="z-10 h-auto py-14 pr-5" key={item.id}>
+              <SwiperSlide className="z-10 h-auto py-14 px-2.5" key={item.id}>
                 <TestimonialCard key={item.id} item={item} />
               </SwiperSlide>
             ))}

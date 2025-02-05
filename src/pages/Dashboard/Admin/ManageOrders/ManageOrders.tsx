@@ -9,6 +9,9 @@ import { IOrder } from "@/types/order.type";
 import { formatMongoDateToDate } from "@/utils/formateDate";
 import { formatPrice } from "@/utils/formatePrice";
 import toast from "react-hot-toast";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { FiMoreVertical } from "react-icons/fi";
+import OrderDetails from "../../User/ViewOrders/OrderDetails";
 const ManageOrders = () => {
   const [page, setPage] = useState(1);
   const [updateStatus] = useUpdateOrderStatusMutation(undefined);
@@ -41,20 +44,20 @@ const ManageOrders = () => {
                 <th className="px-4 py-2 text-left border w-32 border-[#f1f1f1]">Order</th>
                 <th className="px-4 py-2 text-left border border-[#f1f1f1]">Date</th>
                 <th className="px-4 py-2 text-left border border-[#f1f1f1]">Customer</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Payment Status</th>
+                <th className="px-4 py-2 text-left w-20 border border-[#f1f1f1]">Payment Status</th>
                 <th className="px-4 py-2 text-left border border-[#f1f1f1]">Total</th>
                 <th className="px-4 py-2 text-left border border-[#f1f1f1]">Items</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Order Status</th>
+                <th className="px-4 py-2 text-left w-20 border border-[#f1f1f1]">Order Status</th>
                 <th className="px-4 py-2 text-left border border-[#f1f1f1]">Action</th>
               </tr>
             </thead>
             <tbody>
               {orderData?.data?.result?.map((item: IOrder) => (
                 <tr key={item?._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border w-32 border-[#f1f1f1]">{item?._id}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{formatMongoDateToDate(item?.createdAt)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.user?.fullName}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">
+                  <td className="px-4 py-2 border w-32 border-[#f1f1f1] text-sm">{item?._id}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatMongoDateToDate(item?.createdAt)}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.user?.fullName}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
                     <span
                       className={`px-2 py-1 rounded-md
                           ${
@@ -70,9 +73,9 @@ const ManageOrders = () => {
                       {item?.paymentStatus}
                     </span>
                   </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{formatPrice(item?.totalOrderPrice)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.products?.length}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatPrice(item?.totalOrderPrice)}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.products?.length}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
                     {
                       <span
                         className={`px-2 py-1 rounded-md
@@ -88,17 +91,25 @@ const ManageOrders = () => {
                       </span>
                     }
                   </td>
-                  <td className="px-4 py-2 border w-20 border-[#f1f1f1]">
-                    <Button
-                      onClick={() => {
-                        handleUpdateOrderStatus(item?._id);
-                      }}
-                      type="submit"
-                      disabled={item?.status === "Shipping"}
-                      className="sm-mx:w-full"
-                    >
-                      {item?.status === "Shipping" ? "Approved" : "Approve"}
-                    </Button>
+                  <td className="px-4 py-2 border-b border-[#f1f1f1] ">
+                    <div className="flex items-center justify-center gap-3">
+                      <Button
+                        onClick={() => {
+                          handleUpdateOrderStatus(item?._id);
+                        }}
+                        type="submit"
+                        disabled={item?.status === "Shipping"}
+                        className="sm-mx:w-full"
+                      >
+                        {item?.status === "Shipping" ? "Approved" : "Approve"}
+                      </Button>
+                      <Dialog>
+                        <DialogTrigger>
+                          <FiMoreVertical className="mx-auto hover:scale-110 hover:cursor-pointer" size={18} />
+                        </DialogTrigger>
+                        <OrderDetails productDetails={item?.products} />
+                      </Dialog>
+                    </div>
                   </td>
                 </tr>
               ))}

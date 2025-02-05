@@ -34,7 +34,7 @@ const productManagementApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["review"],
+      providesTags: ["review", "product"],
     }),
 
     // Add new Product

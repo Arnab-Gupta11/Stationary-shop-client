@@ -21,7 +21,7 @@ export default {
       "md-mx": { max: "767px" },
       "sm-mx": { max: "639px" },
       "xs-mx": { max: "475px" },
-      "xsm-mx": { max: "349px" },
+      "xsm-mx": { max: "359px" },
     },
     fontFamily: {
       sora: ["Sora", "serif"],

@@ -46,11 +46,11 @@ const ManageUsers = () => {
                   <td className="px-4 py-2 border w-32 border-[#f1f1f1]">
                     <img src={item?.profilePicture} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
                   </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.fullName}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.email}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.fullName}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.email}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
                     <span
-                      className={`px-2 py-1 rounded-md
+                      className={`px-2 py-1 rounded-md text-sm
                           ${
                             item?.isBlocked === true
                               ? "bg-[#FDEEEF] text-[#ff6a62] border border-[#f5f4f4]"

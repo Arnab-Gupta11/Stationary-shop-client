@@ -59,7 +59,7 @@ const LoginPage = () => {
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
 
-              <Button type="submit" className="w-full mt-8">
+              <Button type="submit" disabled={isLoading} className=" w-full mt-8">
                 {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign In"}
               </Button>
             </CustomForm>

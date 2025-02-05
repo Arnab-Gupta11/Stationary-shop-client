@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import { BsThreeDots } from "react-icons/bs";
 import { TProduct } from "@/types/product.types";
-import img from "../../../../../public/images/banner/banner3.png";
 import { formatPrice } from "@/utils/formatePrice";
 import Loader from "@/components/shared/Loader";
 import React, { useState } from "react";
@@ -16,7 +16,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/compon
 const ManageProducts = () => {
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState<string>("");
-  const { data: productData, isLoading } = useGetAllProductsQuery([
+  const {
+    data: productData,
+    isLoading,
+    isFetching,
+  } = useGetAllProductsQuery([
     { name: "page", value: page },
     { name: "searchTerm", value: searchValue },
   ]);
@@ -36,9 +40,13 @@ const ManageProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await deleteProduct({ id: _id }).unwrap();
-        if (res?.success === true) {
-          Swal.fire("Your Product has been Deleted!", "success");
+        try {
+          const res = await deleteProduct({ id: _id }).unwrap();
+          if (res?.success === true) {
+            Swal.fire("Your Product has been Deleted!", "success");
+          }
+        } catch (error) {
+          Swal.fire("Error!", "Failed to delete review. Please try again later.", "error");
         }
       }
     });
@@ -64,11 +72,11 @@ const ManageProducts = () => {
           </Button>
         </Link>
       </div>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Loader />
       ) : (
         <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
-          <table className="w-full bg-white border border-[#f1f1f1] mb-5">
+          <table className="w-full bg-white border border-[#f1f1f1] mb-5 select-none -z-10">
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-4 py-2 text-left border w-32 border-[#f1f1f1]">Image</th>
@@ -83,16 +91,18 @@ const ManageProducts = () => {
               {productData?.data?.map((item: TProduct) => (
                 <tr key={item?._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border w-32 border-[#f1f1f1]">
-                    <img src={img} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
+                    <img src={item?.image} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
                   </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.name}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{item?.category}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">{formatPrice(item?.price)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1]">
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.name}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.category}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatPrice(item?.price)}</td>
+                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
                     {item?.inStock ? (
-                      <span className="bg-[#e8fbe6] text-green-900 px-2 py-0.5 text-sm font-semibold rounded-md">In Stock</span>
+                      <span className="bg-[#e8fbe6] text-green-600 border border-[#f5f4f4] px-2 py-1 text-sm font-base rounded-md">In Stock</span>
                     ) : (
-                      <span className="bg-[#FBE6EC] text-primary-bg px-2 py-0.5 text-sm font-semibold rounded-md">Out of Stock</span>
+                      <span className="bg-[#FBE6EC] text-primary-bg px-2 text-sm font-semibold rounded-md border border-[#f5f4f4] py-1">
+                        Out of Stock
+                      </span>
                     )}
                   </td>
                   <td className="px-4 py-2 border w-20 border-[#f1f1f1]">

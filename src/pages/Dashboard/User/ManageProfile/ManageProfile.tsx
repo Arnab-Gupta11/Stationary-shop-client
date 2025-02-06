@@ -70,7 +70,7 @@ const AddNewProduct = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-start gap-8 md:px-14 rounded-md pb-10">
-          <div className="w-full sm:w-56 h-full">
+          <div className="w-full sm:w-56 h-full p-3 bg-[#f8fafa] rounded-lg mt-2">
             <Avatar className="w-full xsm:w-48 h-48 rounded-lg">
               <AvatarImage src={loginUser ? loginUser?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
               <AvatarFallback>DP</AvatarFallback>

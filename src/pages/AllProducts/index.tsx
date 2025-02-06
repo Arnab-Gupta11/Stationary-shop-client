@@ -53,7 +53,7 @@ const AllProductsPage = () => {
 
   return (
     <>
-      <PageHeader>
+      <PageHeader title="All Products">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

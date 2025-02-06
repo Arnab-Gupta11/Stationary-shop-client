@@ -8,6 +8,7 @@ import CartIcon from "./CartIcon";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { Button } from "@/components/ui/button";
+import Logo from "../Logo";
 
 const Navbar = () => {
   const location = useLocation();
@@ -33,9 +34,10 @@ const Navbar = () => {
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
           <div className="hidden xs:flex">
-            <h1 className="text-black text-2xl font-bold">
+            {/* <h1 className="text-black text-2xl font-bold">
               Note<span className="text-primary-bg">fy</span>
-            </h1>
+            </h1> */}
+            <Logo />
           </div>
         </div>
         <div className="flex gap-5 items-center">
@@ -46,7 +48,9 @@ const Navbar = () => {
                   key={idx}
                   to={menuItem.path}
                   className={({ isActive }) =>
-                    isActive ? "border-b-[3px] border-primary-text  text-slate-900 font-medium" : " py-2 text-slate-800 font-medium"
+                    isActive
+                      ? "border-b-[3px] border-primary-text  text-slate-900 font-medium"
+                      : " text-slate-800 font-medium hover:text-primary-bg ease-in-outs duration-700"
                   }
                 >
                   <NavItem label={menuItem.label} active={true} />

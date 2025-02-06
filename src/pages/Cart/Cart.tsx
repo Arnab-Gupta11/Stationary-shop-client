@@ -102,7 +102,7 @@ const CartPage = () => {
 
   return (
     <>
-      <PageHeader>
+      <PageHeader title="Shopping Cart">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -241,7 +241,7 @@ const CartPage = () => {
                             {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Order Now"}
                           </Button>
                           <Button type="button" variant={"outline"} className="w-full">
-                            Proceed to Checkout
+                            <Link to={"/shop?page=1"}>Continue Shopping</Link>
                           </Button>
                         </div>
                       </CustomForm>

@@ -7,17 +7,20 @@ import { IOrder, IOrderItem } from "@/types/order.type";
 import { formatMongoDateToDate } from "@/utils/formateDate";
 import { formatPrice } from "@/utils/formatePrice";
 import { useState } from "react";
-import { FiMoreHorizontal } from "react-icons/fi";
 import OrderDetails from "./OrderDetails";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BsThreeDots } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const ViewOrders = () => {
   const [page, setPage] = useState(1);
-  const { data: orderData, isLoading } = useGetAllOrdersOfAUserQuery([]);
+  const { data: orderData, isLoading, isFetching } = useGetAllOrdersOfAUserQuery([{ name: "page", value: page }]);
+  console.log(orderData?.data?.result[0]?.transaction?.id);
 
   return (
     <div>
       <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Loader />
       ) : (
         <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
@@ -86,12 +89,25 @@ const ViewOrders = () => {
                     }
                   </td>
                   <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
-                    <Dialog>
-                      <DialogTrigger>
-                        <FiMoreHorizontal className="mx-auto hover:scale-110 hover:cursor-pointer" size={18} />
-                      </DialogTrigger>
-                      <OrderDetails productDetails={item?.products} />
-                    </Dialog>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
+                        <BsThreeDots className="mt-2" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        side="bottom"
+                        className="bg-white border-none shadow-md shadow-secondary-bg-light outline-none p-2 flex flex-col gap-2"
+                      >
+                        <Dialog>
+                          <DialogTrigger>
+                            <span className="hover:text-slate-700">Product Details</span>
+                          </DialogTrigger>
+                          <OrderDetails productDetails={item?.products} />
+                        </Dialog>
+                        <Link to={`/order/verification/?order_id=${item?.transaction?.id}`}>
+                          <span className="ml-0.5 hover:text-slate-700">Order Details</span>
+                        </Link>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </td>
                 </tr>
               ))}

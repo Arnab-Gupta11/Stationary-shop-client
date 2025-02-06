@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const FeaturedProducts = () => {
   const { data: productData } = useGetAllProductsQuery([{ name: "limit", value: 8 }]);
   return (
-    <div className="pt-20 pb-24">
+    <div className="pt-20 ">
       <Section>
         <div className="text-center">
           <h1 className="text-base xsm:text-lg md:text-2xl font-bold mb-3 text-slate-900">

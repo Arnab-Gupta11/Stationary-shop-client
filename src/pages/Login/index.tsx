@@ -3,6 +3,7 @@
 import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
 import CustomPassword from "@/components/form/CustomPassword";
+import Logo from "@/components/shared/Logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import useCustomForm from "@/hooks/useCustomForm";
@@ -51,10 +52,12 @@ const LoginPage = () => {
       <div className="grid place-items-center py-10 lg:py-28 mx-5 md:mx-0 ">
         <Card className="bg-white shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
           <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
-            <CardTitle className="mx-auto">Logo</CardTitle>
+            <CardTitle className="mx-auto">
+              <Logo />
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <h1 className="mt-5 text-2xl font-bold text-slate-800 text-center">Welcome back</h1>
+            <h1 className="mt-5 text-lg sm:text-xl font-bold text-slate-800 text-center">Welcome back</h1>
             <CustomForm onSubmit={onSubmit} form={form}>
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />

@@ -15,7 +15,7 @@ import OrderDetails from "../../User/ViewOrders/OrderDetails";
 const ManageOrders = () => {
   const [page, setPage] = useState(1);
   const [updateStatus] = useUpdateOrderStatusMutation(undefined);
-  const { data: orderData, isLoading } = useGetAllOrdersQuery([{ name: "page", value: page }]);
+  const { data: orderData, isLoading, isFetching } = useGetAllOrdersQuery([{ name: "page", value: page }]);
 
   const handleUpdateOrderStatus = async (_id: string) => {
     try {
@@ -34,7 +34,7 @@ const ManageOrders = () => {
   return (
     <div>
       <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Loader />
       ) : (
         <div className="overflow-x-auto rounded-lg shadow-sm pb-10">

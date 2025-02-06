@@ -5,9 +5,13 @@ import { Button } from "@/components/ui/button";
 
 import toast from "react-hot-toast";
 import { useGetAllUsersQuery, useUpdateUserStatusMutation } from "@/redux/features/user/user.api";
+import { PaginationProduct } from "@/pages/AllProducts/Pagination";
+import { TMeta } from "@/types/global";
+import { useState } from "react";
 const ManageUsers = () => {
+  const [page, setPage] = useState(1);
   const [updateStatus] = useUpdateUserStatusMutation(undefined);
-  const { data: userData, isLoading } = useGetAllUsersQuery(undefined);
+  const { data: userData, isLoading, isFetching } = useGetAllUsersQuery([{ name: "page", value: page }]);
 
   const handleUpdateUserStatus = async (_id: string, staues: boolean) => {
     try {
@@ -26,7 +30,7 @@ const ManageUsers = () => {
   return (
     <div>
       <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Loader />
       ) : (
         <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
@@ -41,7 +45,7 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {userData?.data?.map((item: any) => (
+              {userData?.data?.result?.map((item: any) => (
                 <tr key={item?._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border w-32 border-[#f1f1f1]">
                     <img src={item?.profilePicture} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
@@ -76,6 +80,7 @@ const ManageUsers = () => {
               ))}
             </tbody>
           </table>
+          <PaginationProduct meta={userData?.data?.meta as TMeta} page={page} setPage={setPage} />
         </div>
       )}
     </div>

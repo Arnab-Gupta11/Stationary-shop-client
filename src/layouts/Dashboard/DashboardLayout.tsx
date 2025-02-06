@@ -7,7 +7,8 @@ import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import CartIcon from "@/components/shared/Navbar/CartIcon";
 import ProfileAvatar from "@/components/shared/Navbar/ProfileAvatar";
 import { BiHome } from "react-icons/bi";
-
+import { FaBox, FaShoppingCart, FaUsers, FaClipboardList, FaUser } from "react-icons/fa";
+import Logo from "@/components/shared/Logo";
 export default function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = useAppSelector(useCurrentUser);
@@ -16,26 +17,31 @@ export default function DashboardLayout() {
       label: "Manage Products",
       path: "/dashboard/manage-products",
       show: user?.role === "admin",
+      Icon: FaBox,
     },
     {
       label: "Manage Orders",
       path: "/dashboard/manage-orders",
       show: user?.role === "admin",
+      Icon: FaShoppingCart,
     },
     {
       label: "Manage Users",
       path: "/dashboard/manage-users",
       show: user?.role === "admin",
+      Icon: FaUsers,
     },
     {
       label: "View Orders",
       path: "/dashboard/view-orders",
       show: user?.role === "user",
+      Icon: FaClipboardList,
     },
     {
       label: "Manage Profile",
       path: "/dashboard/manage-profile",
       show: user?.role === "user",
+      Icon: FaUser,
     },
   ];
 
@@ -47,27 +53,31 @@ export default function DashboardLayout() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-64"
         } lg:translate-x-0 lg:fixed`}
       >
-        <div className="flex items-center justify-between p-4 b">
-          <h1 className="text-black text-2xl font-bold ml-2">
-            Note<span className="text-primary-bg">fy</span>
-          </h1>
+        <div className="flex items-center justify-between p-4 ">
+          <div className="mx-auto">
+            <Logo />
+          </div>
 
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X className="w-6 h-6" />
           </Button>
         </div>
         <nav className="flex flex-col p-4 space-y-1.5">
-          {menuItems.map((menuItem, idx) =>
-            menuItem.show ? (
+          {menuItems.map((menuItem, idx) => {
+            const { Icon } = menuItem;
+            return menuItem.show ? (
               <NavLink
                 key={idx}
                 to={menuItem.path}
                 className={({ isActive }) => (isActive ? "bg-[#F7F6FE]  text-slate-900 font-medium" : " text-slate-800 font-medium")}
               >
-                <div className="justify-start px-4 py-2 rounded-lg">{menuItem?.label}</div>
+                <div className="justify-start px-4 py-2 rounded-lg flex items-center gap-2">
+                  <Icon size={14} />
+                  <span>{menuItem?.label}</span>
+                </div>
               </NavLink>
-            ) : null
-          )}
+            ) : null;
+          })}
         </nav>
       </aside>
 

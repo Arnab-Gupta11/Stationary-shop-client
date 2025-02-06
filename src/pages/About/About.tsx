@@ -1,6 +1,6 @@
 import Section from "@/components/shared/Section";
-import about1 from "../../../public/images/about/about1.jpg";
-import about2 from "../../../public/images/about/about2.jpg";
+import about1 from "../../assets/images/about/about1.jpg";
+import about2 from "../../assets/images/about/about2.jpg";
 import "./about.css";
 import AboutImage from "./AboutImage";
 import AboutLeftSection from "./AboutLeftSection";
@@ -9,10 +9,46 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { Link } from "react-router-dom";
 import PageHeader from "@/components/shared/PageHeader";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { useRef, useState } from "react";
+import type { Swiper as SwiperType } from "swiper";
+import teamMembers from "@/data/teamMember.data";
+
 const About = () => {
+  const SlideRef = useRef<SwiperType | null>(null);
+  const [slideBegOrNot, setSlideByState] = useState({
+    isFirst: true,
+    isLast: false,
+  });
+
+  const handleNext = () => {
+    if (SlideRef.current) {
+      SlideRef.current.slideNext();
+    }
+  };
+
+  const handlePrev = () => {
+    if (SlideRef.current) {
+      SlideRef.current.slidePrev();
+    }
+  };
+
+  const onSlideChange = (swiper: SwiperType) => {
+    setSlideByState({
+      isFirst: swiper.isBeginning,
+      isLast: swiper.isEnd,
+    });
+  };
+
+  const { isLast, isFirst } = slideBegOrNot;
   return (
     <>
-      <PageHeader>
+      <PageHeader title="About Us">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -25,7 +61,7 @@ const About = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </PageHeader>
-      <div className="bg-light-bg-100 dark:bg-dark-bg-200 my-20">
+      <div className="bg-light-bg-100 mt-20">
         <Section>
           {/* First section */}
           <div className="grid grid-cols-1 bs:grid-cols-2 gap-5 bs:gap-10 items-center group">
@@ -66,6 +102,91 @@ const About = () => {
             <div className="order-1 bs:order-1">
               <AboutImage img={about2} />
             </div>
+          </div>
+
+          <div className="pt-28">
+            <Section>
+              <div className="text-center">
+                <h1 className="text-base xsm:text-lg md:text-2xl font-bold  text-slate-900">
+                  Meet Our <span className="text-primary-bg">Team</span>
+                </h1>
+                <p className="text-xs xsm:text-sm md:text-base font-medium text-slate-700 mb-10">Meet our passionate stationery experts!</p>
+              </div>
+
+              <div className="relative">
+                {/* Heading and Pagination Controls */}
+                <div className="flex justify-end items-center mb-4">
+                  {/* Pagination and Navigation Buttons */}
+                  <div className="flex items-center gap-4 bg-white">
+                    {/* <p className="swiper-paginations text-sm font-medium text-gray-700"></p> */}
+                    <div className="flex items-center gap-2">
+                      {/* Previous Button */}
+                      <button
+                        onClick={!isFirst ? handlePrev : undefined}
+                        className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 hover:shadow-slate-300 rounded-md transition ${
+                          isFirst ? "text-gray-400 cursor-not-allowed" : " hover:bg-primary hover:text-primary-bg duration-700 cursor-pointer"
+                        }`}
+                      >
+                        <BsArrowLeft className="text-xl " />
+                      </button>
+
+                      {/* Next Button */}
+                      <button
+                        onClick={!isLast ? handleNext : undefined}
+                        className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 hover:shadow-slate-300 rounded-md transition ${
+                          isLast ? "text-gray-400 cursor-not-allowed" : " hover:bg-primary hover:text-primary-bg duration-700 cursor-pointer"
+                        }`}
+                      >
+                        <BsArrowRight className="text-xl pointer-events-none" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="-mt-8">
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={0}
+                  className="mySwiper"
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  onSwiper={(swiper) => (SlideRef.current = swiper)}
+                  onSlideChange={onSlideChange}
+                  pagination={{
+                    el: ".swiper-paginations",
+                    type: "fraction",
+                  }}
+                  navigation={false}
+                  modules={[Pagination, Navigation, A11y, Autoplay]}
+                  breakpoints={{
+                    0: { slidesPerView: 1 },
+                    390: { slidesPerView: 1.2 },
+                    // 502: { slidesPerView: 2 },
+                    750: { slidesPerView: 3 },
+                    // 992: { slidesPerView: 2.5 },
+                    1100: { slidesPerView: 4 },
+                  }}
+                >
+                  {teamMembers?.map((item) => (
+                    <SwiperSlide className="z-10 h-auto py-14 px-2.5" key={item.id}>
+                      <div className="flex flex-col gap-6 mb-20 group relative shadow-box-shadow rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 duration-500">
+                        <div className="bg-slate-100 rounded-lg group-hover:scale-105 duration-700 ease-in-out">
+                          <img className="w-full object-contain h-64 rounded-lg" src={item.image} alt="team-member" />
+                        </div>
+
+                        <div className="flex flex-col gap-1 items-center">
+                          <h1 className="text-lg sm:text-xl font-Cormorant-Garamond font-bold text-slate-900 text-center">{item.name}</h1>
+                          <p className="text-sm text-center sm:text-base text-slate-700 font-medium pb-5">{item.role} </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </Section>
           </div>
         </Section>
       </div>

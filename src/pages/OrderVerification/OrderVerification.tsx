@@ -1,94 +1,75 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { clearCart } from "@/redux/features/auth/authSlice";
 import { useVerifyOrderQuery } from "@/redux/features/order/order.api";
 import { useAppDispatch } from "@/redux/hooks";
+import { TOrderData } from "@/types/order.type";
 
-import { CheckCircle, AlertCircle } from "lucide-react";
 import { useEffect } from "react";
-
-import { Link, useSearchParams } from "react-router";
-
-interface OrderData {
-  id: number;
-  order_id: string;
-  currency: string;
-  amount: number;
-  payable_amount: number;
-  discsount_amount: number | null;
-  disc_percent: number;
-  received_amount: string;
-  usd_amt: number;
-  usd_rate: number;
-  is_verify: number;
-  card_holder_name: string | null;
-  card_number: string | null;
-  phone_no: string;
-  bank_trx_id: string;
-  invoice_no: string;
-  bank_status: string;
-  customer_order_id: string;
-  sp_code: string;
-  sp_message: string;
-  name: string;
-  email: string;
-  address: string;
-  city: string;
-  value1: string | null;
-  value2: string | null;
-  value3: string | null;
-  value4: string | null;
-  transaction_status: string | null;
-  method: string;
-  date_time: string;
-}
+import { Link, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function OrderVerification() {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
+
   useEffect(() => {
     dispatch(clearCart());
   }, [dispatch]);
+
   const { isLoading, data } = useVerifyOrderQuery(searchParams.get("order_id"), {
     refetchOnMountOrArgChange: true,
   });
 
-  const orderData: OrderData = data?.data?.[0];
+  const orderData: TOrderData = data?.data?.[0];
 
   return isLoading ? (
-    <div>Loading</div>
+    <div className="flex h-screen items-center justify-center">
+      <div className="text-lg font-semibold animate-pulse">Loading...</div>
+    </div>
   ) : (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Order Verification</h1>
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Order Details</CardTitle>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full md:max-w-[90%] mx-auto p-6 py-20"
+    >
+      <div className="flex items-center flex-col xs:flex-row justify-center xsm:justify-between  flex-wrap mb-8 gap-3">
+        <h1 className="text-2xl md:text-4xl text-center xs:text-start font-bold">Order Verification</h1>
+        <Button>
+          <Link to={"/dashboard/view-orders"}>View Orders</Link>
+        </Button>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Order Details */}
+        <Card className="shadow-lg rounded-lg">
+          <CardHeader className="bg-gray-100 rounded-t-lg">
+            <CardTitle className="text-lg">Order Details</CardTitle>
           </CardHeader>
           <CardContent>
-            <dl className="grid grid-cols-2 gap-2">
+            <dl className="grid gap-3 text-sm mt-4">
               <dt className="font-semibold">Order ID:</dt>
               <dd>{orderData?.order_id}</dd>
               <dt className="font-semibold">Amount:</dt>
-              <dd>
+              <dd className="text-green-600">
                 {orderData?.currency} {orderData?.amount?.toFixed(2)}
               </dd>
               <dt className="font-semibold">Status:</dt>
-              <dd>
-                <span>{orderData?.bank_status}</span>
-              </dd>
+              <dd className="capitalize">{orderData?.bank_status}</dd>
               <dt className="font-semibold">Date:</dt>
-              <dd>{new Date(orderData?.date_time)?.toLocaleString()}</dd>
+              <dd>{new Date(orderData?.date_time).toLocaleString()}</dd>
             </dl>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Payment Information</CardTitle>
+        {/* Payment Information */}
+        <Card className="shadow-lg rounded-lg">
+          <CardHeader className="bg-gray-100 rounded-t-lg">
+            <CardTitle className="text-lg">Payment Information</CardTitle>
           </CardHeader>
           <CardContent>
-            <dl className="grid grid-cols-2 gap-2">
+            <dl className="grid gap-3 text-sm mt-4">
               <dt className="font-semibold">Method:</dt>
               <dd>{orderData?.method}</dd>
               <dt className="font-semibold">Transaction ID:</dt>
@@ -103,12 +84,13 @@ export default function OrderVerification() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Customer Information</CardTitle>
+        {/* Customer Information */}
+        <Card className="shadow-lg rounded-lg">
+          <CardHeader className="bg-gray-100 rounded-t-lg">
+            <CardTitle className="text-lg">Customer Information</CardTitle>
           </CardHeader>
           <CardContent>
-            <dl className="grid grid-cols-2 gap-2">
+            <dl className="grid gap-3 text-sm mt-4">
               <dt className="font-semibold">Name:</dt>
               <dd>{orderData?.name}</dd>
               <dt className="font-semibold">Email:</dt>
@@ -122,33 +104,7 @@ export default function OrderVerification() {
             </dl>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Verification Status</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-2">
-              {orderData?.is_verify === 1 ? (
-                <>
-                  <CheckCircle className="text-green-500" />
-                  <span>Verified</span>
-                </>
-              ) : (
-                <>
-                  <AlertCircle className="text-yellow-500" />
-                  <span>Not Verified</span>
-                </>
-              )}
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Link to="/order">
-              <Button className="w-full">View Orders</Button>
-            </Link>
-          </CardFooter>
-        </Card>
       </div>
-    </div>
+    </motion.div>
   );
 }

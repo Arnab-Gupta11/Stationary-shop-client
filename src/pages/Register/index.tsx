@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAddUserMutation } from "@/redux/features/auth/authApi";
+import Logo from "@/components/shared/Logo";
 
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,10 +48,14 @@ const RegisterPage = () => {
       <div className="grid place-items-center py-10 lg:py-20 mx-5 md:mx-0 ">
         <Card className="bg-white shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
           <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
-            <CardTitle className="mx-auto">Logo</CardTitle>
+            <CardTitle className="mx-auto">
+              <CardTitle className="mx-auto">
+                <Logo />
+              </CardTitle>
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <h1 className="mt-5 text-xl xs:text-2xl font-bold text-slate-800 text-center">Create Your Account</h1>
+            <h1 className="mt-5 text-lg xs:text-xl font-bold text-slate-800 text-center">Create Your Account</h1>
             <CustomForm onSubmit={onSubmit} form={form}>
               <CustomInput form={form} fieldName={"fullName"} label={"Full Name"} inputType={"text"} placeholder={"Enter your full name"} />
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />

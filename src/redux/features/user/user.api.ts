@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "@/redux/api/baseApi";
+import { TQueryParam, TResponseRedux } from "@/types/global";
 
 const userManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,13 +23,26 @@ const userManagementApi = baseApi.injectEndpoints({
     }),
 
     getAllUsers: builder.query({
-      query: () => {
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
         return {
           url: "/user",
           method: "GET",
+          params: params,
         };
       },
       providesTags: ["user"],
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
     }),
 
     // Update Ordered Status

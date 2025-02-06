@@ -115,7 +115,7 @@ The Stationery Shop is a web-based e-commerce platform that allows users to brow
 #### **1. Clone the Repository**
 
 ```bash
-https://github.com/Arnab-Gupta11/Stationery-Shop-Server.git
+https://github.com/Arnab-Gupta11/Stationary-shop-client.git
 cd Stationary-shop-client
 ```
 

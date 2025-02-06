@@ -57,7 +57,6 @@ const orderApi = baseApi.injectEndpoints({
       },
       providesTags: ["order"],
       transformResponse: (response: TResponseRedux<any>) => {
-        console.log(response);
         return {
           data: response.data,
           meta: response.meta,

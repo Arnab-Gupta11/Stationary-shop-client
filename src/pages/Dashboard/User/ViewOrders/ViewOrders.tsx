@@ -11,18 +11,18 @@ import OrderDetails from "./OrderDetails";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { MdOutlineShoppingBag } from "react-icons/md";
 
 const ViewOrders = () => {
   const [page, setPage] = useState(1);
   const { data: orderData, isLoading, isFetching } = useGetAllOrdersOfAUserQuery([{ name: "page", value: page }]);
-  console.log(orderData?.data?.result[0]?.transaction?.id);
 
   return (
     <div>
       <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
       {isLoading || isFetching ? (
         <Loader />
-      ) : (
+      ) : orderData?.data?.result.length > 0 ? (
         <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
           <table className="w-full bg-white border border-[#f1f1f1] mb-5">
             <thead className="bg-gray-100">
@@ -114,6 +114,12 @@ const ViewOrders = () => {
             </tbody>
           </table>
           <PaginationProduct meta={orderData?.data?.meta as TMeta} page={page} setPage={setPage} />
+        </div>
+      ) : (
+        <div className="min-h-[calc(100vh-150px)] flex items-center justify-center ">
+          <div className="text-slate-500 flex items-center justify-center font-semibold text-xl sm:text-2xl gap-5">
+            <MdOutlineShoppingBag /> <span>No orders found. Place your first order now!</span>
+          </div>
         </div>
       )}
     </div>

@@ -116,7 +116,7 @@ const CartPage = () => {
         </Breadcrumb>
       </PageHeader>
       <Section>
-        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0 mb-20 md:mb-28">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl"></h2>
 
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -172,7 +172,7 @@ const CartPage = () => {
                     );
                   })
                 ) : (
-                  <div className="min-h-[calc(100vh-400px)] flex items-center justify-center ">
+                  <div className="min-h-[calc(100vh-200px)] flex items-center justify-center ">
                     <div className="text-slate-500 flex items-center justify-center font-semibold text-xl sm:text-2xl gap-5">
                       <MdProductionQuantityLimits /> <span> Your cart is currently empty. Start shopping now!</span>
                     </div>

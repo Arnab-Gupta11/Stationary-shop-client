@@ -12,10 +12,10 @@ const ReviewCard = ({ item }: { item: TReview }) => {
         <div className=" w-full">
           <div className="flex items-center justify-between flex-wrap gap-4 w-full">
             <div>
-              <h1 className="text-lg sm:text-xl font-semibold text-slate-900">{item?.user?.fullName}</h1>
-              <span className="text-xs sm:text-sm font-medium text-slate-500">{formateDateTime(item?.updatedAt)}</span>
+              <h1 className="text-base sm:text-lg font-semibold text-slate-900">{item?.user?.fullName}</h1>
+              <span className="text-[10px] sm:text-xs font-medium text-slate-500">{formateDateTime(item?.updatedAt)}</span>
             </div>
-            <StarRating rating={item?.rating} starSize={15}/>
+            <StarRating rating={item?.rating} starSize={15} />
           </div>
           <div>
             <p className="text-sm sm:text-base mt-4 text-slate-700">{item?.review}</p>

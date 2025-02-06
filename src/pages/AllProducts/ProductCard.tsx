@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FaRegHeart } from "react-icons/fa";
+// import { FaRegHeart } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { TProduct } from "@/types/product.types";
@@ -64,7 +64,7 @@ const ProductCard = ({ product }: TProductProp) => {
             onClick={addProductToCart}
             className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md"
           />
-          <FaRegHeart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md" />
+          {/* <FaRegHeart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md" /> */}
         </div>
       </div>
       <div className="p-2.5">

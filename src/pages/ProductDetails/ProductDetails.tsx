@@ -4,7 +4,7 @@ import { useGetProductDetailsQuery } from "@/redux/features/product/product.api"
 import { useParams } from "react-router-dom";
 import { TProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
-import { Heart, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useState } from "react";
@@ -71,7 +71,7 @@ const ProductDetails = () => {
             </div>
             <h1 className="text-3xl font-bold text-slate-900 mt-2">{name}</h1>
             <div className="flex items-center gap-2 flex-wrap mt-1">
-              <StarRating rating={rating} starSize={15}/>
+              <StarRating rating={rating} starSize={15} />
               <span className="text-sm text-slate-600">({totalReviews} customer reviews)</span>
             </div>
             <p className="text-xl font-semibold text-primary-bg mt-3">{formatPrice(price)}</p>
@@ -94,9 +94,9 @@ const ProductDetails = () => {
                   <MdOutlineShoppingCart />
                   <span>Add To Cart</span>
                 </Button>
-                <Button className="py-7 rounded-lg group  bg-none border-[#e5e5e5] border-[2px] hover:bg-none hover:border-primary-bg duration-700 ">
+                {/* <Button className="py-7 rounded-lg group  bg-none border-[#e5e5e5] border-[2px] hover:bg-none hover:border-primary-bg duration-700 ">
                   <Heart size={234} className="text-[#d1c6c6] font-bold text-2xl group-hover:text-primary-bg duration-700" />
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>

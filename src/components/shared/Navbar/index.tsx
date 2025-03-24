@@ -26,11 +26,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleChangeBackgroundOnScroll);
   }, []);
   return (
-    <div
-      className={`${scrolled ? "backdrop-blur-md shadow-md" : "bg-none border-b border-slate-300"} transition-colors duration-500 ${
-        location.pathname === "/" ? "fixed" : "sticky"
-      } top-0 w-full h-20 z-20`}
-    >
+    <div className="bg-white shadow-md border-b border-slate-300 transition-colors duration-500 sticky top-0 w-full h-24 z-20">
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
           <div className="hidden xs:flex">

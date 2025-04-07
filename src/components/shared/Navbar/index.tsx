@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { NavMenuOption } from "@/constants/navbar.constant";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import NavItem from "./NavItem";
 import ProfileAvatar from "./ProfileAvatar";
 import NavSidebar from "./NavSidebar";
 import CartIcon from "./CartIcon";
-import { useAppSelector } from "@/redux/hooks";
-import { useCurrentUser } from "@/redux/features/auth/authSlice";
-import { Button } from "@/components/ui/button";
 import Logo from "../Logo";
-
+import { BiSearchAlt2 } from "react-icons/bi";
+import { ThemeToggler } from "../ThemeToggler";
 const Navbar = () => {
-  const location = useLocation();
-  const user = useAppSelector(useCurrentUser);
   const [scrolled, setScrolled] = useState(false);
   const menuItems = NavMenuOption();
   const handleChangeBackgroundOnScroll = () => {
@@ -26,7 +22,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleChangeBackgroundOnScroll);
   }, []);
   return (
-    <div className="bg-white shadow-md border-b border-slate-300 transition-colors duration-500 sticky top-0 w-full h-24 z-20">
+    <div className={`${scrolled ? "shadow-md" : "border-b border-slate-300"} bg-white sticky top-0 w-full h-24 z-20`}>
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
           <div className="hidden xs:flex">
@@ -37,7 +33,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex gap-5 items-center">
-          <div className="hidden lg:flex gap-6 items-center font-medium ">
+          <div className="hidden lg:flex gap-6 items-center ">
             {menuItems.map((menuItem, idx) =>
               menuItem.show ? (
                 <NavLink
@@ -45,8 +41,8 @@ const Navbar = () => {
                   to={menuItem.path}
                   className={({ isActive }) =>
                     isActive
-                      ? "border-b-[3px] border-primary-text  text-slate-900 font-medium"
-                      : " text-slate-800 font-medium hover:text-primary-bg ease-in-outs duration-700"
+                      ? "border-b-[3px] border-primary-text  text-primary-text-light"
+                      : " text-primary-text-light font-medium hover:text-primary-bg ease-in-outs duration-700"
                   }
                 >
                   <NavItem label={menuItem.label} active={true} />
@@ -54,19 +50,14 @@ const Navbar = () => {
               ) : null
             )}
           </div>
+        </div>
 
-          <div className="flex items-center">
-            <CartIcon />
-            {user ? (
-              <ProfileAvatar />
-            ) : (
-              <Link to={"/login"}>
-                <Button className="ml-5">Login</Button>
-              </Link>
-            )}
-
-            <NavSidebar menuItems={menuItems} />
-          </div>
+        <div className="flex items-center">
+          <BiSearchAlt2 className="text-3xl text-primary-text-light hover:text-primary-bg transition hover:scale-105 cursor-pointer" />
+          <CartIcon />
+          <ThemeToggler />
+          <ProfileAvatar />
+          <NavSidebar menuItems={menuItems} />
         </div>
       </div>
     </div>

@@ -50,7 +50,9 @@ const RegisterPage = () => {
           <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
             <CardTitle className="mx-auto">
               <CardTitle className="mx-auto">
-                <Logo />
+                <Link to={"/"}>
+                  <Logo />
+                </Link>
               </CardTitle>
             </CardTitle>
           </CardHeader>

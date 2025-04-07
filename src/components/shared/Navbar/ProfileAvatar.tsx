@@ -1,12 +1,19 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useLogoutMutation } from "@/redux/features/auth/authApi";
 import { logout, useCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
+import { Heart, LayoutDashboard, LogIn, LogOut, UserPlus } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
 const ProfileAvatar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(useCurrentUser);
@@ -21,27 +28,63 @@ const ProfileAvatar = () => {
   };
 
   return (
-    <div className="ml-5">
+    <div className="font-Play font-medium">
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
-          <Avatar className="border border-[#f1f1f1]">
-            <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
-            <AvatarFallback>DP</AvatarFallback>
-          </Avatar>
+        <DropdownMenuTrigger asChild>
+          {user ? (
+            <Avatar className=" cursor-pointer ml-5 flex items-center justify-center">
+              <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
+              <AvatarFallback>DP</AvatarFallback>
+            </Avatar>
+          ) : (
+            <span>
+              <CgProfile className="text-3xl text-primary-text-light hover:text-primary-bg transition hover:scale-105 ml-5 cursor-pointer" />
+            </span>
+          )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          side="bottom"
-          className="bg-primary-bg-light dark:bg-primary-bg-dark border-none shadow-md shadow-secondary-bg-light dark:shadow-secondary-bg-dark outline-none"
-        >
-          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+        <DropdownMenuContent className="w-44 bg-white">
+          <DropdownMenuLabel>{user ? <span>{user?.name}</span> : "My Account"}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            {!user && (
+              <>
+                <Link to={"/login"}>
+                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Sign In
+                  </DropdownMenuItem>
+                </Link>
 
-          <DropdownMenuItem>{user?.userEmail}</DropdownMenuItem>
-          <DropdownMenuItem>
-            <Button onClick={handleLogout} variant={"outline"} className="w-full border-primary-text text-primary-bg flex items-center gap-2">
-              <LogOut size={8} />
-              <span className="text-base">Logout</span>
-            </Button>
-          </DropdownMenuItem>
+                <Link to={"/register"}>
+                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light ">
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Register
+                  </DropdownMenuItem>
+                </Link>
+              </>
+            )}
+            {user && (
+              <Link to={user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}>
+                <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+            )}
+            <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
+              <Heart className="w-4 h-4 mr-2" />
+              Wishlist
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          {user && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2 text-red-500" />
+                Log out
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

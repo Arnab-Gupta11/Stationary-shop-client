@@ -15,7 +15,7 @@ const FeaturedProducts = () => {
           </h1>
           <p className="text-xs xsm:text-sm md:text-base font-medium text-slate-700 mb-10">Shop our exclusive selection of top-rated products.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 bs:grid-cols-3 lg:grid-cols-4 gap-5 ">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 ">
           {productData?.data &&
             productData?.data?.length > 0 &&
             productData?.data?.map((product) => <ProductCard key={product._id} product={product} />)}

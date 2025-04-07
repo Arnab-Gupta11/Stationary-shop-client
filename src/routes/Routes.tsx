@@ -21,6 +21,7 @@ import UserRoutes from "./UserRoutes";
 import AddNewProduct from "@/pages/Dashboard/Admin/ManageProducts/AddNewProduct";
 import UpdateProduct from "@/pages/Dashboard/Admin/ManageProducts/UpdateProduct";
 import About from "@/pages/About/About";
+import DashboardLayout1 from "@/layouts/Dashboard/DashboardLayout1";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,68 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    children: [
+      {
+        path: "manage-products",
+        element: (
+          <AdminRoute>
+            <ManageProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-products/add-product",
+        element: (
+          <AdminRoute>
+            <AddNewProduct />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-products/:id",
+        element: (
+          <AdminRoute>
+            <UpdateProduct />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: (
+          <AdminRoute>
+            <ManageOrders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "view-orders",
+        element: (
+          <UserRoutes>
+            <ViewOrders />
+          </UserRoutes>
+        ),
+      },
+      {
+        path: "manage-profile",
+        element: (
+          <UserRoutes>
+            <ManageProfile />
+          </UserRoutes>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard1",
+    element: <DashboardLayout1 />,
     children: [
       {
         path: "manage-products",

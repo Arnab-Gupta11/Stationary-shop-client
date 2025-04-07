@@ -127,10 +127,10 @@ const CartPage = () => {
                     return (
                       <div
                         key={item.product}
-                        className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6 xsm-mx:flex xsm-mx:items-center xsm-mx:justify-center"
+                        className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm md:p-6 xsm-mx:flex xsm-mx:items-center xsm-mx:justify-center"
                       >
                         <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                          <div className="shrink-0 md:order-1 bg-[#F7F7F7] rounded-lg h-24 w-24 flex items-center justify-center">
+                          <div className="shrink-0 md:order-1 bg-[#F7F7F7] rounded-3xl h-24 w-24 flex items-center justify-center">
                             <img className="h-20 w-20" src={item?.image} alt="imac image" />
                           </div>
                           <div className="flex flex-col xsm:flex-row xsm:items-center xsm:justify-between md:order-3 md:justify-end gap-8">

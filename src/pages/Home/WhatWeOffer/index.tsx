@@ -1,29 +1,28 @@
 import Section from "@/components/shared/Section";
-import offerImg1 from "../../../assets/images/services/box.png";
-import offerImg2 from "../../../assets/images/services/transport.png";
-import offerImg3 from "../../../assets/images/services/payment.png";
-import offerImg4 from "../../../assets/images/services/service.png";
 import { motion } from "framer-motion";
-
+import { MdOutlineLocalShipping } from "react-icons/md";
+import { PiShippingContainerBold } from "react-icons/pi";
+import { LuHandCoins } from "react-icons/lu";
+import { MdSupportAgent } from "react-icons/md";
 const WhatWeOffer = () => {
   const offers = [
     {
-      logo: offerImg1,
+      Logo: PiShippingContainerBold,
       title: "Free Shipping",
       description: "Free shipping on orders over $65.",
     },
     {
-      logo: offerImg2,
+      Logo: MdOutlineLocalShipping,
       title: "Free Returns",
       description: "30-days free return policy.",
     },
     {
-      logo: offerImg3,
+      Logo: LuHandCoins,
       title: "Secured Payments",
       description: "We accept all major credit cards.",
     },
     {
-      logo: offerImg4,
+      Logo: MdSupportAgent,
       title: "Customer Service",
       description: "Top-notch customer service.",
     },
@@ -60,25 +59,28 @@ const WhatWeOffer = () => {
             },
           }}
         >
-          {offers.map((item) => (
-            <motion.div
-              key={item.title}
-              className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-lg py-6 px-8 bg-white"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            >
-              <motion.div className="flex-shrink-0" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }}>
-                <img src={item.logo} alt={item.title} className="w-10 h-10" />
+          {offers.map((item) => {
+            const { Logo } = item;
+            return (
+              <motion.div
+                key={item.title}
+                className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-3xl py-6 px-8 bg-white"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+              >
+                <motion.div className="flex-shrink-0" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }}>
+                  <Logo className="text-primary-bg text-4xl" />
+                </motion.div>
+                <div>
+                  <h1 className="text-base font-bold text-slate-800">{item.title}</h1>
+                  <p className="text-sm text-slate-600 font-medium">{item.description}</p>
+                </div>
               </motion.div>
-              <div>
-                <h1 className="text-base font-bold text-slate-800">{item.title}</h1>
-                <p className="text-sm text-slate-600 font-medium">{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </Section>
     </div>

@@ -6,7 +6,7 @@ import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 
 const TestimonialCard = ({ item }: { item: ITestimonial }) => {
   return (
-    <div className="shadow-box-shadow rounded-lg min-h-64">
+    <div className="shadow-box-shadow rounded-3xl min-h-64">
       <div className="relative w-full h-20">
         <Avatar className="border border-[#f1f1f1] w-24 h-24 absolute left-1/2 transform -translate-x-1/2 -top-10 z-10">
           <AvatarImage src={item.image} alt="@shadcn" />

@@ -1,5 +1,5 @@
-import { useCurrentUser } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hooks";
+// import { useCurrentUser } from "@/redux/features/auth/authSlice";
+// import { useAppSelector } from "@/redux/hooks";
 
 export type TNavMenuItem = {
   label: string;
@@ -7,7 +7,7 @@ export type TNavMenuItem = {
   show: boolean;
 }[];
 export const NavMenuOption = () => {
-  const user = useAppSelector(useCurrentUser);
+  // const user = useAppSelector(useCurrentUser);
   const menuItems = [
     {
       label: "Home",
@@ -19,11 +19,11 @@ export const NavMenuOption = () => {
       path: "/shop",
       show: true,
     },
-    {
-      label: "Dashboard",
-      path: `${user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}`,
-      show: user?.role === "user" || user?.role === "admin",
-    },
+    // {
+    //   label: "Dashboard",
+    //   path: `${user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}`,
+    //   show: user?.role === "user" || user?.role === "admin",
+    // },
     {
       label: "About",
       path: "/about",

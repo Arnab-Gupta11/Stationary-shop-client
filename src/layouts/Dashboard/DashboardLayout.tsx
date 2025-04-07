@@ -92,8 +92,8 @@ export default function DashboardLayout() {
             {/* <h2 className="text-lg font-semibold">Welcome</h2> */}
           </div>
           <div className="flex items-center pl-5">
-            <Link className="pr-5" to={"/"}>
-              <BiHome className="text-xl text-slate-800 hover:scale-105 hover:cursor-pointer" />
+            <Link className="" to={"/"}>
+              <BiHome className="text-3xl text-primary-text-light hover:text-primary-bg hover:scale-105 hover:cursor-pointer" />
             </Link>
             <CartIcon />
             <ProfileAvatar />

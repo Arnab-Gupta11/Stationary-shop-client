@@ -12,6 +12,7 @@ import { setUser, TUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { loginFormDefaultValue, loginSchema } from "@/schemas/auth/austhSchema";
 import { verifyToken } from "@/utils/verifyToken";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
@@ -24,6 +25,8 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const [loginUser] = useLoginMutation(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGuestLoading, setIsGuestLoading] = useState(false);
+  const [isAdminLoading, setIsAdminLoading] = useState(false);
   const [form] = useCustomForm(loginSchema, loginFormDefaultValue);
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
@@ -46,6 +49,35 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+  const credentialLogin = async (data: { email: string; password: string }) => {
+    try {
+      if (data.email === "guest@gmail.com") {
+        setIsGuestLoading(true);
+      } else {
+        setIsAdminLoading(true);
+      }
+
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await loginUser(userInfo).unwrap();
+      if (res?.success === true) {
+        const user = verifyToken(res.data?.token) as TUser;
+        dispatch(setUser({ user: user, token: res.data?.token }));
+        toast.success(res?.message);
+        navigate("/");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message);
+    } finally {
+      if (data.email === "guest@gmail.com") {
+        setIsGuestLoading(false);
+      } else {
+        setIsAdminLoading(false);
+      }
+    }
+  };
 
   return (
     <div className="bg-primary-bg-light min-h-screen">
@@ -53,11 +85,13 @@ const LoginPage = () => {
         <Card className="bg-white shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
           <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
             <CardTitle className="mx-auto">
-              <Logo />
+              <Link to={"/"}>
+                <Logo />
+              </Link>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <h1 className="mt-5 text-lg sm:text-xl font-bold text-slate-800 text-center">Welcome back</h1>
+            <h1 className="mt-5 text-lg sm:text-xl font-bold text-primary-text-light text-center">Welcome back</h1>
             <CustomForm onSubmit={onSubmit} form={form}>
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
@@ -75,6 +109,26 @@ const LoginPage = () => {
               </Link>
             </div>
           </CardFooter>
+
+          <h1 className="mx-6 border-t-2 border-gray-300 text-lg text-primary-text-light font-semibold py-4">Credential</h1>
+          <div className="grid grid-cols-2 pb-8 px-6  gap-5">
+            <Button
+              onClick={() => credentialLogin({ email: "guest@gmail.com", password: "12345678" })}
+              type="submit"
+              disabled={isGuestLoading}
+              className=" w-full"
+            >
+              {isGuestLoading ? <BiLoaderCircle className="animate-spin" /> : "Guest User"}
+            </Button>
+            <Button
+              onClick={() => credentialLogin({ email: "admin@gmail.com", password: "12345678" })}
+              type="submit"
+              disabled={isAdminLoading}
+              className=" w-full"
+            >
+              {isAdminLoading ? <BiLoaderCircle className="animate-spin" /> : "Admin"}
+            </Button>
+          </div>
         </Card>
       </div>
     </div>

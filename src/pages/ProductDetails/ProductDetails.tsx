@@ -90,7 +90,7 @@ const ProductDetails = () => {
                 <Plus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-slate-700" onClick={handleIncreaseQuantity} />
               </div>
               <div className="flex items-center gap-4 w-full">
-                <Button className="flex xsm-mx:w-full items-center justify-center gap-3 py-7 rounded-lg select-none" onClick={addProductToCart}>
+                <Button className="flex xsm-mx:w-full items-center justify-center gap-3 py-7 select-none" onClick={addProductToCart}>
                   <MdOutlineShoppingCart />
                   <span>Add To Cart</span>
                 </Button>

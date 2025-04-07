@@ -6,22 +6,36 @@ export default {
     screens: {
       xsm: "360px",
       xs: "476px",
-      // xs: "425px",
       sm: "640px",
       md: "768px",
       bs: "900px",
       lg: "1024px",
       xl: "1280px",
       "2xl": "1550px",
-
-      "2xl-mx": { max: "1535px" },
-      "xl-mx": { max: "1279px" },
-      "lg-mx": { max: "1023px" },
-      "bs-mx": { max: "899px" },
-      "md-mx": { max: "767px" },
-      "sm-mx": { max: "639px" },
-      "xs-mx": { max: "475px" },
-      "xsm-mx": { max: "359px" },
+      "2xl-mx": {
+        max: "1535px",
+      },
+      "xl-mx": {
+        max: "1279px",
+      },
+      "lg-mx": {
+        max: "1023px",
+      },
+      "bs-mx": {
+        max: "899px",
+      },
+      "md-mx": {
+        max: "767px",
+      },
+      "sm-mx": {
+        max: "639px",
+      },
+      "xs-mx": {
+        max: "475px",
+      },
+      "xsm-mx": {
+        max: "359px",
+      },
     },
     fontFamily: {
       sora: ["Sora", "serif"],
@@ -30,12 +44,22 @@ export default {
     },
     extend: {
       colors: {
-        "primary-bg": "#fa414c", //"#D51243",
-        "primary-text": "#b50c37",
+        "primary-bg": "#fa414c",
+        "primary-text": "#fa414c",
         "primary-bg-light": "#f9fbfd",
         "secondary-bg-light": "#e4eafc",
         "primary-text-light": "rgb(16, 17, 30)",
         "secondary-text-light": "rgb(116, 118, 145)",
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
       boxShadow: {
         "card-shadow-dark": "rgb(21, 22, 47) 0px 1px 0px 1px, rgb(21, 22, 47) 0px 1px 0px 1px",

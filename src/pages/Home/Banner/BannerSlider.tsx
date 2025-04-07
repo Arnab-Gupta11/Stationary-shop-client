@@ -30,7 +30,7 @@ const BannerSlider = () => {
             <motion.img
               src={item.src}
               alt={item.alt}
-              className="w-full aspect-square bs:h-[500px]"
+              className="w-full bs:h-[465px]"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}

@@ -2,13 +2,14 @@ import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import Promotion from "@/pages/Home/Promotion/Promotion";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 const RootLayout = () => {
+  const location = useLocation();
   return (
     <>
       <ScrollToTop />
-      <Promotion />
+      {location?.pathname === "/" && <Promotion />}
       <Navbar />
       <div>
         <Outlet />

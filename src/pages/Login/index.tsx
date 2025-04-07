@@ -96,7 +96,7 @@ const LoginPage = () => {
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
 
-              <Button type="submit" disabled={isLoading} className=" w-full mt-8">
+              <Button variant={"primary"} type="submit" disabled={isLoading} className=" w-full mt-8">
                 {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign In"}
               </Button>
             </CustomForm>
@@ -117,6 +117,7 @@ const LoginPage = () => {
               type="submit"
               disabled={isGuestLoading}
               className=" w-full"
+              variant={"primary"}
             >
               {isGuestLoading ? <BiLoaderCircle className="animate-spin" /> : "Guest User"}
             </Button>
@@ -125,6 +126,7 @@ const LoginPage = () => {
               type="submit"
               disabled={isAdminLoading}
               className=" w-full"
+              variant={"primary"}
             >
               {isAdminLoading ? <BiLoaderCircle className="animate-spin" /> : "Admin"}
             </Button>

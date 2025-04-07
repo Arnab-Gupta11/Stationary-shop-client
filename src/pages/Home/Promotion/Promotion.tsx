@@ -15,15 +15,17 @@ const Promotion = () => {
     "Easy Order Tracking",
   ];
   return (
-    <div className="bg-button-gradient py-1 text-white ">
-      <Marquee pauseOnHover={true} direction="left">
-        {promotions?.map((promotion, index) => (
-          <div key={index} className="flex items-center gap-1">
-            <FaCircle className="text-[8px]" />
-            <span className="mr-6">{promotion}</span>
-          </div>
-        ))}
-      </Marquee>
+    <div className="bg-button-gradient py-1 text-white overflow-hidden w-full">
+      <div className="max-w-screen-md mx-auto">
+        <Marquee pauseOnHover direction="left" gradient={false}>
+          {promotions.map((promotion, index) => (
+            <div key={index} className="flex items-center gap-1 whitespace-nowrap">
+              <FaCircle className="text-[8px]" />
+              <span className="mr-6">{promotion}</span>
+            </div>
+          ))}
+        </Marquee>
+      </div>
     </div>
   );
 };

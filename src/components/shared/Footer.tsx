@@ -4,7 +4,7 @@ import darkLogo from "../../assets/images/logo/DarkLogo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-950  text-white">
+    <footer className="bg-black  text-white">
       <div className="w-full max-w-[90%] mx-auto p-4 md:py-8">
         <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center sm:justify-between">
           <img src={darkLogo} alt="logo" className="w-28 h-10" />

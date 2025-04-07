@@ -8,6 +8,7 @@ import CartIcon from "./CartIcon";
 import Logo from "../Logo";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { ThemeToggler } from "../ThemeToggler";
+import { BiGitCompare } from "react-icons/bi";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const menuItems = NavMenuOption();
@@ -22,7 +23,11 @@ const Navbar = () => {
     window.addEventListener("scroll", handleChangeBackgroundOnScroll);
   }, []);
   return (
-    <div className={`${scrolled ? "shadow-md" : "border-b border-slate-300"} bg-white sticky top-0 w-full h-24 z-20`}>
+    <div
+      className={`${
+        scrolled ? "shadow-md dark:shadow-gray-900" : "border-b border-light-border dark:border-dark-border"
+      } bg-white dark:bg-black sticky top-0 w-full h-24 z-20`}
+    >
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
           <div className="hidden xs:flex">
@@ -33,7 +38,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex gap-5 items-center">
-          <div className="hidden lg:flex gap-6 items-center ">
+          <div className="hidden lg:flex gap-7 items-center ">
             {menuItems.map((menuItem, idx) =>
               menuItem.show ? (
                 <NavLink
@@ -41,8 +46,8 @@ const Navbar = () => {
                   to={menuItem.path}
                   className={({ isActive }) =>
                     isActive
-                      ? "border-b-[3px] border-primary-text  text-primary-text-light"
-                      : " text-primary-text-light font-medium hover:text-primary-bg ease-in-outs duration-700"
+                      ? "border-b-[3px] border-primary text-primary"
+                      : "text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary ease-in-outs duration-700"
                   }
                 >
                   <NavItem label={menuItem.label} active={true} />
@@ -53,8 +58,9 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center">
-          <BiSearchAlt2 className="text-3xl text-primary-text-light hover:text-primary-bg transition hover:scale-105 cursor-pointer" />
+          <BiSearchAlt2 className="text-2xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
           <CartIcon />
+          <BiGitCompare className="text-2xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer ml-4" />
           <ThemeToggler />
           <ProfileAvatar />
           <NavSidebar menuItems={menuItems} />

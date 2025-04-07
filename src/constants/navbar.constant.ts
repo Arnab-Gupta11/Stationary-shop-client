@@ -19,13 +19,28 @@ export const NavMenuOption = () => {
       path: "/shop",
       show: true,
     },
-    // {
-    //   label: "Dashboard",
-    //   path: `${user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}`,
-    //   show: user?.role === "user" || user?.role === "admin",
-    // },
     {
       label: "About",
+      path: "/about",
+      show: true,
+    },
+    {
+      label: "Home",
+      path: "/gsdg",
+      show: true,
+    },
+    {
+      label: "Shop",
+      path: "/shop",
+      show: true,
+    },
+    {
+      label: "About",
+      path: "/about",
+      show: true,
+    },
+    {
+      label: "About1",
       path: "/about",
       show: true,
     },

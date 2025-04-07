@@ -9,6 +9,7 @@ import testimonialsData from "@/data/testimonial.data";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
+import SectionHeader from "../SectionHeader/SectionHeader";
 
 const Testimonial = () => {
   const SlideRef = useRef<SwiperType | null>(null);
@@ -39,16 +40,9 @@ const Testimonial = () => {
   const { isLast, isFirst } = slideBegOrNot;
 
   return (
-    <div className="pt-20 pb-24">
+    <div className="pt-24">
       <Section>
-        <div className="text-center">
-          <h1 className="text-base xsm:text-lg md:text-2xl font-bold mb-3 text-slate-900">
-            What Our <span className="text-primary-bg">Clients Say</span>
-          </h1>
-          <p className="text-xs xsm:text-sm md:text-base font-medium text-slate-700 mb-10">
-            Hear from our happy customers about their experience with us.
-          </p>
-        </div>
+        <SectionHeader heading="What Our" subheading="Clients Say" />
 
         <div className="relative">
           {/* Heading and Pagination Controls */}

@@ -8,10 +8,9 @@ const textVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", staggerChildren: 0.2 } },
 };
-// bg-[#162528]
 const Banner = () => {
   return (
-    <div className="bg-smooth-light">
+    <div className="bg-main-bg-light dark:bg-main-bg-dark overflow-x-hidden">
       <Section>
         <div className="grid grid-cols-1 bs:grid-cols-2 items-center  justify-between py-12 h-full">
           <motion.div
@@ -21,14 +20,10 @@ const Banner = () => {
             variants={textVariants}
           >
             <div>
-              <motion.div className="flex bs-mx:justify-center" variants={textVariants}>
-                {/* <span className="bg-primary-bg-light dark:bg-secondary-bg-dark px-3 rounded-lg text-slate-600 font-bold text-[9px] xsm:text-xs md:text-sm py-1 shadow-md text-center bs:text-left">
-                  ⭐ Special Offer: Flat <span className="text-primary-bg">20%</span> off on your first order! ⭐
-                </span> */}
-              </motion.div>
+              <motion.div className="flex bs-mx:justify-center" variants={textVariants}></motion.div>
 
               <motion.p
-                className="text-xl text-primary-text-light dark:text-[#fff] sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-5 text-center bs:text-left mt-5 font-Aclonica"
+                className="text-xl text-light-primary-text dark:text-dark-primary-txt sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-5 text-center bs:text-left mt-5 font-Aclonica"
                 style={{ lineHeight: "1.4" }}
                 variants={textVariants}
               >
@@ -36,7 +31,7 @@ const Banner = () => {
               </motion.p>
 
               <motion.div
-                className="flex bs-mx:justify-center text-secondary-text-light dark:text-[#ccc] font-semibold text-xs md:text-base bs:text-lg py-1 mb-8 text-center bs:text-left"
+                className="flex bs-mx:justify-center text-light-secondary-text dark:text-dark-secondary-txt font-semibold text-xs md:text-base bs:text-lg py-1 mb-8 text-center bs:text-left"
                 variants={textVariants}
               >
                 <div>
@@ -47,7 +42,7 @@ const Banner = () => {
 
               <motion.div className="flex justify-center bs:justify-start" variants={textVariants}>
                 <Link to={"/shop"}>
-                  <Button className="sm:py-6 sm:px-12 flex items-center gap-2">
+                  <Button variant={"primary"} className="sm:py-6 sm:px-12 flex items-center gap-2">
                     <TbShoppingBag />
                     <span> Shop Now</span>
                   </Button>

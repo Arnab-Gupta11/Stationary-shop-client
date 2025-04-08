@@ -132,9 +132,9 @@ const router = createBrowserRouter([
       {
         path: "manage-products",
         element: (
-          <AdminRoute>
-            <ManageProducts />
-          </AdminRoute>
+          // <AdminRoute>
+          <ManageProducts />
+          // </AdminRoute>
         ),
       },
       {
@@ -171,6 +171,14 @@ const router = createBrowserRouter([
       },
       {
         path: "view-orders",
+        element: (
+          <UserRoutes>
+            <ViewOrders />
+          </UserRoutes>
+        ),
+      },
+      {
+        path: "user",
         element: (
           <UserRoutes>
             <ViewOrders />

@@ -48,10 +48,11 @@ export default {
         //Light-mode
         "light-primary-bg": "#f9fbfd",
         "light-secondary-bg": "#ffffff",
-        "light-muted-bg": "#f7f7fd", //"#e4eafc",
+        "light-muted-bg": "#eceef7", //"#f7f7fd", //"#e4eafc",
         "light-primary-text": "#020617", //"rgb(16, 17, 30)",
         "light-secondary-text": "#334155",
-        "light-border": "#f7f7f7",
+        "light-card-border": "#f4f4f6",
+        "light-border": "#f7f7f7", //"#f7f7f7",
 
         //Dark-mode
         "dark-primary-bg": "#04040C", //"#050505",

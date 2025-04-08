@@ -52,7 +52,7 @@ const ProductCard = ({ product }: TProductProp) => {
   const price = formatPrice(product?.price);
   return (
     <Link to={`/products/${product?._id}`}>
-      <div className="rounded-3xl bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border shadow-card-shadow dark:shadow-none hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3">
+      <div className="rounded-3xl bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-card-border dark:border-dark-border hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3">
         <div className="bg-light-muted-bg dark:bg-dark-muted-bg h-56 flex justify-center items-center relative rounded-2xl">
           <img src={product?.image} alt="img1" className="h-[90%] object-contain group-hover:scale-105 transition-all duration-1000" />
           <span className="bg-primary-bg text-xs font-semibold text-white px-2 py-0.5 absolute top-2 right-1 rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700">

@@ -1,92 +1,75 @@
 "use client";
 
 import * as React from "react";
-import { Bot, Frame, LifeBuoy, Map, PieChart, Send, Settings, SquareTerminal } from "lucide-react";
+import { Bot, Settings, SquareTerminal } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 import Logo from "@/components/shared/Logo";
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/user/dashboard",
-      icon: SquareTerminal,
-      isActive: true,
-    },
-    {
-      title: "Products",
-      // url: "/user/shop/products",
-      icon: Bot,
-      items: [
-        {
-          title: "Manage Products",
-          url: "/dashboard1/manage-products",
-        },
-        {
-          title: "Manage Categories",
-          url: "/user/shop/category",
-        },
-        {
-          title: "Manage Brands",
-          url: "/user/shop/brand",
-        },
-        {
-          title: "Manage Coupon",
-          url: "/user/shop/manage-coupon",
-        },
-      ],
-    },
-
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-      items: [
-        {
-          title: "Profile",
-          url: "/profile",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-};
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAppSelector(useCurrentUser);
+  const data = {
+    navMain: [
+      {
+        title: "Dashboard-admin",
+        url: "/admin",
+        icon: SquareTerminal,
+        isActive: true,
+        show: user?.role === "admin",
+      },
+      {
+        title: "Dashboard-user",
+        url: "/dashboard1/user",
+        icon: SquareTerminal,
+        isActive: true,
+        show: user?.role === "user",
+      },
+      {
+        title: "Products",
+        // url: "/user/shop/products",
+        icon: Bot,
+        show: user?.role === "admin",
+        items: [
+          {
+            title: "Manage Products",
+            url: "/dashboard1/manage-products",
+          },
+          {
+            title: "Manage Categories",
+            url: "/user/shop/category",
+          },
+          {
+            title: "Manage Brands",
+            url: "/user/shop/brand",
+          },
+          {
+            title: "Manage Coupon",
+            url: "/user/shop/manage-coupon",
+          },
+        ],
+      },
+
+      {
+        title: "Settings",
+        url: "#",
+        icon: Settings,
+        show: user?.role === "user",
+        items: [
+          {
+            title: "Profile",
+            url: "/profile",
+          },
+        ],
+      },
+    ],
+  };
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="offcanvas" {...props} className="bg-light-secondary-bg dark:bg-dark-secondary-bg border-none">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -95,15 +78,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="flex items-center justify-center">
                   <Logo />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                {/* <div className="grid flex-1 text-left text-sm leading-tight">
                   <h2 className="font-bold text-xl">NextMart</h2>
-                </div>
+                </div> */}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="mt-3">
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>

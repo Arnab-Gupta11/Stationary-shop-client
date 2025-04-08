@@ -38,25 +38,43 @@ const ProfileAvatar = () => {
             </Avatar>
           ) : (
             <span>
-              <CgProfile className="text-3xl text-primary-text-light hover:text-primary-bg transition hover:scale-105 ml-5 cursor-pointer" />
+              <CgProfile className="text-3xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 ml-5 cursor-pointer" />
             </span>
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-44 bg-white">
-          <DropdownMenuLabel>{user ? <span>{user?.name}</span> : "My Account"}</DropdownMenuLabel>
+        <DropdownMenuContent
+          align="end"
+          className="min-w-44 bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border text-light-primary-text dark:text-dark-primary-txt dark:shadow-box-shadow-dark font-medium font-Exo rounded-2xl mt-3 p-2"
+        >
+          <DropdownMenuLabel>
+            {user ? (
+              <div className="flex items-center gap-2 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src={user?.profilePicture} alt={user?.name} />
+                  <AvatarFallback className="rounded-lg">DP</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold text-light-primary-text dark:text-dark-primary-txt">{user?.name}</span>
+                  <span className="truncate text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">{user?.userEmail}</span>
+                </div>
+              </div>
+            ) : (
+              "My Account"
+            )}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
+          <DropdownMenuGroup className="space-y-1.5">
             {!user && (
               <>
                 <Link to={"/login"}>
-                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
+                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
                     <LogIn className="w-4 h-4 mr-2" />
                     Sign In
                   </DropdownMenuItem>
                 </Link>
 
                 <Link to={"/register"}>
-                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light ">
+                  <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
                     <UserPlus className="w-4 h-4 mr-2" />
                     Register
                   </DropdownMenuItem>
@@ -65,21 +83,26 @@ const ProfileAvatar = () => {
             )}
             {user && (
               <Link to={user?.role === "admin" ? "/dashboard/manage-products" : "/dashboard/view-orders"}>
-                <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
+                <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
                   <LayoutDashboard className="w-4 h-4 mr-2" />
                   Dashboard
                 </DropdownMenuItem>
               </Link>
             )}
-            <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light">
-              <Heart className="w-4 h-4 mr-2" />
-              Wishlist
-            </DropdownMenuItem>
+            {user && user.role === "user" && (
+              <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
+                <Heart className="w-4 h-4 mr-2" />
+                Wishlist
+              </DropdownMenuItem>
+            )}
           </DropdownMenuGroup>
           {user && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg text-primary-text-light" onClick={handleLogout}>
+              <DropdownMenuItem
+                className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+                onClick={handleLogout}
+              >
                 <LogOut className="w-4 h-4 mr-2 text-red-500" />
                 Log out
               </DropdownMenuItem>

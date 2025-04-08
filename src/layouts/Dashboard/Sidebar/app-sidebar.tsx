@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bot, Settings, SquareTerminal } from "lucide-react";
+import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText, SquareTerminal, Settings } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -15,43 +15,64 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAppSelector(useCurrentUser);
   const data = {
     navMain: [
+      //Admin routes
       {
-        title: "Dashboard-admin",
-        url: "/admin",
-        icon: SquareTerminal,
-        isActive: true,
+        title: "Overview",
+        url: "/dashboard/admin/overview",
+        icon: LayoutDashboard,
         show: user?.role === "admin",
       },
       {
-        title: "Dashboard-user",
-        url: "/dashboard1/user",
-        icon: SquareTerminal,
-        isActive: true,
-        show: user?.role === "user",
+        title: "Categories",
+        icon: FolderOpen,
+        show: user?.role === "admin",
+        items: [
+          { title: "Manage Categories", url: "/dashboard/admin/manage-categories" },
+          { title: "Deleted Categories", url: "/dashboard/admin/deleted-categories" },
+        ],
+      },
+      {
+        title: "Brands",
+        icon: BadgeCheck,
+        show: user?.role === "admin",
+        items: [
+          { title: "Manage Brands", url: "/dashboard/admin/manage-brands" },
+          { title: "Deleted Brands", url: "/dashboard/admin/deleted-brands" },
+        ],
       },
       {
         title: "Products",
-        // url: "/user/shop/products",
-        icon: Bot,
+        icon: Boxes,
         show: user?.role === "admin",
         items: [
-          {
-            title: "Manage Products",
-            url: "/dashboard1/manage-products",
-          },
-          {
-            title: "Manage Categories",
-            url: "/user/shop/category",
-          },
-          {
-            title: "Manage Brands",
-            url: "/user/shop/brand",
-          },
-          {
-            title: "Manage Coupon",
-            url: "/user/shop/manage-coupon",
-          },
+          { title: "Manage Products", url: "/dashboard/admin/manage-products" },
+          { title: "Add Products", url: "/dashboard/admin/add-product" },
+          { title: "Deleted Products", url: "/dashboard/admin/deleted-products" },
         ],
+      },
+      {
+        title: "Orders",
+        url: "/dashboard/admin/manage-orders",
+        icon: ShoppingCart,
+        show: user?.role === "admin",
+      },
+      {
+        title: "Blogs",
+        icon: FileText,
+        show: user?.role === "admin",
+        items: [
+          { title: "Manage Blogs", url: "/dashboard/admin/manage-blogs" },
+          { title: "Add Blogs", url: "/dashboard/admin/add-blogs" },
+          { title: "Deleted Blogs", url: "/dashboard/admin/deleted-blogs" },
+        ],
+      },
+
+      //User routes
+      {
+        title: "Users",
+        url: "/dashboard/admin/manage-users",
+        icon: SquareTerminal,
+        show: user?.role === "admin",
       },
 
       {

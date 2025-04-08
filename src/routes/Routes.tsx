@@ -1,4 +1,3 @@
-import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
 import RootLayout from "@/layouts/RootLayout";
 
 import AllProductsPage from "@/pages/AllProducts";
@@ -12,16 +11,27 @@ import RegisterPage from "@/pages/Register";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
-import ManageOrders from "@/pages/Dashboard/Admin/ManageOrders/ManageOrders";
-import ManageProducts from "@/pages/Dashboard/Admin/ManageProducts/ManageProducts";
-import ManageUsers from "@/pages/Dashboard/Admin/ManageUsers/ManageUsers";
+
 import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
 import AdminRoute from "./AdminRoute";
 import UserRoutes from "./UserRoutes";
-import AddNewProduct from "@/pages/Dashboard/Admin/ManageProducts/AddNewProduct";
-import UpdateProduct from "@/pages/Dashboard/Admin/ManageProducts/UpdateProduct";
 import About from "@/pages/About/About";
-import DashboardLayout1 from "@/layouts/Dashboard/DashboardLayout1";
+import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
+import ManageProducts from "@/pages/Dashboard/Admin/products/ManageProducts";
+import Overview from "@/pages/Dashboard/Admin/overview/Overview";
+import AddNewProduct from "@/pages/Dashboard/Admin/products/AddNewProduct";
+import UpdateProduct from "@/pages/Dashboard/Admin/products/UpdateProduct";
+import DeletedProducts from "@/pages/Dashboard/Admin/products/DeletedProducts";
+import ManageCategories from "@/pages/Dashboard/Admin/categories/ManageCategories";
+import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
+import ManageBrands from "@/pages/Dashboard/Admin/brands/ManageBrands";
+import DeletedBrands from "@/pages/Dashboard/Admin/brands/DeletedBrands";
+import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
+import ManageBlogs from "@/pages/Dashboard/Admin/blogs/ManageBlogs";
+import AddBlog from "@/pages/Dashboard/Admin/blogs/AddBlog";
+import UpdateBlog from "@/pages/Dashboard/Admin/blogs/UpdateBlog";
+import DeletedBlogs from "@/pages/Dashboard/Admin/blogs/DeletedBlogs";
+import ManageUsers from "@/pages/Dashboard/Admin/users/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -67,8 +77,19 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
+      //Admin Overview Routes
       {
-        path: "manage-products",
+        path: "admin/overview",
+        element: (
+          <AdminRoute>
+            <Overview />
+          </AdminRoute>
+        ),
+      },
+
+      //Product Routes
+      {
+        path: "admin/manage-products",
         element: (
           <AdminRoute>
             <ManageProducts />
@@ -76,7 +97,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manage-products/add-product",
+        path: "admin/add-product",
         element: (
           <AdminRoute>
             <AddNewProduct />
@@ -84,7 +105,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manage-products/:id",
+        path: "admin/update-product/:id",
         element: (
           <AdminRoute>
             <UpdateProduct />
@@ -92,93 +113,106 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manage-orders",
+        path: "admin/deleted-products",
+        element: (
+          <AdminRoute>
+            <DeletedProducts />
+          </AdminRoute>
+        ),
+      },
+      //Category Routes
+      {
+        path: "admin/manage-categories",
+        element: (
+          <AdminRoute>
+            <ManageCategories />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/deleted-categories",
+        element: (
+          <AdminRoute>
+            <DeletedCategories />
+          </AdminRoute>
+        ),
+      },
+
+      //Brand Routes
+      {
+        path: "admin/manage-brands",
+        element: (
+          <AdminRoute>
+            <ManageBrands />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/deleted-brands",
+        element: (
+          <AdminRoute>
+            <DeletedBrands />
+          </AdminRoute>
+        ),
+      },
+
+      //Manage Order Routes
+      {
+        path: "admin/manage-orders",
         element: (
           <AdminRoute>
             <ManageOrders />
           </AdminRoute>
         ),
       },
+
+      //Blogs Routes
       {
-        path: "manage-users",
+        path: "admin/manage-blogs",
+        element: (
+          <AdminRoute>
+            <ManageBlogs />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/add-blogs",
+        element: (
+          <AdminRoute>
+            <AddBlog />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/update-blog/:id",
+        element: (
+          <AdminRoute>
+            <UpdateBlog />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/deleted-blogs",
+        element: (
+          <AdminRoute>
+            <DeletedBlogs />
+          </AdminRoute>
+        ),
+      },
+
+      //Maange User Routes
+      {
+        path: "admin/manage-users",
         element: (
           <AdminRoute>
             <ManageUsers />
           </AdminRoute>
         ),
       },
+
+      // User Routes
       {
         path: "view-orders",
-        element: (
-          <UserRoutes>
-            <ViewOrders />
-          </UserRoutes>
-        ),
-      },
-      {
-        path: "manage-profile",
-        element: (
-          <UserRoutes>
-            <ManageProfile />
-          </UserRoutes>
-        ),
-      },
-    ],
-  },
-  {
-    path: "/dashboard1",
-    element: <DashboardLayout1 />,
-    children: [
-      {
-        path: "manage-products",
-        element: (
-          // <AdminRoute>
-          <ManageProducts />
-          // </AdminRoute>
-        ),
-      },
-      {
-        path: "manage-products/add-product",
-        element: (
-          <AdminRoute>
-            <AddNewProduct />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "manage-products/:id",
-        element: (
-          <AdminRoute>
-            <UpdateProduct />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "manage-orders",
-        element: (
-          <AdminRoute>
-            <ManageOrders />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "manage-users",
-        element: (
-          <AdminRoute>
-            <ManageUsers />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "view-orders",
-        element: (
-          <UserRoutes>
-            <ViewOrders />
-          </UserRoutes>
-        ),
-      },
-      {
-        path: "user",
         element: (
           <UserRoutes>
             <ViewOrders />

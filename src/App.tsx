@@ -7,11 +7,11 @@ import { ThemeProvider } from "./Provider/ThemeProvider";
 function App() {
   return (
     <>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Provider store={store}>
+      <Provider store={store}>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <RouterProvider router={router} />
-        </Provider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }

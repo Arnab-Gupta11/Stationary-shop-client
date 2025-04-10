@@ -2,14 +2,15 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AiOutlineSearch } from "react-icons/ai";
-import { TablePagination } from "./TablePagination";
+import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isFetching: boolean;
 }
 
-export function CustomTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function CustomTable<TData, TValue>({ columns, data, isFetching }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -19,7 +20,7 @@ export function CustomTable<TData, TValue>({ columns, data }: DataTableProps<TDa
   return (
     <>
       <div className="overflow-x-auto border-4 rounded-2xl border-light-muted-bg dark:border-dark-muted-bg">
-        <Table className="min-w-full table-auto rounded-2xl">
+        <Table className="min-w-[600px] md:min-w-full table-auto rounded-2xl">
           <TableHeader className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-t-2xl">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="border-slate-200 dark:border-dark-muted-bg">
@@ -34,7 +35,13 @@ export function CustomTable<TData, TValue>({ columns, data }: DataTableProps<TDa
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isFetching ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <TableSkeletonLoader /> {/* Show loader when fetching */}
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="border-[#e9eefc] dark:border-[#101417]">
                   {row.getVisibleCells().map((cell) => (
@@ -57,7 +64,7 @@ export function CustomTable<TData, TValue>({ columns, data }: DataTableProps<TDa
           </TableBody>
         </Table>
       </div>
-      <TablePagination table={table} />
+      {/* <TablePagination table={table} /> */}
     </>
   );
 }

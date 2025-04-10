@@ -88,7 +88,7 @@ export function TablePagination<TData>({ table }: DataTablePaginationProps<TData
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top" className="text-light-primary-text dark:text-dark-primary-txt">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[5, 10, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`} className="cursor-pointer">
                   {pageSize}
                 </SelectItem>

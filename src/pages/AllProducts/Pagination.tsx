@@ -2,6 +2,7 @@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { TMeta } from "@/types/global";
 import React, { useEffect } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 type TPaginationProductProp = {
   meta: TMeta;
@@ -44,39 +45,52 @@ export function PaginationProduct({ meta, page, setPage }: TPaginationProductPro
   };
 
   return (
-    <div className="flex justify-center">
-      <Pagination>
-        <PaginationContent>
-          {/* Previous Button */}
-          <PaginationItem>
-            <PaginationPrevious onClick={handlePrevious} className={`hover:cursor-pointer ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`} />
-          </PaginationItem>
+    <Pagination>
+      <PaginationContent className="flex items-center space-x-2">
+        {/* Previous Button with Icon */}
+        <PaginationItem>
+          <PaginationLink
+            onClick={handlePrevious}
+            className={`p-2 rounded-full transition-all duration-300 transform hover:scale-105 ${
+              page === 1
+                ? "text-slate-400 dark:text-slate-800 cursor-not-allowed"
+                : "text-light-primary-text dark:text-dark-primary-txt hover:text-primary hover:cursor-pointer"
+            }`}
+          >
+            <FaArrowLeft size={18} />
+          </PaginationLink>
+        </PaginationItem>
 
-          {/* Page Numbers */}
-          {pages.map((pageNumber) => (
-            <PaginationItem key={pageNumber}>
-              <PaginationLink
-                onClick={() => handlePageClick(pageNumber)}
-                className={`${
-                  page === pageNumber
-                    ? "bg-gradient-to-b from-gray-700 to-gray-900 font-medium text-white shadow hover:bg-gradient-to-br"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                } rounded px-4 py-2 hover:cursor-pointer`}
-              >
-                {pageNumber}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-
-          {/* Next Button */}
-          <PaginationItem>
-            <PaginationNext
-              onClick={handleNext}
-              className={`hover:cursor-pointer ${page === meta?.totalPage ? "opacity-50 cursor-not-allowed" : ""}`}
-            />
+        {/* Page Numbers */}
+        {pages.map((pageNumber) => (
+          <PaginationItem key={pageNumber}>
+            <PaginationLink
+              onClick={() => handlePageClick(pageNumber)}
+              className={`${
+                page === pageNumber
+                  ? "bg-button-gradient from-purple-500 to-blue-500 text-white font-semibold shadow-lg "
+                  : "bg-gray-200 dark:bg-slate-900 text-gray-700 hover:bg-gray-300 dark:hover:bg-slate-800  hover:text-primary"
+              } rounded-[14px] px-4 py-2 transition-all duration-200 ease-in-out transform hover:scale-105 cursor-pointer `}
+            >
+              {pageNumber}
+            </PaginationLink>
           </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+        ))}
+
+        {/* Next Button with Icon */}
+        <PaginationItem>
+          <PaginationLink
+            onClick={handleNext}
+            className={`p-2 rounded-full transition-all duration-300 transform hover:scale-105 ${
+              page === meta?.totalPage
+                ? "text-slate-400 dark:text-slate-800 cursor-not-allowed"
+                : "text-light-primary-text dark:text-dark-primary-txt hover:text-primary hover:cursor-pointer"
+            }`}
+          >
+            <FaArrowRight size={18} />
+          </PaginationLink>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }

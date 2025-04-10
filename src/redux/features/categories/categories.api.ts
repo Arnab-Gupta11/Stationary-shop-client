@@ -22,6 +22,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["category"],
       transformResponse: (response: TResponseRedux<TCategory[]>) => {
+        console.log("responssss===>", response);
         return {
           data: response.data,
           meta: response.meta,

@@ -77,6 +77,8 @@ export default {
         "card-shadow": "0 1px 4px #8080801c",
         "box-shadow-light": "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px",
         "box-shadow-dark": "#101017 0px 2px 0px, #101017 0px 2px 8px",
+        "dashboard-page-shadow-light": "rgba(17, 17, 26, 0.05) 0px 2px 2px 0px, rgba(17, 17, 26, 0.05) 0px 2px 2px 0px",
+        "dashboard-page-shadow-dark": "#101017 0px 2px 2px 0px, #101017 0px 2px 2px 0px",
       },
       backgroundImage: {
         "main-bg-dark": "linear-gradient(135deg, #0f1b1d 0%, #162528 50%, #1e363b 100%)",

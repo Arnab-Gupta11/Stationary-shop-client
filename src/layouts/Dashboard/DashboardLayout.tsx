@@ -23,7 +23,7 @@ const DashboardLayout = () => {
             </div>
           </header>
           <div className="p-2 z-0">
-            <div className="p-5 bg-slate-50 dark:bg-dark-primary-bg rounded-3xl shadow-inner shadow-slate-200 dark:shadow-black border-2 border-light-border dark:border-dark-border min-h-screen ">
+            <div className="sm:p-5 bg-slate-50 dark:bg-dark-primary-bg rounded-3xl shadow-inner shadow-slate-200 dark:shadow-black border-2 border-light-border dark:border-dark-border min-h-screen ">
               <Outlet />
             </div>
           </div>

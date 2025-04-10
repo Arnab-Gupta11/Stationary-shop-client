@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
 import { CustomTable } from "../../shared/CustomTable";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { useGetAllCategoriesQuery } from "@/redux/features/categories/categories.api";
 import { TCategory } from "@/types/category.types";
 import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
 import { useState } from "react";
+import CreateCategoryModal from "./CreateCategoryModal";
 const ManageCategories = () => {
   const [page, setPage] = useState(1);
   const {
@@ -20,7 +18,6 @@ const ManageCategories = () => {
     { name: "page", value: page },
     { name: "limit", value: 4 },
   ]);
-  console.log(categoryData);
   const columns: ColumnDef<TCategory>[] = [
     {
       header: "Icon",
@@ -63,23 +60,8 @@ const ManageCategories = () => {
     <div>
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
-          {/* <div className="relative">
-            <Search className="absolute top-3 left-2 text-slate-500" size={14} />
-            <Input
-              type="text"
-              onChange={handleSearchValu}
-              placeholder="Search Products..."
-              className="rounded-lg focus-visible:ring-0 w-full sm:w-56 pl-8 text-slate-700 font-normal"
-            />
-          </div> */}
-          {/* <AddProduct /> */}
           <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Categories</h1>
-          <Link to="/dashboard/manage-products/add-product">
-            <Button variant={"primary"}>
-              <Plus />
-              <span>Add Category</span>
-            </Button>
-          </Link>
+          <CreateCategoryModal />
         </div>
         {isLoading && <TableSkeletonLoader />}
         {!isLoading && <CustomTable columns={columns} data={categoryData?.data || []} isFetching={isFetching} />}

@@ -44,6 +44,17 @@ const categoryManagementApi = baseApi.injectEndpoints({
       //   };
       // },
     }),
+
+    // Add new Product
+    addNewCategory: builder.mutation({
+      query: (data) => ({
+        url: "/category",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["category"],
+    }),
+
     getProductDetails: builder.query({
       query: (args) => {
         return {
@@ -52,16 +63,6 @@ const categoryManagementApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ["review", "product"],
-    }),
-
-    // Add new Product
-    addNewProduct: builder.mutation({
-      query: (data) => ({
-        url: "/products",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["product"],
     }),
 
     // Update Registered Semester
@@ -87,7 +88,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
 export const {
   useGetAllCategoriesQuery,
   useGetProductDetailsQuery,
-  useAddNewProductMutation,
+  useAddNewCategoryMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
   useGetAllCategoriesOptionQuery,

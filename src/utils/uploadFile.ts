@@ -8,6 +8,5 @@ export const uploadFile = async (data: File[]) => {
     })
   );
   const imageUrls = uploadResults.filter((url): url is string => !!url);
-  console.log("After Uploading===>", imageUrls);
   return imageUrls;
 };

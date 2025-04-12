@@ -15,6 +15,7 @@ import { createCategoryValidationSchema } from "@/schemas/category";
 import toast from "react-hot-toast";
 import CustomForm from "@/components/form/CustomForm";
 import { uploadFile } from "@/utils/uploadFile";
+import { useAddNewCategoryMutation } from "@/redux/features/categories/categories.api";
 
 type TFormValues = z.infer<typeof createCategoryValidationSchema>;
 type TCategoryModalProp = {
@@ -28,7 +29,10 @@ const createCategoryDefaultValue = {
   parent: "",
   icon: [],
 };
+
 const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) => {
+  const [open, setOpen] = useState(false);
+  const [addNewCategory] = useAddNewCategoryMutation(undefined);
   const form = useForm<TFormValues>({
     resolver: zodResolver(createCategoryValidationSchema),
     defaultValues: createCategoryDefaultValue,
@@ -41,18 +45,16 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
     try {
       setUploading(true);
 
-      // Check for validation errors
+      // Validate icon field
       if (data.icon.length === 0) {
         form.trigger("icon");
         setUploading(false);
         return;
       }
 
-      console.log("Upload Files======>", data.icon);
-
       const imageUrls = await uploadFile(data.icon);
       if (imageUrls.length !== data.icon.length) {
-        toast("Some images failed to upload.Try again later.");
+        toast("Some images failed to upload. Try again later.");
         setUploading(false);
         return;
       }
@@ -64,14 +66,14 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
         icon: imageUrls[0],
       };
 
-      console.log("Submitting to backend:", payload);
-
-      form.reset({
-        name: "",
-        description: "",
-        parent: "",
-        icon: [],
-      });
+      const res = await addNewCategory(payload).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+        form.reset();
+        setOpen(false);
+      } else {
+        toast.error(res?.data?.message || "Something went wrong. Try again later.");
+      }
     } catch (err: any) {
       console.error(err);
     } finally {
@@ -80,7 +82,7 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="primary">
           <Plus />

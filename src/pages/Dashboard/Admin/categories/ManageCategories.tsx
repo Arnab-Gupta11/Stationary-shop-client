@@ -10,7 +10,6 @@ import { useState } from "react";
 import CreateCategoryModal from "./CreateCategoryModal";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDots } from "react-icons/bs";
-import { Loader2 } from "lucide-react";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 const ManageCategories = () => {
   const [page, setPage] = useState(1);
@@ -89,7 +88,6 @@ const ManageCategories = () => {
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
           <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Categories</h1>
-          <UpdateCategoryModal />
           <CreateCategoryModal categoryOption={categoryOption?.data} isLoading={categoryOptionLoading} />
         </div>
         {isLoading && <TableSkeletonLoader />}

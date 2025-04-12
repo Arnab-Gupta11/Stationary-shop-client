@@ -29,7 +29,7 @@ const CreateImageUploader = <T extends FieldValues>({
   });
 
   const [previews, setPreviews] = useState<string[]>([]);
-  const [dragging, setDragging] = useState(false); // <-- New
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     const newPreviews = (value as File[]).map((file: File) => URL.createObjectURL(file));

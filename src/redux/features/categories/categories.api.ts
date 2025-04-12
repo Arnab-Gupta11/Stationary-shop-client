@@ -60,13 +60,13 @@ const categoryManagementApi = baseApi.injectEndpoints({
     }),
 
     // Update Registered Semester
-    updateProduct: builder.mutation({
+    updateCategory: builder.mutation({
       query: (args) => ({
-        url: `/products/${args.id}`,
+        url: `/category/${args.id}`,
         method: "PUT",
         body: args.data,
       }),
-      invalidatesTags: ["product"],
+      invalidatesTags: ["category"],
     }),
 
     //Delete Product
@@ -83,7 +83,7 @@ export const {
   useGetAllCategoriesQuery,
   useGetCategoryDetailsQuery,
   useAddNewCategoryMutation,
-  useUpdateProductMutation,
+  useUpdateCategoryMutation,
   useDeleteProductMutation,
   useGetAllCategoriesOptionQuery,
 } = categoryManagementApi;

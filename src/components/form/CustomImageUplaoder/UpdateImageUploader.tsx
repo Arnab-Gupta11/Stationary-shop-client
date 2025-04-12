@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useEffect, useState } from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 interface UpdateImageUploaderProps<T extends FieldValues> {
   control: Control<T>;
@@ -24,7 +25,6 @@ const UpdateImageUploader = <T extends FieldValues>({
   name,
   label = "Upload Image",
   maxFiles = 3,
-  maxFileSize = 2,
   className = "",
   existingImages,
 }: UpdateImageUploaderProps<T>) => {
@@ -52,6 +52,7 @@ const UpdateImageUploader = <T extends FieldValues>({
   });
 
   const [previews, setPreviews] = useState<string[]>([]);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     const existingPreviews = existingImages.filter((url) => !value.removedExisting.includes(url));
@@ -96,12 +97,24 @@ const UpdateImageUploader = <T extends FieldValues>({
       <Label className="ml-1">{label}</Label>
       <label
         htmlFor="image-upload"
-        onDragOver={(e) => e.preventDefault()}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
         onDrop={handleImageDrop}
-        className="mt-2 cursor-pointer flex items-center justify-center px-4 py-2 h-28 w-full rounded-2xl border-2 border-slate-100 dark:border-gray-950 bg-slate-50 dark:bg-dark-muted-bg text-sm font-medium text-light-secondary-text dark:text-dark-secondary-txt focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg"
+        className={`mt-2 cursor-pointer flex items-center justify-center px-4 py-2 h-32 w-full rounded-2xl border-2 border-slate-100 dark:border-gray-950 text-sm text-light-secondary-text dark:text-dark-secondary-txt bg-slate-50 dark:bg-dark-muted-bg font-medium flex-col font-Exo transition-all hover:shadow-md dark:hover:shadow-dark-primary-bg hover:bg-slate-100 hover:dark:bg-slate-900
+                ${
+                  dragging
+                    ? "border-blue-200 bg-blue-50 dark:border-blue-950 dark:bg-[#181a37]"
+                    : "border-slate-100 bg-slate-50 dark:border-gray-950 dark:bg-dark-muted-bg"
+                }
+                `}
         aria-label="Drag and drop or click to upload images"
       >
-        Upload Image
+        <AiOutlineCloudUpload className="text-3xl xl:text-4xl" />
+        <span className="font-semibold mt-3">Drag & drop files here, or click to select files.</span>
+        <span className="text-slate-500 mt-0.5 text-sm">You can upload {maxFiles} files.</span>
       </label>
       <Input id="image-upload" type="file" accept="image/*" multiple={maxFiles > 1} className="hidden" onChange={handleChange} />
       {error && <span className="mt-3 text-red-600 text-xs font-medium">{error.message}</span>}

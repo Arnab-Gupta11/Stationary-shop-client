@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateCategoryValidationSchema } from "@/schemas/category";
-import { useGetCategoryDetailsQuery } from "@/redux/features/categories/categories.api";
+import { useGetCategoryDetailsQuery, useUpdateCategoryMutation } from "@/redux/features/categories/categories.api";
 
 import CustomForm from "@/components/form/CustomForm";
 import CustomInput from "@/components/form/CustomInput";
@@ -24,7 +25,7 @@ const UpdateCategoryModal = ({ id }: TCategoryModalProp) => {
   const defaultImages = [categoryData?.data?.icon];
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
-
+  const [updateCategory] = useUpdateCategoryMutation(undefined);
   const form = useAsyncForm<TFormValues>({
     resolver: zodResolver(updateCategoryValidationSchema),
     defaultValues: {
@@ -64,12 +65,16 @@ const UpdateCategoryModal = ({ id }: TCategoryModalProp) => {
         icon: finalImages[0],
       };
 
-      console.log("Submitting to backend:", payload);
-      toast.success("Category updated successfully!");
-      form.reset();
+      const res = await updateCategory({ id: categoryData?.data?._id, data: payload }).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+        form.reset();
+        setOpen(false);
+      } else {
+        toast.error(res?.data?.message || "Something went wrong. Try again later.");
+      }
     } catch (err: any) {
       console.error(err);
-      toast.error("Failed to update category. Try again later.");
     } finally {
       setUploading(false);
     }

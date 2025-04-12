@@ -33,7 +33,7 @@ export function NavMain({ items }: { items: TSidbarItem }) {
                     {item?.items ? (
                       <SidebarMenuButton
                         tooltip={item.title}
-                        className="text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary"
+                        className="text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary dark:hover:text-primary"
                       >
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
@@ -47,7 +47,7 @@ export function NavMain({ items }: { items: TSidbarItem }) {
                             className={({ isActive }) =>
                               isActive
                                 ? "text-primary font-medium flex items-center gap-2"
-                                : "flex items-center gap-2 text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary"
+                                : "flex items-center gap-2 text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary dark:hover:text-primary"
                             }
                           >
                             {item.icon && <item.icon className="w-4 h-4" />}

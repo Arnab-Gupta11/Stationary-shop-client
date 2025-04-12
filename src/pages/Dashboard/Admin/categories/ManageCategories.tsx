@@ -1,15 +1,17 @@
 import { CustomTable } from "../../shared/CustomTable";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { ColumnDef } from "@tanstack/react-table";
-import { useGetAllCategoriesQuery } from "@/redux/features/categories/categories.api";
+import { useGetAllCategoriesOptionQuery, useGetAllCategoriesQuery } from "@/redux/features/categories/categories.api";
 import { TCategory } from "@/types/category.types";
 import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
 import { useState } from "react";
 import CreateCategoryModal from "./CreateCategoryModal";
+import UpdateCategoryModal from "./UpdateCategoryModal";
 const ManageCategories = () => {
   const [page, setPage] = useState(1);
+  const { data: categoryOption, isLoading: categoryOptionLoading } = useGetAllCategoriesOptionQuery(undefined);
   const {
     data: categoryData,
     isLoading,
@@ -61,13 +63,18 @@ const ManageCategories = () => {
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
           <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Categories</h1>
-          <CreateCategoryModal />
+          <UpdateCategoryModal />
+          <CreateCategoryModal categoryOption={categoryOption?.data} isLoading={categoryOptionLoading} />
         </div>
         {isLoading && <TableSkeletonLoader />}
-        {!isLoading && <CustomTable columns={columns} data={categoryData?.data || []} isFetching={isFetching} />}
-        <div className="mt-6 flex w-full justify-start">
-          <PaginationProduct meta={categoryData?.meta as TMeta} page={page} setPage={setPage} />
-        </div>
+        {!isLoading && (
+          <>
+            <CustomTable columns={columns} data={categoryData?.data || []} isFetching={isFetching} />
+            <div className="mt-6 flex w-full justify-start">
+              {categoryData?.data && <PaginationProduct meta={categoryData?.meta as TMeta} page={page} setPage={setPage} />}
+            </div>
+          </>
+        )}
       </DashboardPageSection>
     </div>
   );

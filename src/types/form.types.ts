@@ -7,7 +7,7 @@ export type TCustomSelect = {
   fieldName: string;
   label: string;
   placeholder: string;
-  options: { value: string; label: string }[];
+  children: ReactNode;
 };
 
 //Custom Input Component type

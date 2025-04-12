@@ -4,7 +4,7 @@ import { TQueryParam, TResponseRedux } from "@/types/global";
 
 const categoryManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    //Get All Register semesters.
+    //Get All Categories.
     getAllCategories: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -13,7 +13,6 @@ const categoryManagementApi = baseApi.injectEndpoints({
             params.append(item.name, item.value as string);
           });
         }
-        console.log("params", params);
         return {
           url: "/category",
           method: "GET",
@@ -22,12 +21,28 @@ const categoryManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["category"],
       transformResponse: (response: TResponseRedux<TCategory[]>) => {
-        console.log("responssss===>", response);
         return {
           data: response.data,
           meta: response.meta,
         };
       },
+    }),
+
+    //Get All Categories option.
+    getAllCategoriesOption: builder.query({
+      query: () => {
+        return {
+          url: "/category/options",
+          method: "GET",
+        };
+      },
+      providesTags: ["category"],
+      // transformResponse: (response: TResponseRedux<TCategory[]>) => {
+      //   return {
+      //     data: response.data,
+      //     meta: response.meta,
+      //   };
+      // },
     }),
     getProductDetails: builder.query({
       query: (args) => {
@@ -69,5 +84,11 @@ const categoryManagementApi = baseApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetAllCategoriesQuery, useGetProductDetailsQuery, useAddNewProductMutation, useUpdateProductMutation, useDeleteProductMutation } =
-  categoryManagementApi;
+export const {
+  useGetAllCategoriesQuery,
+  useGetProductDetailsQuery,
+  useAddNewProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+  useGetAllCategoriesOptionQuery,
+} = categoryManagementApi;

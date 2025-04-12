@@ -9,3 +9,14 @@ export type TCategory = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type TCategoryOptions = {
+  _id: string;
+  name: string;
+  icon: string;
+  subcategory: {
+    _id: string;
+    name: string;
+    icon: string;
+  }[];
+};

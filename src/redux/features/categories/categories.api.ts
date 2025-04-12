@@ -37,15 +37,9 @@ const categoryManagementApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ["category"],
-      // transformResponse: (response: TResponseRedux<TCategory[]>) => {
-      //   return {
-      //     data: response.data,
-      //     meta: response.meta,
-      //   };
-      // },
     }),
 
-    // Add new Product
+    // Add new Category
     addNewCategory: builder.mutation({
       query: (data) => ({
         url: "/category",
@@ -55,14 +49,14 @@ const categoryManagementApi = baseApi.injectEndpoints({
       invalidatesTags: ["category"],
     }),
 
-    getProductDetails: builder.query({
+    getCategoryDetails: builder.query({
       query: (args) => {
         return {
-          url: `/products/${args.id}`,
+          url: `/category/${args.id}`,
           method: "GET",
         };
       },
-      providesTags: ["review", "product"],
+      providesTags: ["category"],
     }),
 
     // Update Registered Semester
@@ -87,7 +81,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
 });
 export const {
   useGetAllCategoriesQuery,
-  useGetProductDetailsQuery,
+  useGetCategoryDetailsQuery,
   useAddNewCategoryMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,

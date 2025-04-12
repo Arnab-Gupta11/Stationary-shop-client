@@ -1,125 +1,72 @@
-import CustomInput from "@/components/form/CustomInput";
-import CustomSelect from "@/components/form/CustomSelect";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
-import { SelectItem } from "@/components/ui/select";
-import { Pencil, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import imageUpload from "@/utils/imageUpload";
-import { useState, useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { updateCategoryValidationSchema } from "@/schemas/category";
+import { useGetCategoryDetailsQuery } from "@/redux/features/categories/categories.api";
+
+import CustomForm from "@/components/form/CustomForm";
+import CustomInput from "@/components/form/CustomInput";
 import UpdateImageUploader from "@/components/form/CustomImageUplaoder/UpdateImageUploader";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { uploadFile } from "@/utils/uploadFile";
+import { useAsyncForm } from "@/hooks/useAsyncForm";
+import { z } from "zod";
+import CustomTextArea from "@/components/form/CustomTextArea";
 
-// Mock database data
-const defaultData = {
-  name: {
-    firstName: "Rahim",
-    lastName: "Monjur",
-  },
-  email: "rahim@gmail.com",
-  fruits: "banana",
-  images: [
-    "https://res.cloudinary.com/dgxvtrpmh/image/upload/v1744396456/vks7qebzpevnqlihit2i.png",
-    "https://res.cloudinary.com/dgxvtrpmh/image/upload/v1744396455/laws74lflhqmi0auoswd.jpg",
-  ],
+type TCategoryModalProp = {
+  id: string;
 };
+type TFormValues = z.infer<typeof updateCategoryValidationSchema>;
+const UpdateCategoryModal = ({ id }: TCategoryModalProp) => {
+  const { data: categoryData, isLoading } = useGetCategoryDetailsQuery({ id });
+  const defaultImages = [categoryData?.data?.icon];
+  const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-// Zod schema for update
-const formSchema = z.object({
-  name: z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-  }),
-  email: z.string().email("Invalid email address"),
-  fruits: z.string().min(1, "Please select a fruit"),
-  image: z.object({
-    newImages: z.array(z.instanceof(File)).max(3, "Cannot upload more than 3 images"),
-    removedExisting: z.array(z.string().url("Invalid image URL")),
-  }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-const UpdateCategoryModal = () => {
-  const fruits = [
-    { name: "Apple", value: "apple" },
-    { name: "Banana", value: "banana" },
-  ];
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useAsyncForm<TFormValues>({
+    resolver: zodResolver(updateCategoryValidationSchema),
     defaultValues: {
-      name: defaultData.name,
-      email: defaultData.email,
-      fruits: defaultData.fruits,
-      image: {
+      name: "",
+      description: "",
+      images: {
         newImages: [],
         removedExisting: [],
       },
     },
-    mode: "onSubmit",
+    asyncData: categoryData?.data,
   });
 
-  const {
-    formState: { isSubmitting },
-    reset,
-    trigger,
-  } = form;
-
-  const [uploading, setUploading] = useState(false);
-
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: TFormValues) => {
     try {
       setUploading(true);
-
-      const totalImages = data.image.newImages.length + (defaultData.images.length - data.image.removedExisting.length);
+      const totalImages = data.images.newImages.length + (defaultImages.length - data.images.removedExisting.length);
       if (totalImages < 1) {
-        trigger("image");
+        form.trigger("images");
         toast.error("At least one image is required.");
         setUploading(false);
         return;
       }
 
-      console.log("Upload Files======>", data.image.newImages);
-
-      const uploadResults = await Promise.all(
-        data.image.newImages.map(async (file) => {
-          const result = await imageUpload(file);
-          return result.secure_url || null;
-        })
-      );
-      console.log("Upload URLs======>", uploadResults);
-
-      const newImageUrls = uploadResults.filter((url): url is string => !!url);
-      console.log("After Uploading===>", newImageUrls);
-
-      if (newImageUrls.length !== data.image.newImages.length) {
+      const newImageUrls = await uploadFile(data.images.newImages);
+      if (newImageUrls.length !== data.images.newImages.length) {
         toast.error("Some images failed to upload.");
         setUploading(false);
         return;
       }
 
-      const finalImages = defaultData.images.filter((url) => !data.image.removedExisting.includes(url)).concat(newImageUrls);
+      const finalImages = defaultImages.filter((url: string) => !data.images.removedExisting.includes(url)).concat(newImageUrls);
 
       const payload = {
         name: data.name,
-        email: data.email,
-        fruits: data.fruits,
-        images: finalImages,
+        description: data.description,
+        icon: finalImages[0],
       };
 
       console.log("Submitting to backend:", payload);
-
       toast.success("Category updated successfully!");
-      reset({
-        name: defaultData.name,
-        email: defaultData.email,
-        fruits: defaultData.fruits,
-        image: { newImages: [], removedExisting: [] },
-      });
+      form.reset();
     } catch (err: any) {
       console.error(err);
       toast.error("Failed to update category. Try again later.");
@@ -129,50 +76,47 @@ const UpdateCategoryModal = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <Pencil className="mr-2 h-4 w-4" />
-          <span>Edit Category</span>
-        </Button>
+        <span className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
+          Update
+        </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Product Category</DialogTitle>
         </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CustomInput fieldName="name.firstName" label="First Name" placeholder="Enter first name" inputType="text" form={form} />
-            <CustomInput fieldName="name.lastName" label="Last Name" placeholder="Enter last name" inputType="text" form={form} />
-            <CustomInput fieldName="email" label="Email" placeholder="Enter email" inputType="email" form={form} />
-            <CustomSelect form={form} fieldName="fruits" label="Favourite Fruit" placeholder="Choose your favourite fruit">
-              {fruits.map((option) => (
-                <SelectItem key={option.name} value={option.value}>
-                  {option.name}
-                </SelectItem>
-              ))}
-            </CustomSelect>
+        {isLoading && <Loader2 className="animate-spin mx-auto mt-8" />}
+        {!isLoading && (
+          <CustomForm form={form} onSubmit={onSubmit}>
+            <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
+            <CustomTextArea
+              fieldName="description"
+              label="Category Description"
+              placeholder="Enter category description"
+              inputType="text"
+              form={form}
+            />
             <UpdateImageUploader
               control={form.control}
-              name="image"
+              name="images"
               label="Category Image"
-              maxFiles={3}
-              maxFileSize={2}
-              existingImages={defaultData.images}
+              maxFiles={1}
+              maxFileSize={4}
+              existingImages={defaultImages}
             />
-            <Button variant="default" type="submit" className="w-full mt-8" disabled={isSubmitting || uploading}>
+            <Button variant="default" type="submit" className="w-full mt-8" disabled={uploading}>
               {uploading ? (
                 <div className="flex items-center gap-2">
                   <Loader2 className="animate-spin" />
-                  Uploading...
+                  Updating Category...
                 </div>
               ) : (
                 "Update Category"
               )}
             </Button>
-          </form>
-        </Form>
+          </CustomForm>
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -9,9 +9,10 @@ export const createCategoryValidationSchema = z.object({
 });
 //Update category validation schema
 export const updateCategoryValidationSchema = z.object({
-  body: z.object({
-    name: z.string().max(80, "Category name should not exceed 80 characters").optional(),
-    description: z.string().max(150, "Category name should not exceed 150 characters").optional(),
-    icon: z.string().optional(),
+  name: z.string().min(1, "Category name is required").max(80, "Category name should not exceed 80 characters"),
+  description: z.string().min(1, "Category description is required").max(150, "Category name should not exceed 150 characters"),
+  images: z.object({
+    newImages: z.array(z.instanceof(File)).max(1, "Cannot upload more than 1 image"),
+    removedExisting: z.array(z.string().url("Invalid image URL")),
   }),
 });

@@ -38,7 +38,6 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
     defaultValues: createCategoryDefaultValue,
     mode: "onChange",
   });
-
   const [uploading, setUploading] = useState(false);
 
   const onSubmit = async (data: TFormValues) => {

@@ -8,6 +8,9 @@ import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
 import { useState } from "react";
 import CreateCategoryModal from "./CreateCategoryModal";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BsThreeDots } from "react-icons/bs";
+import { Loader2 } from "lucide-react";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 const ManageCategories = () => {
   const [page, setPage] = useState(1);
@@ -55,6 +58,29 @@ const ManageCategories = () => {
           </span>
         );
       },
+    },
+    {
+      accessorKey: "action",
+      header: () => <div>Action</div>,
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="outline-none flex items-center justify-center hover:scale-105 active:scale-95 duration-700">
+            <BsThreeDots className="mt-2 text-xl" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            side="bottom"
+            className="bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border text-light-primary-text dark:text-dark-primary-txt dark:shadow-box-shadow-dark font-medium font-Exo rounded-2xl p-2 flex flex-col"
+          >
+            <UpdateCategoryModal id={row.original._id} />
+            <span
+              // onClick={() => handleDelete(item)}
+              className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+            >
+              Delete
+            </span>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
     },
   ];
 

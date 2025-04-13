@@ -1,136 +1,119 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
-import { BsThreeDots } from "react-icons/bs";
-import { TProduct } from "@/types/product.types";
-import { formatPrice } from "@/utils/formatePrice";
-import Loader from "@/components/shared/Loader";
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CustomTable } from "../../shared/CustomTable";
+import DashboardPageSection from "../../shared/DashboardPageSection";
+import { ColumnDef } from "@tanstack/react-table";
+import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
-import { Plus, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-const ManageProducts = () => {
-  const [page, setPage] = useState(1);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const {
-    data: productData,
-    isLoading,
-    isFetching,
-  } = useGetAllProductsQuery([
-    { name: "page", value: page },
-    { name: "searchTerm", value: searchValue },
-  ]);
-  const handleSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
-  const [deleteProduct] = useDeleteProductMutation(undefined);
+import { useState } from "react";
 
-  const handleDelete = (_id: string) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res = await deleteProduct({ id: _id }).unwrap();
-          if (res?.success === true) {
-            Swal.fire("Your Product has been Deleted!", "success");
-          }
-        } catch (error) {
-          Swal.fire("Error!", "Failed to delete review. Please try again later.", "error");
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BsThreeDots } from "react-icons/bs";
+
+import DeleteConfirmationModal from "../../shared/DeleteConfirmationModal";
+import toast from "react-hot-toast";
+import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import { IProduct } from "@/types/product.types";
+import { formatPrice } from "@/utils/formatePrice";
+const ManageProducts = () => {
+  //Hooks
+  const [page, setPage] = useState(1);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  //Categories
+  const { data: productData, isLoading, isFetching } = useGetAllProductsQuery([{ name: "page", value: page }]);
+
+  //Delete Category
+  const [deleteProduct] = useDeleteProductMutation(undefined);
+  const handleDelete = (data: IProduct) => {
+    setSelectedId(data?._id);
+    setSelectedItem(data?.name);
+    setDeleteModalOpen(true);
+  };
+  const handleDeleteConfirm = async () => {
+    try {
+      if (selectedId) {
+        const res = await deleteProduct(selectedId).unwrap();
+        if (res?.success === true) {
+          toast.success(res?.message);
+          setDeleteModalOpen(false);
+        } else {
+          toast.error(res?.data?.message || "Something went wrong. Try again later.");
         }
       }
-    });
+    } catch (err: any) {
+      console.error(err?.message);
+    }
   };
+  const columns: ColumnDef<IProduct>[] = [
+    {
+      header: "Image",
+      cell: ({ row }) => (
+        <div className="flex items-center space-x-3">
+          <img
+            src={row.original.images[0]}
+            alt={row.original.name}
+            className="w-12 h-12 md:w-16 md:h-16 bg-light-muted-bg dark:bg-dark-muted-bg p-2 rounded-2xl flex-shrink-0 object-contain"
+          />
+        </div>
+      ),
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      header: "Price",
+      cell: ({ row }) => {
+        return <span>{formatPrice(row.original.price)}</span>;
+      },
+    },
+    {
+      accessorKey: "quantity",
+      header: "Quantity",
+    },
+    {
+      accessorKey: "action",
+      header: () => <div>Action</div>,
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="outline-none flex items-center justify-center hover:scale-105 active:scale-95 duration-700">
+            <BsThreeDots className="mt-2 text-xl" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="bottom" className=" flex flex-col">
+            {/* <UpdateCategoryModal id={row.original._id} /> */}
+            <span
+              onClick={() => handleDelete(row.original)}
+              className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+            >
+              Delete
+            </span>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
+  ];
 
   return (
     <div>
-      <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
-        <div className="relative">
-          <Search className="absolute top-3 left-2 text-slate-500" size={14} />
-          <Input
-            type="text"
-            onChange={handleSearchValue}
-            placeholder="Search Products..."
-            className="rounded-lg focus-visible:ring-0 w-full sm:w-56 pl-8 text-slate-700 font-normal"
-          />
+      <DashboardPageSection>
+        <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
+          <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Products</h1>
+          {/* <CreateCategoryModal categoryOption={categoryOption?.data} isLoading={categoryOptionLoading} /> */}
         </div>
-        {/* <AddProduct /> */}
-        <Link to="/dashboard/manage-products/add-product">
-          <Button>
-            <Plus />
-            <span>Add Product</span>
-          </Button>
-        </Link>
-      </div>
-      {isLoading || isFetching ? (
-        <Loader />
-      ) : (
-        <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
-          <table className="w-full bg-white border border-[#f1f1f1] mb-5 select-none -z-10">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-2 text-left border w-32 border-[#f1f1f1]">Image</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Name</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Category</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Price</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Status</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productData?.data?.map((item: TProduct) => (
-                <tr key={item?._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border w-32 border-[#f1f1f1]">
-                    <img src={item?.image} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
-                  </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.name}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.category}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatPrice(item?.price)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
-                    {item?.inStock ? (
-                      <span className="bg-[#e8fbe6] text-green-600 border border-[#f5f4f4] px-2 py-1 text-sm font-base rounded-md">In Stock</span>
-                    ) : (
-                      <span className="bg-[#FBE6EC] text-primary-bg px-2 text-sm font-semibold rounded-md border border-[#f5f4f4] py-1">
-                        Out of Stock
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-2 border w-20 border-[#f1f1f1]">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="outline-none hover:scale-105 active:scale-95 duration-700">
-                        <BsThreeDots className="mt-2" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        side="bottom"
-                        className="bg-white border-none shadow-md shadow-secondary-bg-light outline-none p-2 flex flex-col gap-2"
-                      >
-                        <Link to={`/dashboard/manage-products/${item?._id}`}>
-                          <span className="text-slate-700 hover:text-slate-900 ">Update</span>
-                        </Link>
-
-                        <span onClick={() => handleDelete(item?._id)} className="text-slate-700 hover:text-slate-900 hover:cursor-pointer">
-                          Delete
-                        </span>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />
-        </div>
-      )}
+        {isLoading && <TableSkeletonLoader />}
+        {!isLoading && (
+          <>
+            <CustomTable columns={columns} data={productData?.data || []} isFetching={isFetching} />
+            <div className="mt-6 flex w-full justify-start">
+              {productData?.data && <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />}
+            </div>
+          </>
+        )}
+      </DashboardPageSection>
+      <DeleteConfirmationModal name={selectedItem} isOpen={isDeleteModalOpen} onOpenChange={setDeleteModalOpen} onConfirm={handleDeleteConfirm} />
     </div>
   );
 };

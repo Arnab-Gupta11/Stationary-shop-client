@@ -27,12 +27,35 @@ const categoryManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    //Get all deleted Categories.
+    getAllDeletedCategories: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/category/deleted-categories",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["category"],
+      transformResponse: (response: TResponseRedux<TCategory[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
 
     //Get All Categories option.
     getAllCategoriesOption: builder.query({
       query: () => {
         return {
-          url: "/category/options",
+          url: "/category/category-options",
           method: "GET",
         };
       },
@@ -86,4 +109,5 @@ export const {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
   useGetAllCategoriesOptionQuery,
+  useGetAllDeletedCategoriesQuery,
 } = categoryManagementApi;

@@ -23,7 +23,6 @@ import AddNewProduct from "@/pages/Dashboard/Admin/products/AddNewProduct";
 import UpdateProduct from "@/pages/Dashboard/Admin/products/UpdateProduct";
 import DeletedProducts from "@/pages/Dashboard/Admin/products/DeletedProducts";
 import ManageCategories from "@/pages/Dashboard/Admin/categories/ManageCategories";
-import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
 import ManageBrands from "@/pages/Dashboard/Admin/brands/ManageBrands";
 import DeletedBrands from "@/pages/Dashboard/Admin/brands/DeletedBrands";
 import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
@@ -32,6 +31,7 @@ import AddBlog from "@/pages/Dashboard/Admin/blogs/AddBlog";
 import UpdateBlog from "@/pages/Dashboard/Admin/blogs/UpdateBlog";
 import DeletedBlogs from "@/pages/Dashboard/Admin/blogs/DeletedBlogs";
 import ManageUsers from "@/pages/Dashboard/Admin/users/ManageUsers";
+import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
 
 const router = createBrowserRouter([
   {

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomTable } from "../../shared/CustomTable";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { ColumnDef } from "@tanstack/react-table";
-import { useGetAllDeletedCategoriesQuery } from "@/redux/features/categories/categories.api";
+import { useGetAllDeletedCategoriesQuery, useRestoreCategoryMutation } from "@/redux/features/categories/categories.api";
 import { TCategory } from "@/types/category.types";
 import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
@@ -9,11 +10,12 @@ import { TMeta } from "@/types/global";
 import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDots } from "react-icons/bs";
+import toast from "react-hot-toast";
 const DeletedCategories = () => {
   //Hooks
   const [page, setPage] = useState(1);
 
-  //Categories
+  //Get Deleted Categories
   const {
     data: categoryData,
     isLoading,
@@ -22,6 +24,21 @@ const DeletedCategories = () => {
     { name: "page", value: page },
     { name: "limit", value: 4 },
   ]);
+  //Restore Categories.
+  const [restoreCategory] = useRestoreCategoryMutation(undefined);
+  const handleRestoreCategory = async (id: string) => {
+    try {
+      const res = await restoreCategory(id).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.data?.message || "Something went wrong. Try again later.");
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
+  };
+
   const columns: ColumnDef<TCategory>[] = [
     {
       header: "Icon",
@@ -68,10 +85,10 @@ const DeletedCategories = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent side="bottom" className=" flex flex-col">
             <span
-              // onClick={() => handleDelete(row.original)}
+              onClick={() => handleRestoreCategory(row.original._id)}
               className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
             >
-              Delete
+              Restore
             </span>
           </DropdownMenuContent>
         </DropdownMenu>

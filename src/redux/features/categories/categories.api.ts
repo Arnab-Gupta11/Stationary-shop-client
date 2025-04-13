@@ -100,6 +100,14 @@ const categoryManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["category"],
     }),
+    //Restore Category
+    restoreCategory: builder.mutation({
+      query: (id) => ({
+        url: `/category/${id}/restore`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["category"],
+    }),
   }),
 });
 export const {
@@ -110,4 +118,5 @@ export const {
   useDeleteCategoryMutation,
   useGetAllCategoriesOptionQuery,
   useGetAllDeletedCategoriesQuery,
+  useRestoreCategoryMutation,
 } = categoryManagementApi;

@@ -44,7 +44,7 @@ const brandManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      providesTags: ["category"],
+      providesTags: ["brand"],
       transformResponse: (response: TResponseRedux<TBrand[]>) => {
         return {
           data: response.data,

@@ -64,23 +64,23 @@ const categoryManagementApi = baseApi.injectEndpoints({
     }),
 
     // Add new Category
-    addNewCategory: builder.mutation({
+    addNewBrand: builder.mutation({
       query: (data) => ({
-        url: "/category",
+        url: "/brands",
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["brand"],
     }),
-
-    getCategoryDetails: builder.query({
+    //Get Brand details
+    getBrandDetails: builder.query({
       query: (args) => {
         return {
-          url: `/category/${args.id}`,
+          url: `/brands/${args.id}`,
           method: "GET",
         };
       },
-      providesTags: ["category"],
+      providesTags: ["brand"],
     }),
 
     // Update Category

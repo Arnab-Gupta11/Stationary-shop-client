@@ -10,9 +10,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-xl",
+        default: "bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-[11px]",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border  bg-background shadow-sm",
+        outline: "border  bg-background shadow-sm rounded-[11px]",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "",
         link: "text-primary underline-offset-4 hover:underline",

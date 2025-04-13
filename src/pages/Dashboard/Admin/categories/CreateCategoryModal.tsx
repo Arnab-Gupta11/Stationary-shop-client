@@ -89,46 +89,48 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
           <span>Add Category</span>
         </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create Product Category</DialogTitle>
-        </DialogHeader>
+      <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
+        <div className="p-6 overflow-y-auto w-full h-full">
+          <DialogHeader>
+            <DialogTitle>Create Product Category</DialogTitle>
+          </DialogHeader>
 
-        <CustomForm form={form} onSubmit={onSubmit}>
-          <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
-          <CustomTextArea
-            fieldName="description"
-            label="Category Description"
-            placeholder="Enter category description"
-            inputType="text"
-            form={form}
-          />
-          <CustomSelect form={form} fieldName="parent" label="Parent Category (Optional)" placeholder="Select parent category (if sub-category)">
-            {isLoading && (
-              <div className="flex items-center gap-2">
-                <Loader2 className="animate-spin" />
-              </div>
-            )}
-            {!isLoading &&
-              categoryOption?.length > 0 &&
-              categoryOption?.map((option) => (
-                <SelectItem key={option._id} value={option._id}>
-                  {option.name}
-                </SelectItem>
-              ))}
-          </CustomSelect>
-          <CreateImageUploader control={form.control} name="icon" label="Category Icon image" maxFiles={1} />
-          <Button variant="default" type="submit" className="w-full mt-8" disabled={uploading}>
-            {uploading ? (
-              <div className="flex items-center gap-2">
-                <Loader2 className="animate-spin" />
-                Adding Category...
-              </div>
-            ) : (
-              "Add Category"
-            )}
-          </Button>
-        </CustomForm>
+          <CustomForm form={form} onSubmit={onSubmit}>
+            <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
+            <CustomTextArea
+              fieldName="description"
+              label="Category Description"
+              placeholder="Enter category description"
+              inputType="text"
+              form={form}
+            />
+            <CustomSelect form={form} fieldName="parent" label="Parent Category (Optional)" placeholder="Select parent category (if sub-category)">
+              {isLoading && (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                </div>
+              )}
+              {!isLoading &&
+                categoryOption?.length > 0 &&
+                categoryOption?.map((option) => (
+                  <SelectItem key={option._id} value={option._id}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+            </CustomSelect>
+            <CreateImageUploader control={form.control} name="icon" label="Category Icon image" maxFiles={1} />
+            <Button variant="default" type="submit" className="w-full mt-8" disabled={uploading}>
+              {uploading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Adding Category...
+                </div>
+              ) : (
+                "Add Category"
+              )}
+            </Button>
+          </CustomForm>
+        </div>
       </DialogContent>
     </Dialog>
   );

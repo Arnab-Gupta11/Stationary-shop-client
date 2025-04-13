@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomTable } from "../../shared/CustomTable";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { ColumnDef } from "@tanstack/react-table";
-import { useGetAllCategoriesOptionQuery, useGetAllCategoriesQuery } from "@/redux/features/categories/categories.api";
+import { useDeleteCategoryMutation, useGetAllCategoriesOptionQuery, useGetAllCategoriesQuery } from "@/redux/features/categories/categories.api";
 import { TCategory } from "@/types/category.types";
 import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
@@ -11,9 +12,19 @@ import CreateCategoryModal from "./CreateCategoryModal";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDots } from "react-icons/bs";
 import UpdateCategoryModal from "./UpdateCategoryModal";
+import DeleteConfirmationModal from "../../shared/DeleteConfirmationModal";
+import toast from "react-hot-toast";
 const ManageCategories = () => {
+  //Hooks
   const [page, setPage] = useState(1);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  //Category Options
   const { data: categoryOption, isLoading: categoryOptionLoading } = useGetAllCategoriesOptionQuery(undefined);
+
+  //Categories
   const {
     data: categoryData,
     isLoading,
@@ -22,6 +33,29 @@ const ManageCategories = () => {
     { name: "page", value: page },
     { name: "limit", value: 4 },
   ]);
+
+  //Delete Category
+  const [deleteCategory] = useDeleteCategoryMutation(undefined);
+  const handleDelete = (data: TCategory) => {
+    setSelectedId(data?._id);
+    setSelectedItem(data?.name);
+    setDeleteModalOpen(true);
+  };
+  const handleDeleteConfirm = async () => {
+    try {
+      if (selectedId) {
+        const res = await deleteCategory(selectedId).unwrap();
+        if (res?.success === true) {
+          toast.success(res?.message);
+          setDeleteModalOpen(false);
+        } else {
+          toast.error(res?.data?.message || "Something went wrong. Try again later.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
+  };
   const columns: ColumnDef<TCategory>[] = [
     {
       header: "Icon",
@@ -66,13 +100,10 @@ const ManageCategories = () => {
           <DropdownMenuTrigger className="outline-none flex items-center justify-center hover:scale-105 active:scale-95 duration-700">
             <BsThreeDots className="mt-2 text-xl" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            side="bottom"
-            className="bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border text-light-primary-text dark:text-dark-primary-txt dark:shadow-box-shadow-dark font-medium font-Exo rounded-2xl p-2 flex flex-col"
-          >
+          <DropdownMenuContent side="bottom" className=" flex flex-col">
             <UpdateCategoryModal id={row.original._id} />
             <span
-              // onClick={() => handleDelete(item)}
+              onClick={() => handleDelete(row.original)}
               className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
             >
               Delete
@@ -100,6 +131,7 @@ const ManageCategories = () => {
           </>
         )}
       </DashboardPageSection>
+      <DeleteConfirmationModal name={selectedItem} isOpen={isDeleteModalOpen} onOpenChange={setDeleteModalOpen} onConfirm={handleDeleteConfirm} />
     </div>
   );
 };

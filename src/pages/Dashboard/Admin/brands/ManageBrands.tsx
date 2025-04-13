@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useDeleteBrandMutation, useGetAllBrandsByAdminQuery } from "@/redux/features/brand";
 import { TBrand } from "@/types/brand.types";
 import CreateBrandModal from "./CreateBrandModal";
+import UpdateBrandModal from "./UpdateBrandModal";
 const ManageBrands = () => {
   //Hooks
   const [page, setPage] = useState(1);
@@ -83,7 +84,7 @@ const ManageBrands = () => {
             <BsThreeDots className="mt-2 text-xl" />
           </DropdownMenuTrigger>
           <DropdownMenuContent side="bottom" className=" flex flex-col">
-            {/* <UpdateCategoryModal id={row.original._id} /> */}
+            <UpdateBrandModal id={row.original._id} />
             <span
               onClick={() => handleDelete(row.original)}
               className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"

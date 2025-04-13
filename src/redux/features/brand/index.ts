@@ -2,7 +2,7 @@ import { baseApi } from "@/redux/api/baseApi";
 import { TCategory } from "@/types/category.types";
 import { TQueryParam, TResponseRedux } from "@/types/global";
 
-const categoryManagementApi = baseApi.injectEndpoints({
+const brandManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     //Get all brands by admin.
     getAllBrandsByAdmin: builder.query({
@@ -29,7 +29,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
     }),
 
     //Get all deleted Categories.
-    getAllDeletedCategories: builder.query({
+    getAllDeletedBrands: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -38,7 +38,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/category/deleted-categories",
+          url: "/brands/deleted-brands",
           method: "GET",
           params: params,
         };
@@ -72,6 +72,7 @@ const categoryManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["brand"],
     }),
+
     //Get Brand details
     getBrandDetails: builder.query({
       query: (args) => {
@@ -84,40 +85,41 @@ const categoryManagementApi = baseApi.injectEndpoints({
     }),
 
     // Update Category
-    updateCategory: builder.mutation({
+    updateBrand: builder.mutation({
       query: (args) => ({
-        url: `/category/${args.id}`,
+        url: `/brands/${args.id}`,
         method: "PUT",
         body: args.data,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["brand"],
     }),
 
     //Delete Category
-    deleteCategory: builder.mutation({
+    deleteBrand: builder.mutation({
       query: (id) => ({
-        url: `/category/${id}`,
+        url: `/brands/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["brand"],
     }),
+
     //Restore Category
-    restoreCategory: builder.mutation({
+    restoreBrand: builder.mutation({
       query: (id) => ({
-        url: `/category/${id}/restore`,
+        url: `/brands/${id}/restore`,
         method: "PUT",
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["brand"],
     }),
   }),
 });
 export const {
-  useGetAllCategoriesQuery,
-  useGetCategoryDetailsQuery,
-  useAddNewCategoryMutation,
-  useUpdateCategoryMutation,
-  useDeleteCategoryMutation,
-  useGetAllCategoriesOptionQuery,
-  useGetAllDeletedCategoriesQuery,
-  useRestoreCategoryMutation,
-} = categoryManagementApi;
+  useAddNewBrandMutation,
+  useDeleteBrandMutation,
+  useGetAllBrandsByAdminQuery,
+  useGetAllBrandsQuery,
+  useGetAllDeletedBrandsQuery,
+  useGetBrandDetailsQuery,
+  useRestoreBrandMutation,
+  useUpdateBrandMutation,
+} = brandManagementApi;

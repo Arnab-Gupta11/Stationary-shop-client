@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import CustomForm from "@/components/form/CustomForm";
 import { uploadFile } from "@/utils/uploadFile";
 import { useAddNewCategoryMutation } from "@/redux/features/categories/categories.api";
+import CustomTextArea from "@/components/form/CustomTextArea";
 
 type TFormValues = z.infer<typeof createCategoryValidationSchema>;
 type TCategoryModalProp = {
@@ -95,7 +96,13 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
 
         <CustomForm form={form} onSubmit={onSubmit}>
           <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
-          <CustomInput fieldName="description" label="Category Description" placeholder="Enter category description" inputType="text" form={form} />
+          <CustomTextArea
+            fieldName="description"
+            label="Category Description"
+            placeholder="Enter category description"
+            inputType="text"
+            form={form}
+          />
           <CustomSelect form={form} fieldName="parent" label="Parent Category (Optional)" placeholder="Select parent category (if sub-category)">
             {isLoading && (
               <div className="flex items-center gap-2">
@@ -103,8 +110,8 @@ const CreateCategoryModal = ({ categoryOption, isLoading }: TCategoryModalProp) 
               </div>
             )}
             {!isLoading &&
-              categoryOption.length > 0 &&
-              categoryOption.map((option) => (
+              categoryOption?.length > 0 &&
+              categoryOption?.map((option) => (
                 <SelectItem key={option._id} value={option._id}>
                   {option.name}
                 </SelectItem>

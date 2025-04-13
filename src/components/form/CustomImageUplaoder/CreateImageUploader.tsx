@@ -84,8 +84,8 @@ const CreateImageUploader = <T extends FieldValues>({
         aria-label="Drag and drop or click to upload images"
       >
         <AiOutlineCloudUpload className="text-3xl xl:text-4xl" />
-        <span className="font-semibold mt-3">Drag & drop files here, or click to select files.</span>
-        <span className="text-slate-500 mt-0.5 text-sm">You can upload {maxFiles} files.</span>
+        <span className="font-semibold mt-3 text-center">Drag & drop files here, or click to select files.</span>
+        <span className="text-slate-500 mt-0.5 text-sm text-center">You can upload {maxFiles} files.</span>
       </label>
       <Input id="image-upload" type="file" accept="image/*" multiple={maxFiles > 1} className="hidden" onChange={handleChange} />
       {error && <span className="mt-3 text-red-600 text-xs font-medium">{error.message}</span>}

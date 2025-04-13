@@ -4,11 +4,11 @@ import { cn } from "@/lib/utils";
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<"textarea">>(({ className, ...props }, ref) => {
   return (
-    <div className="rounded-2xl overflow-hidden ">
+    <div className="h-40 bg-slate-50 dark:bg-dark-muted-bg rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-gray-950">
       <textarea
         ref={ref}
         className={cn(
-          "h-40 w-full rounded-xl resize-none border-2 border-slate-100 dark:border-gray-950 bg-slate-50 dark:bg-dark-muted-bg px-3 py-1.5 text-sm md:text-sm font-Exo font-medium text-light-secondary-text dark:text-dark-secondary-txt placeholder:text-muted-foreground shadow-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg disabled:cursor-not-allowed disabled:opacity-50 overflow-y-auto",
+          "h-40 w-full rounded-2xl resize-none  bg-slate-50 dark:bg-dark-muted-bg px-3 py-2 text-sm text-light-secondary-text dark:text-dark-secondary-txt placeholder:text-muted-foreground shadow-sm focus-visible:outline-none focus-visible:ring-0  disabled:cursor-not-allowed disabled:opacity-50 font-Exo font-medium  overflow-y-auto custom-scrollbar",
           className
         )}
         {...props}

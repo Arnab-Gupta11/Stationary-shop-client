@@ -88,7 +88,7 @@ const ManageProducts = () => {
           <DropdownMenuContent side="bottom" className=" flex flex-col">
             <Link to={`/dashboard/admin/update-product/${row.original._id}`}>
               <span className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
-                Delete
+                Update
               </span>
             </Link>
 

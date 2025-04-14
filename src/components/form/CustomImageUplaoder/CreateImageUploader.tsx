@@ -65,7 +65,7 @@ const CreateImageUploader = <T extends FieldValues>({
 
   return (
     <div className={`w-full mt-4 ${className}`}>
-      <Label className="ml-1">{label}</Label>
+      <Label className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">{label}</Label>
       <label
         htmlFor="image-upload"
         onDragOver={(e) => {
@@ -88,11 +88,11 @@ const CreateImageUploader = <T extends FieldValues>({
         <span className="text-slate-500 mt-0.5 text-sm text-center">You can upload {maxFiles} files.</span>
       </label>
       <Input id="image-upload" type="file" accept="image/*" multiple={maxFiles > 1} className="hidden" onChange={handleChange} />
-      {error && <span className="mt-3 text-red-600 text-xs font-medium">{error.message}</span>}
-      <div className="mt-4 grid grid-col-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-8 gap-3">
+      {error && <span className="mt-3 text-red-500 text-xs font-medium">{error.message}</span>}
+      <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-8 gap-3">
         {previews.map((preview, index) => (
           <div key={index} className="relative">
-            <img src={preview} alt="preview" className="w-full h-24 object-contain rounded-lg shadow-md p-1" />
+            <img src={preview} alt="preview" className="w-full h-24 object-cover rounded-2xl shadow-md p-1" />
             <button
               type="button"
               onClick={() => removeImage(index)}

@@ -15,6 +15,9 @@ import toast from "react-hot-toast";
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 const ManageProducts = () => {
   //Hooks
   const [page, setPage] = useState(1);
@@ -83,7 +86,12 @@ const ManageProducts = () => {
             <BsThreeDots className="mt-2 text-xl" />
           </DropdownMenuTrigger>
           <DropdownMenuContent side="bottom" className=" flex flex-col">
-            {/* <UpdateCategoryModal id={row.original._id} /> */}
+            <Link to={`/dashboard/admin/update-product/${row.original._id}`}>
+              <span className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
+                Delete
+              </span>
+            </Link>
+
             <span
               onClick={() => handleDelete(row.original)}
               className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
@@ -101,7 +109,12 @@ const ManageProducts = () => {
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
           <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Products</h1>
-          {/* <CreateCategoryModal categoryOption={categoryOption?.data} isLoading={categoryOptionLoading} /> */}
+          <Link to={"/dashboard/admin/add-product"}>
+            <Button variant="primary">
+              <Plus />
+              <span>Add Product</span>
+            </Button>
+          </Link>
         </div>
         {isLoading && <TableSkeletonLoader />}
         {!isLoading && (

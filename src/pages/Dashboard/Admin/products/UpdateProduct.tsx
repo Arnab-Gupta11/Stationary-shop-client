@@ -1,196 +1,288 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import { FiUpload } from "react-icons/fi";
-import { useForm } from "react-hook-form";
-import imageUpload from "@/utils/imageUpload";
+import CustomInput from "@/components/form/CustomInput";
+import CustomSelect from "@/components/form/CustomSelect";
 import { Button } from "@/components/ui/button";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import toast from "react-hot-toast";
-import { useGetProductDetailsQuery, useUpdateProductMutation } from "@/redux/features/product/product.api";
-import { BiLoaderCircle } from "react-icons/bi";
-import { TProduct } from "@/types/product.types";
-import Loader from "@/components/shared/Loader";
+import { SelectItem } from "@/components/ui/select";
+import { Loader2, Plus } from "lucide-react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useState } from "react";
+import CreateImageUploader from "@/components/form/CustomImageUplaoder/CreateImageUploader";
+import { TCategoryOptions } from "@/types/category.types";
+
+import CustomForm from "@/components/form/CustomForm";
+
+import CustomTextArea from "@/components/form/CustomTextArea";
+import DashboardPageSection from "../../shared/DashboardPageSection";
+import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
+import { useAddNewProductMutation } from "@/redux/features/product/product.api";
+import { useGetAllBrandsQuery } from "@/redux/features/brand";
+import { TBrand } from "@/types/brand.types";
+import { createProductValidationSchema } from "@/schemas/product";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { IoMdRemove } from "react-icons/io";
+import { uploadFile } from "@/utils/uploadFile";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+type TFormValues = z.infer<typeof createProductValidationSchema>;
+
+const createProductDefaultValue = {
+  name: "",
+  description: "",
+  price: "",
+  category: "",
+  brand: "",
+  quantity: "",
+  weight: "",
+  images: [],
+  keyFeatures: [{ value: "" }],
+  specification: [{ key: "", value: "" }],
+};
+
 const UpdateProduct = () => {
   const { id } = useParams();
   const { data: productData, isLoading } = useGetProductDetailsQuery({ id });
-
-  const [loading, setLoading] = useState(false);
+  const [addNewProduct] = useAddNewProductMutation(undefined);
   const navigate = useNavigate();
-  const [updateProduct] = useUpdateProductMutation(undefined);
-  const categoryOptions = [
-    { value: "Writing", label: "Writing" },
-    { value: "Office Supplies", label: "Office Supplies" },
-    { value: "Art Supplies", label: "Art Supplies" },
-    { value: "Educational", label: "Educational" },
-    { value: "Technology", label: "Technology" },
-  ];
+  const { data: categoryOption, isLoading: isCategoryOptionLoading } = useGetAllSubCategoriesQuery(undefined);
+  const { data: brandOption, isLoading: isBrandOptionLoading } = useGetAllBrandsQuery(undefined);
+
+  const form = useForm<TFormValues>({
+    resolver: zodResolver(createProductValidationSchema),
+    defaultValues: createProductDefaultValue,
+    mode: "onChange",
+  });
+  const [uploading, setUploading] = useState(false);
 
   const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  if (isLoading) {
-    return <Loader />;
-  }
-  const { _id, brand, category, description, name, price, quantity, image } = productData?.data as TProduct;
-  const onSubmit = async (data: any) => {
+    fields: featureFields,
+    append: appendFeatures,
+    remove: removeFeatures,
+  } = useFieldArray({
+    name: "keyFeatures",
+    control: form.control,
+    rules: { minLength: 1 },
+  });
+  const {
+    fields: specificationFields,
+    append: appendSpecification,
+    remove: removeSpecification,
+  } = useFieldArray({
+    name: "specification",
+    control: form.control,
+    rules: { minLength: 1 },
+  });
+
+  const onSubmit = async (data: TFormValues) => {
     try {
-      setLoading(true);
-      let imageData;
-      if (data.image[0]) {
-        const fileImage = data.image[0];
-        imageData = await imageUpload(fileImage);
+      setUploading(true);
+
+      // Validate icon field
+      if (data.images.length === 0) {
+        form.trigger("images");
+        setUploading(false);
+        return;
       }
-      const productInfo = {
-        name: data.name || name,
-        brand: data.brand || brand,
-        price: parseFloat(data.price) || price,
-        quantity: parseFloat(data.quantity) || quantity,
-        category: data.category || category,
-        description: data.details || description,
-        image: imageData || image,
+
+      const imageUrls = await uploadFile(data.images);
+      if (imageUrls.length !== data.images.length) {
+        toast("Some images failed to upload. Try again later.");
+        setUploading(false);
+        return;
+      }
+      const keyFeatures = data.keyFeatures.map((item) => item.value);
+      const specification: { [key: string]: string } = {};
+      data.specification.forEach((item: { key: string; value: string }) => (specification[item.key] = item.value));
+
+      const payload = {
+        ...data,
+        keyFeatures,
+        specification,
+        images: imageUrls,
+        price: parseFloat(data.price),
+        quantity: parseInt(data.quantity),
+        weight: parseFloat(data.weight),
       };
-      const res = await updateProduct({ id: _id, data: productInfo }).unwrap();
+      const res = await addNewProduct(payload).unwrap();
       if (res?.success === true) {
         toast.success(res?.message);
-        navigate("/dashboard/manage-products");
+        form.reset();
+        navigate("/dashboard/admin/manage-products");
+      } else {
+        toast.error(res?.data?.message || "Something went wrong. Try again later.");
       }
     } catch (err: any) {
-      toast.error(err?.data?.message);
+      console.error(err);
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
   return (
-    <div className="z-0">
-      <div className="pt-10 px-4 bs:px-0">
-        <div className="flex items-center justify-between mb-5 pt-8 md:px-14">
-          <h2 className="text-base sm:text-lg bs:text-xl font-bold text-light-text-100 dark:text-dark-text-100 ">Update Product</h2>
-          <Button onClick={() => navigate(-1)}>
-            <IoMdArrowRoundBack />
-          </Button>
-        </div>
+    <>
+      <DashboardPageSection>
+        <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Add New Product</h1>
 
-        <form
-          className=" shadow-light-container-shadow dark:shadow-dark-container-shadow md:px-14   rounded-md pb-10"
-          onSubmit={handleSubmit(onSubmit)}
-          autoComplete="off"
-        >
-          {/* form row */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-5 mb-3 md:mb-5">
-            <div className="w-full md:w-1/2">
-              <Label>Product Name</Label>
-              <Input type="text" defaultValue={name} placeholder="Enter Product name" className="mt-1.5" {...register("name", { required: true })} />
-              {/* {errors.name && <span className="text-red-600 text-xs font-medium mt-0 ml-1">Product name is required</span>} */}
-            </div>
-            <div className="w-full md:w-1/2">
-              <Label>Product Brand</Label>
-              <Input type="text" defaultValue={brand} placeholder="Enter Brand Name" className="mt-1.5" {...register("brand", { required: true })} />
-              {errors.brand && <span className="text-red-600 text-xs font-medium mt-0 ml-1">Product Brand is required</span>}
-            </div>
+        <CustomForm form={form} onSubmit={onSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomInput fieldName="name" label="Product Name" placeholder="Enter product name" inputType="text" form={form} />
+            <CustomInput fieldName="weight" label="Product Weight" placeholder="Enter product weight" inputType="number" form={form} />
           </div>
-          {/* form row */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-5 mb-3 md:mb-5">
-            <div className="w-full md:w-1/2">
-              <Label>Product Price</Label>
-              <Input
-                type="text"
-                defaultValue={String(price)}
-                placeholder="Enter Product Price"
-                className="mt-1.5"
-                {...register("price", {
-                  required: "Product Price is required",
-                  validate: (value) => (/^\d+(\.\d{1,2})?$/.test(value) && parseFloat(value) > 0) || "Enter a valid positive number",
-                })}
-              />
-              {errors.price && <span className="text-red-600 text-xs font-medium mt-0 ml-1">{String(errors.price.message)}</span>}
-            </div>
-
-            <div className="w-full md:w-1/2">
-              <Label>Product Quantity</Label>
-              <Input
-                type="text"
-                defaultValue={quantity}
-                placeholder="Enter Product Quantity"
-                className="mt-1.5"
-                {...register("quantity", {
-                  required: "Product Quantity is required",
-                  validate: (value) => (/^\d+$/.test(value) && parseInt(value, 10) > 0) || "Enter a valid positive integer",
-                })}
-              />
-              {errors.quantity && <span className="text-red-600 text-xs font-medium mt-0 ml-1">{String(errors.quantity.message)}</span>}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomInput fieldName="price" label="Product Price" placeholder="Enter product price" inputType="number" form={form} />
+            <CustomInput fieldName="quantity" label="Product Quantity" placeholder="Enter product quantity" inputType="number" form={form} />
           </div>
-
-          {/* form row */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-5 mb-3 md:mb-5">
-            <div className="flex flex-col gap-3 w-full md:w-1/2">
-              <div className="flex flex-col gap-3 mt-1">
-                {/* File Upload Button */}
-                <Label>Upload Product Image</Label>
-                <label
-                  htmlFor="file_input"
-                  className="cursor-pointer flex items-center justify-center px-4 py-2  text-slate-700 font-medium rounded-lg text-base transition-all duration-300 flex-1 w-full  border-[#dddcdc] border "
-                >
-                  <FiUpload className="w-3 h-3 xs:w-5 xs:h-5 mr-2" />
-                  {/* Display Selected File Name */}
-                  <p className="text-sm text-slate-500 font-medium ">{watch("image")?.[0]?.name ? `${watch("image")[0].name}` : "Select Image"}</p>
-                </label>
-
-                {/* Hidden File Input */}
-                <input className="hidden" id="file_input" type="file" accept="image/*" {...register("image")} />
-              </div>
-              {/* {errors.image && <span className="text-red-600 text-xs font-medium mt-0 ml-1">Product Photo is required</span>} */}
-            </div>
-            <div className="w-full md:w-1/2">
-              <Label>Select Product Category</Label>
-              <select
-                defaultValue={category}
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1.5 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:shadow-md focus-visible:shadow-slate-100 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-slate-800 hover:cursor-pointer mt-1.5"
-                {...register("category", { required: true })}
-              >
-                <option value="">Select Category</option>
-                {categoryOptions.map((option) => (
-                  <option defaultValue={category} key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomSelect form={form} fieldName="category" label="Product Category" placeholder="Select category">
+              {isCategoryOptionLoading && (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                </div>
+              )}
+              {!isCategoryOptionLoading &&
+                categoryOption?.data?.length > 0 &&
+                categoryOption?.data?.map((option: TCategoryOptions) => (
+                  <SelectItem key={option._id} value={option._id}>
+                    {option.name}
+                  </SelectItem>
                 ))}
-              </select>
-              {errors.category && <span className="text-red-600 text-xs font-medium mt-0 ml-1">Product Category is required</span>}
+            </CustomSelect>
+            <CustomSelect form={form} fieldName="brand" label="Product Brand" placeholder="Select brand">
+              {isBrandOptionLoading && (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                </div>
+              )}
+              {!isBrandOptionLoading &&
+                brandOption?.data?.length > 0 &&
+                brandOption?.data?.map((option: TBrand) => (
+                  <SelectItem key={option._id} value={option._id}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+            </CustomSelect>
+          </div>
+          <CustomTextArea fieldName="description" label="Product Description" placeholder="Enter product description" inputType="text" form={form} />
+
+          <CreateImageUploader control={form.control} name="images" label="Product images" maxFiles={4} />
+          {/* Specification  */}
+          <div>
+            <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+              <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Specification</p>
+              <Button onClick={() => appendSpecification({ key: "", value: "" })} variant="primary" className="size-10" type="button">
+                <Plus />
+              </Button>
+            </div>
+            <div>
+              {specificationFields.map((field, index) => {
+                return (
+                  <div key={field.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-4">
+                    <div className="w-full">
+                      <FormField
+                        control={form.control}
+                        name={`specification.${index}.key`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                              Specification Name {index + 1}
+                            </FormLabel>
+                            <FormControl>
+                              <Input {...field} value={field.value || ""} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <FormField
+                        control={form.control}
+                        name={`specification.${index}.value`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                              Specification description {index + 1}
+                            </FormLabel>
+                            <FormControl>
+                              <Input {...field} value={field.value || ""} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant={"primary"}
+                      onClick={() => index > 0 && removeSpecification(index)}
+                      className="rounded-2xl py-5 px-4 mt-2  sm:mt-7"
+                    >
+                      <IoMdRemove />
+                    </Button>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* form row */}
-
-          <div className=" mt-5">
-            <Label>Product details</Label>
-            <textarea
-              defaultValue={description}
-              className="w-full rounded-md border border-input bg-transparent px-3 py-1.5 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:shadow-md focus-visible:shadow-slate-100 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-slate-800 mt-1.5"
-              id=""
-              cols={30}
-              rows={5}
-              placeholder="Enter Product details...."
-              {...register("details", { required: true })}
-            />
-            {errors.details && <span className="text-red-600 text-xs font-medium mt-0 ml-1">Product details is required</span>}
+          {/* Features  */}
+          <div>
+            <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+              <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Key Features</p>
+              <Button onClick={() => appendFeatures({ value: "" })} variant="primary" className="size-10" type="button">
+                <Plus />
+              </Button>
+            </div>
+            <div>
+              {featureFields.map((field, index) => {
+                return (
+                  <div key={field.id} className="flex items-center gap-2 mt-4">
+                    <div className="flex-1">
+                      <FormField
+                        control={form.control}
+                        name={`keyFeatures.${index}.value`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                              Key Feature {index + 1}
+                            </FormLabel>
+                            <FormControl>
+                              <Input {...field} value={field.value || ""} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant={"primary"}
+                      onClick={() => index > 0 && removeFeatures(index)}
+                      className="rounded-2xl py-5 px-4 mt-7"
+                    >
+                      <IoMdRemove />
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* button */}
-          <div className=" mt-8 ">
-            <Button type="submit" disabled={loading} className="sm-mx:w-full w-32">
-              {loading ? <BiLoaderCircle className="animate-spin" /> : "Update"}
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+          <Button variant="primary" type="submit" className="mt-8 py-6 px-6" disabled={uploading}>
+            {uploading ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="animate-spin" />
+                Adding Product...
+              </div>
+            ) : (
+              "Add Product"
+            )}
+          </Button>
+        </CustomForm>
+      </DashboardPageSection>
+    </>
   );
 };
 

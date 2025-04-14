@@ -9,7 +9,7 @@ const CustomTextArea = ({ form, fieldName, label, placeholder }: TCustomInput) =
       name={fieldName}
       render={({ field }) => (
         <FormItem className="mt-4">
-          <FormLabel className="text-start ml-1">{label}</FormLabel>
+          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">{label}</FormLabel>
           <FormControl>
             <Textarea placeholder={placeholder} className="resize-none" {...field} />
           </FormControl>

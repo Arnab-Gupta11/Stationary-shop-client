@@ -14,7 +14,7 @@ const CustomPassword = ({ form, fieldName, label, placeholder }: TCustomInput) =
       name={fieldName}
       render={({ field }) => (
         <FormItem className="mt-4">
-          <FormLabel className="text-slate-800 dark:text-slate-200">{label}</FormLabel>
+          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">{label}</FormLabel>
           <FormControl>
             <div className="relative">
               <Input className="pr-10" type={showPassword ? "text" : "password"} placeholder={placeholder} {...field} />

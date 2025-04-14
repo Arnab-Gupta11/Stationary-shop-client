@@ -8,7 +8,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import CreateImageUploader from "@/components/form/CustomImageUplaoder/CreateImageUploader";
 import { TCategoryOptions } from "@/types/category.types";
 
 import CustomForm from "@/components/form/CustomForm";
@@ -16,7 +15,7 @@ import CustomForm from "@/components/form/CustomForm";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
-import { useAddNewProductMutation, useGetProductDetailsQuery, useUpdateProductMutation } from "@/redux/features/product/product.api";
+import {  useGetProductDetailsQuery, useUpdateProductMutation } from "@/redux/features/product/product.api";
 import { useGetAllBrandsQuery } from "@/redux/features/brand";
 import { TBrand } from "@/types/brand.types";
 import { updateProductValidationSchema } from "@/schemas/product";
@@ -28,7 +27,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateImageUpload } from "@/utils/updateImageUpload";
 import { IProduct } from "@/types/product.types";
 import UpdateImageUploader from "@/components/form/CustomImageUplaoder/UpdateImageUploader";
-import { useAsyncForm } from "@/hooks/useAsyncForm";
 type TFormValues = z.infer<typeof updateProductValidationSchema>;
 
 const UpdateProduct = () => {

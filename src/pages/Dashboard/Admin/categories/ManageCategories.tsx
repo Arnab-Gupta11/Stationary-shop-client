@@ -18,6 +18,7 @@ const ManageCategories = () => {
   //Hooks
   const [page, setPage] = useState(1);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -25,14 +26,7 @@ const ManageCategories = () => {
   const { data: categoryOption, isLoading: categoryOptionLoading } = useGetAllCategoriesOptionQuery(undefined);
 
   //Categories
-  const {
-    data: categoryData,
-    isLoading,
-    isFetching,
-  } = useGetAllCategoriesQuery([
-    { name: "page", value: page },
-    { name: "limit", value: 4 },
-  ]);
+  const { data: categoryData, isLoading, isFetching } = useGetAllCategoriesQuery([{ name: "page", value: page }]);
 
   //Delete Category
   const [deleteCategory] = useDeleteCategoryMutation(undefined);
@@ -43,6 +37,7 @@ const ManageCategories = () => {
   };
   const handleDeleteConfirm = async () => {
     try {
+      setIsDeleting(true);
       if (selectedId) {
         const res = await deleteCategory(selectedId).unwrap();
         if (res?.success === true) {
@@ -54,6 +49,8 @@ const ManageCategories = () => {
       }
     } catch (err: any) {
       console.error(err?.message);
+    } finally {
+      setIsDeleting(false);
     }
   };
   const columns: ColumnDef<TCategory>[] = [
@@ -131,7 +128,13 @@ const ManageCategories = () => {
           </>
         )}
       </DashboardPageSection>
-      <DeleteConfirmationModal name={selectedItem} isOpen={isDeleteModalOpen} onOpenChange={setDeleteModalOpen} onConfirm={handleDeleteConfirm} />
+      <DeleteConfirmationModal
+        name={selectedItem}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        onConfirm={handleDeleteConfirm}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 };

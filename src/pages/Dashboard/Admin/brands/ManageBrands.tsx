@@ -19,6 +19,7 @@ const ManageBrands = () => {
   //Hooks
   const [page, setPage] = useState(1);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -41,6 +42,7 @@ const ManageBrands = () => {
   };
   const handleDeleteConfirm = async () => {
     try {
+      setIsDeleting(true);
       if (selectedId) {
         const res = await deleteBrand(selectedId).unwrap();
         if (res?.success === true) {
@@ -52,6 +54,8 @@ const ManageBrands = () => {
       }
     } catch (err: any) {
       console.error(err?.message);
+    } finally {
+      setIsDeleting(false);
     }
   };
   const columns: ColumnDef<TBrand>[] = [
@@ -114,7 +118,13 @@ const ManageBrands = () => {
           </>
         )}
       </DashboardPageSection>
-      <DeleteConfirmationModal name={selectedItem} isOpen={isDeleteModalOpen} onOpenChange={setDeleteModalOpen} onConfirm={handleDeleteConfirm} />
+      <DeleteConfirmationModal
+        name={selectedItem}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        onConfirm={handleDeleteConfirm}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 };

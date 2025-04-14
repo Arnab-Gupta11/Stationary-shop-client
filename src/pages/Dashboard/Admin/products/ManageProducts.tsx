@@ -22,6 +22,7 @@ const ManageProducts = () => {
   //Hooks
   const [page, setPage] = useState(1);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -37,8 +38,10 @@ const ManageProducts = () => {
   };
   const handleDeleteConfirm = async () => {
     try {
+      setIsDeleting(true);
       if (selectedId) {
         const res = await deleteProduct(selectedId).unwrap();
+        console.log(res);
         if (res?.success === true) {
           toast.success(res?.message);
           setDeleteModalOpen(false);
@@ -48,6 +51,8 @@ const ManageProducts = () => {
       }
     } catch (err: any) {
       console.error(err?.message);
+    } finally {
+      setIsDeleting(false);
     }
   };
   const columns: ColumnDef<IProduct>[] = [
@@ -126,7 +131,13 @@ const ManageProducts = () => {
           </>
         )}
       </DashboardPageSection>
-      <DeleteConfirmationModal name={selectedItem} isOpen={isDeleteModalOpen} onOpenChange={setDeleteModalOpen} onConfirm={handleDeleteConfirm} />
+      <DeleteConfirmationModal
+        name={selectedItem}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        onConfirm={handleDeleteConfirm}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 };

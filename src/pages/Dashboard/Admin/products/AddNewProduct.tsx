@@ -121,7 +121,7 @@ const AddNewProduct = () => {
   return (
     <>
       <DashboardPageSection>
-        <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Add New Product</h1>
+        <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">Add New Product</h1>
 
         <CustomForm form={form} onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -167,11 +167,14 @@ const AddNewProduct = () => {
           <CreateImageUploader control={form.control} name="images" label="Product images" maxFiles={4} />
           {/* Specification  */}
           <div>
-            <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+            <div className="flex gap-3 border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
               <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Specification</p>
-              <Button onClick={() => appendSpecification({ key: "", value: "" })} variant="primary" className="size-10" type="button">
-                <Plus />
-              </Button>
+              <span
+                onClick={() => appendSpecification({ key: "", value: "" })}
+                className="size-7 flex items-center  justify-center border-2 dark:border-gray-900 rounded-xl hover:shadow-box-shadow-light hover:dark:shadow-box-shadow-dark cursor-pointer hover:scale-105 active:scale-95 transition-all ease-in-out hover:border-primary dark:hover:border-primary duration-500"
+              >
+                <Plus className="text-primary" />
+              </span>
             </div>
             <div>
               {specificationFields.map((field, index) => {
@@ -183,7 +186,7 @@ const AddNewProduct = () => {
                         name={`specification.${index}.key`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
                               Specification Name {index + 1}
                             </FormLabel>
                             <FormControl>
@@ -200,7 +203,7 @@ const AddNewProduct = () => {
                         name={`specification.${index}.value`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
                               Specification description {index + 1}
                             </FormLabel>
                             <FormControl>
@@ -227,11 +230,14 @@ const AddNewProduct = () => {
 
           {/* Features  */}
           <div>
-            <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+            <div className="flex items-center gap-3 border-light-border dark:border-dark-muted-bg  border-t border-b py-3 my-5">
               <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Key Features</p>
-              <Button onClick={() => appendFeatures({ value: "" })} variant="primary" className="size-10" type="button">
-                <Plus />
-              </Button>
+              <span
+                onClick={() => appendFeatures({ value: "" })}
+                className="size-7 flex items-center justify-center border-2 dark:border-gray-900 rounded-xl hover:shadow-box-shadow-light hover:dark:shadow-box-shadow-dark cursor-pointer hover:scale-105 active:scale-95 transition-all ease-in-out hover:border-primary dark:hover:border-primary duration-500"
+              >
+                <Plus className="text-primary" />
+              </span>
             </div>
             <div>
               {featureFields.map((field, index) => {
@@ -243,7 +249,7 @@ const AddNewProduct = () => {
                         name={`keyFeatures.${index}.value`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
+                            <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
                               Key Feature {index + 1}
                             </FormLabel>
                             <FormControl>

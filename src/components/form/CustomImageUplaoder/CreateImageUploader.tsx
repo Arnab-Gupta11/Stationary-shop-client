@@ -65,7 +65,7 @@ const CreateImageUploader = <T extends FieldValues>({
 
   return (
     <div className={`w-full mt-4 ${className}`}>
-      <Label className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">{label}</Label>
+      <Label className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">{label}</Label>
       <label
         htmlFor="image-upload"
         onDragOver={(e) => {

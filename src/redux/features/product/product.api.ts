@@ -36,6 +36,29 @@ const productManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["review", "product"],
     }),
+    //Get all deleted Products.
+    getAllDeletedProducts: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/products/deleted-products",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["product"],
+      transformResponse: (response: TResponseRedux<IProduct[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
 
     // Add new Product
     addNewProduct: builder.mutation({
@@ -65,7 +88,23 @@ const productManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+
+    //Restore Product
+    restoreProduct: builder.mutation({
+      query: (id) => ({
+        url: `/products/${id}/restore`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
-export const { useGetAllProductsQuery, useGetProductDetailsQuery, useAddNewProductMutation, useUpdateProductMutation, useDeleteProductMutation } =
-  productManagementApi;
+export const {
+  useGetAllProductsQuery,
+  useGetProductDetailsQuery,
+  useAddNewProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+  useGetAllDeletedProductsQuery,
+  useRestoreProductMutation,
+} = productManagementApi;

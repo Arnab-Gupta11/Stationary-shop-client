@@ -87,41 +87,45 @@ const UpdateCategoryModal = ({ id }: TCategoryModalProp) => {
           Update
         </span>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update Product Category</DialogTitle>
-        </DialogHeader>
-        {isLoading && <Loader2 className="animate-spin mx-auto mt-8" />}
-        {!isLoading && (
-          <CustomForm form={form} onSubmit={onSubmit}>
-            <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
-            <CustomTextArea
-              fieldName="description"
-              label="Category Description"
-              placeholder="Enter category description"
-              inputType="text"
-              form={form}
-            />
-            <UpdateImageUploader
-              control={form.control}
-              name="images"
-              label="Category Image"
-              maxFiles={1}
-              maxFileSize={4}
-              existingImages={defaultImages}
-            />
-            <Button variant="default" type="submit" className="w-full mt-8" disabled={uploading}>
-              {uploading ? (
-                <div className="flex items-center gap-2">
-                  <Loader2 className="animate-spin" />
-                  Updating Category...
-                </div>
-              ) : (
-                "Update Category"
-              )}
-            </Button>
-          </CustomForm>
-        )}
+      <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
+        <div className="p-6 overflow-y-auto w-full h-full">
+          <DialogHeader>
+            <DialogTitle className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">
+              Update Product Category
+            </DialogTitle>
+          </DialogHeader>
+          {isLoading && <Loader2 className="animate-spin mx-auto mt-8" />}
+          {!isLoading && (
+            <CustomForm form={form} onSubmit={onSubmit}>
+              <CustomInput fieldName="name" label="Category Name" placeholder="Enter category name" inputType="text" form={form} />
+              <CustomTextArea
+                fieldName="description"
+                label="Category Description"
+                placeholder="Enter category description"
+                inputType="text"
+                form={form}
+              />
+              <UpdateImageUploader
+                control={form.control}
+                name="images"
+                label="Category Image"
+                maxFiles={1}
+                maxFileSize={4}
+                existingImages={defaultImages}
+              />
+              <Button variant="default" type="submit" className="w-full mt-8" disabled={uploading}>
+                {uploading ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="animate-spin" />
+                    Updating Category...
+                  </div>
+                ) : (
+                  "Update Category"
+                )}
+              </Button>
+            </CustomForm>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

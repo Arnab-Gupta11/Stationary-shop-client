@@ -9,7 +9,7 @@ const CustomInput = ({ form, fieldName, inputType, label, placeholder }: TCustom
       name={fieldName}
       render={({ field }) => (
         <FormItem className="mt-4">
-          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">{label}</FormLabel>
+          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">{label}</FormLabel>
           <FormControl>
             <Input type={inputType} placeholder={placeholder} {...field} />
           </FormControl>

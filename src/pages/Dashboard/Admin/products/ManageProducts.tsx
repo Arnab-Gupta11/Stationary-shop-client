@@ -113,7 +113,7 @@ const ManageProducts = () => {
     <div>
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
-          <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Manage Products</h1>
+          <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">Manage Products</h1>
           <Link to={"/dashboard/admin/add-product"}>
             <Button variant="primary">
               <Plus />

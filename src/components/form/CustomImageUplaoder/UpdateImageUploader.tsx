@@ -94,7 +94,7 @@ const UpdateImageUploader = <T extends FieldValues>({
 
   return (
     <div className={`w-full mt-4 ${className}`}>
-      <Label className="ml-1">{label}</Label>
+      <Label className="ml-1 font-semibold">{label}</Label>
       <label
         htmlFor="image-upload"
         onDragOver={(e) => {
@@ -118,7 +118,7 @@ const UpdateImageUploader = <T extends FieldValues>({
       </label>
       <Input id="image-upload" type="file" accept="image/*" multiple={maxFiles > 1} className="hidden" onChange={handleChange} />
       {error && <span className="mt-3 text-red-600 text-xs font-medium">{error.message}</span>}
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-8 gap-3">
         {previews.map((preview, index) => (
           <div key={index} className="relative">
             <img src={preview} alt="preview" className="w-full h-24 object-contain rounded-lg shadow-md p-1" />

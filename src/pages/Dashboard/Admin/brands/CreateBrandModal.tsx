@@ -83,7 +83,9 @@ const CreateBrandModal = () => {
       <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
         <div className="p-6 overflow-y-auto w-full h-full">
           <DialogHeader>
-            <DialogTitle>Create Product Brand</DialogTitle>
+            <DialogTitle className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">
+              Create Product Brand
+            </DialogTitle>
           </DialogHeader>
 
           <CustomForm form={form} onSubmit={onSubmit}>

@@ -15,18 +15,19 @@ import CustomForm from "@/components/form/CustomForm";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import DashboardPageSection from "../../shared/DashboardPageSection";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
-import {  useGetProductDetailsQuery, useUpdateProductMutation } from "@/redux/features/product/product.api";
+import { useGetProductDetailsQuery, useUpdateProductMutation } from "@/redux/features/product/product.api";
 import { useGetAllBrandsQuery } from "@/redux/features/brand";
 import { TBrand } from "@/types/brand.types";
 import { updateProductValidationSchema } from "@/schemas/product";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { IoMdRemove } from "react-icons/io";
+import { IoMdArrowRoundBack, IoMdRemove } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateImageUpload } from "@/utils/updateImageUpload";
 import { IProduct } from "@/types/product.types";
 import UpdateImageUploader from "@/components/form/CustomImageUplaoder/UpdateImageUploader";
+import Loader from "@/components/shared/Loader";
 type TFormValues = z.infer<typeof updateProductValidationSchema>;
 
 const UpdateProduct = () => {
@@ -147,173 +148,180 @@ const UpdateProduct = () => {
       setUploading(false);
     }
   };
-
-  if (isLoading) {
-    return <div>Loading product details...</div>;
-  }
-
   return (
     <DashboardPageSection>
       <div className="flex justify-between items-center flex-wrap">
-        <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Update Product</h1>
+        <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">Update Product</h1>
         <Button type="button" variant={"primary"} onClick={() => navigate(-1)} className="rounded-2xl py-5 px-4 mt-2 sm:mt-7">
-          <IoMdRemove />
+          <IoMdArrowRoundBack />
         </Button>
       </div>
+      {isLoading && <Loader />}
 
-      <CustomForm form={form} onSubmit={onSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CustomInput fieldName="name" label="Product Name" placeholder="Enter product name" inputType="text" form={form} />
-          <CustomInput fieldName="weight" label="Product Weight" placeholder="Enter product weight" inputType="text" form={form} />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CustomInput fieldName="price" label="Product Price" placeholder="Enter product price" inputType="text" form={form} />
-          <CustomInput fieldName="quantity" label="Product Quantity" placeholder="Enter product quantity" inputType="text" form={form} />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CustomSelect form={form} fieldName="category" label="Product Category" placeholder="Select category">
-            {isCategoryOptionLoading ? (
-              <div className="flex items-center gap-2">
-                <Loader2 className="animate-spin" />
-                Loading categories...
-              </div>
-            ) : (
-              categoryOption?.data?.map((option: TCategoryOptions) => (
-                <SelectItem key={option._id} value={option._id}>
-                  {option.name}
-                </SelectItem>
-              ))
-            )}
-          </CustomSelect>
-          <CustomSelect form={form} fieldName="brand" label="Product Brand" placeholder="Select brand">
-            {isBrandOptionLoading ? (
-              <div className="flex items-center gap-2">
-                <Loader2 className="animate-spin" />
-                Loading brands...
-              </div>
-            ) : (
-              brandOption?.data?.map((option: TBrand) => (
-                <SelectItem key={option._id} value={option._id}>
-                  {option.name}
-                </SelectItem>
-              ))
-            )}
-          </CustomSelect>
-        </div>
-        <CustomTextArea fieldName="description" label="Product Description" placeholder="Enter product description" inputType="text" form={form} />
-
-        <UpdateImageUploader
-          control={form.control}
-          name="images"
-          label="Product Images"
-          maxFiles={4}
-          maxFileSize={4}
-          existingImages={defaultImages}
-        />
-
-        {/* Specification */}
-        <div>
-          <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
-            <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Specification</p>
-            <Button onClick={() => appendSpecification({ key: "", value: "" })} variant="primary" className="size-10" type="button">
-              <Plus />
-            </Button>
+      {!isLoading && (
+        <CustomForm form={form} onSubmit={onSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomInput fieldName="name" label="Product Name" placeholder="Enter product name" inputType="text" form={form} />
+            <CustomInput fieldName="weight" label="Product Weight" placeholder="Enter product weight" inputType="text" form={form} />
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomInput fieldName="price" label="Product Price" placeholder="Enter product price" inputType="text" form={form} />
+            <CustomInput fieldName="quantity" label="Product Quantity" placeholder="Enter product quantity" inputType="text" form={form} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CustomSelect form={form} fieldName="category" label="Product Category" placeholder="Select category">
+              {isCategoryOptionLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Loading categories...
+                </div>
+              ) : (
+                categoryOption?.data?.map((option: TCategoryOptions) => (
+                  <SelectItem key={option._id} value={option._id}>
+                    {option.name}
+                  </SelectItem>
+                ))
+              )}
+            </CustomSelect>
+            <CustomSelect form={form} fieldName="brand" label="Product Brand" placeholder="Select brand">
+              {isBrandOptionLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Loading brands...
+                </div>
+              ) : (
+                brandOption?.data?.map((option: TBrand) => (
+                  <SelectItem key={option._id} value={option._id}>
+                    {option.name}
+                  </SelectItem>
+                ))
+              )}
+            </CustomSelect>
+          </div>
+          <CustomTextArea fieldName="description" label="Product Description" placeholder="Enter product description" inputType="text" form={form} />
+
+          {/* Image  */}
+          <UpdateImageUploader
+            control={form.control}
+            name="images"
+            label="Product Images"
+            maxFiles={4}
+            maxFileSize={4}
+            existingImages={defaultImages}
+          />
+
+          {/* Specification */}
           <div>
-            {specificationFields.map((field, index) => (
-              <div key={field.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-4">
-                <div className="w-full">
-                  <FormField
-                    control={form.control}
-                    name={`specification.${index}.key`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
-                          Specification Name {index + 1}
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} value={field.value || ""} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="w-full">
-                  <FormField
-                    control={form.control}
-                    name={`specification.${index}.value`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">
-                          Specification description {index + 1}
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} value={field.value || ""} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <Button
-                  type="button"
-                  variant={"primary"}
-                  onClick={() => index > 0 && removeSpecification(index)}
-                  className="rounded-2xl py-5 px-4 mt-2 sm:mt-7"
-                >
-                  <IoMdRemove />
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Features */}
-        <div>
-          <div className="flex justify-between border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
-            <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Key Features</p>
-            <Button onClick={() => appendFeatures({ value: "" })} variant="primary" className="size-10" type="button">
-              <Plus />
-            </Button>
-          </div>
-          <div>
-            {featureFields.map((field, index) => (
-              <div key={field.id} className="flex items-center gap-2 mt-4">
-                <div className="flex-1">
-                  <FormField
-                    control={form.control}
-                    name={`keyFeatures.${index}.value`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt">Key Feature {index + 1}</FormLabel>
-                        <FormControl>
-                          <Input {...field} value={field.value || ""} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <Button type="button" variant={"primary"} onClick={() => index > 0 && removeFeatures(index)} className="rounded-2xl py-5 px-4 mt-7">
-                  <IoMdRemove />
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Button variant="primary" type="submit" className="mt-8 py-6 px-6" disabled={uploading}>
-          {uploading ? (
-            <div className="flex items-center gap-2">
-              <Loader2 className="animate-spin" />
-              Updating Product...
+            <div className="flex gap-3 border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+              <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Specification</p>
+              <span
+                onClick={() => appendSpecification({ key: "", value: "" })}
+                className="size-7 flex items-center justify-center border-2 dark:border-gray-900 rounded-xl hover:shadow-box-shadow-light hover:dark:shadow-box-shadow-dark cursor-pointer hover:scale-105 active:scale-95 transition-all ease-in-out hover:border-primary dark:hover:border-primary duration-500"
+              >
+                <Plus className="text-primary" />
+              </span>
             </div>
-          ) : (
-            "Update Product"
-          )}
-        </Button>
-      </CustomForm>
+            <div>
+              {specificationFields.map((field, index) => (
+                <div key={field.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-4">
+                  <div className="w-full">
+                    <FormField
+                      control={form.control}
+                      name={`specification.${index}.key`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
+                            Specification Name {index + 1}
+                          </FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value || ""} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <FormField
+                      control={form.control}
+                      name={`specification.${index}.value`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
+                            Specification description {index + 1}
+                          </FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value || ""} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant={"primary"}
+                    onClick={() => index > 0 && removeSpecification(index)}
+                    className="rounded-2xl py-5 px-4 mt-2 sm:mt-7"
+                  >
+                    <IoMdRemove />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Features */}
+          <div>
+            <div className="flex gap-3 border-light-border dark:border-dark-muted-bg items-center border-t border-b py-3 my-5">
+              <p className="text-light-primary-text dark:text-dark-primary-txt font-semibold text-base">Key Features</p>
+              <span
+                onClick={() => appendFeatures({ value: "" })}
+                className="size-7 flex items-center justify-center border-2 dark:border-gray-900 rounded-xl hover:shadow-box-shadow-light hover:dark:shadow-box-shadow-dark cursor-pointer hover:scale-105 active:scale-95 transition-all ease-in-out hover:border-primary dark:hover:border-primary duration-500"
+              >
+                <Plus className="text-primary" />
+              </span>
+            </div>
+            <div>
+              {featureFields.map((field, index) => (
+                <div key={field.id} className="flex items-center gap-2 mt-4">
+                  <div className="flex-1">
+                    <FormField
+                      control={form.control}
+                      name={`keyFeatures.${index}.value`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-start ml-1 text-light-primary-text dark:text-dark-primary-txt font-semibold">
+                            Key Feature {index + 1}
+                          </FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value || ""} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button type="button" variant={"primary"} onClick={() => index > 0 && removeFeatures(index)} className="rounded-2xl py-5 px-4 mt-7">
+                    <IoMdRemove />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Button variant="primary" type="submit" className="mt-8 py-6 px-6" disabled={uploading}>
+            {uploading ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="animate-spin" />
+                Updating Product...
+              </div>
+            ) : (
+              "Update Product"
+            )}
+          </Button>
+        </CustomForm>
+      )}
     </DashboardPageSection>
   );
 };

@@ -78,7 +78,9 @@ const UpdateBrandModal = ({ id }: TUpdateBrandModalProp) => {
       <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
         <div className="p-6 overflow-y-auto w-full h-full">
           <DialogHeader>
-            <DialogTitle>Update Product Brand</DialogTitle>
+            <DialogTitle className="text-xl text-light-primary-text dark:text-dark-primary-txt font-semibold font-Aclonica">
+              Update Product Brand
+            </DialogTitle>
           </DialogHeader>
           {isLoading && <Loader2 className="animate-spin mx-auto mt-8" />}
           {!isLoading && (

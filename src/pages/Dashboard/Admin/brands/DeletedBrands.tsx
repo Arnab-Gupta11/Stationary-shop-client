@@ -85,7 +85,7 @@ const DeletedBrands = () => {
     <div>
       <DashboardPageSection>
         <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
-          <h1 className="text-lg text-light-primary-text dark:text-dark-primary-txt font-bold">Deleted Brands</h1>
+          <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">Deleted Brands</h1>
         </div>
         {isLoading && <TableSkeletonLoader />}
         {!isLoading && (

@@ -1,10 +1,9 @@
-import Lottie from "lottie-react";
-import lodingAnimation from "../../assets/images/loading/loading.json";
+import { BsBoxes } from "react-icons/bs";
 const Loader = () => {
   return (
     <div className="min-h-[calc(100vh-100px)] w-full flex items-center justify-center">
       <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-18 md:h-18">
-        <Lottie animationData={lodingAnimation} loop={true} />
+        <BsBoxes className="animate-spin text-2xl md:text-4xl text-primary" />
       </div>
     </div>
   );

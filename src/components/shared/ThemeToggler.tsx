@@ -13,7 +13,7 @@ export function ThemeToggler() {
         <Button
           variant="ghost"
           size="icon"
-          className="ml-4 bg-none shadow-none hover:bg-none
+          className="bg-none shadow-none hover:bg-none
       focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0
       ring-0 outline-none rounded-xl border-2 border-slate-100 dark:border-gray-900 text-2xl "
         >

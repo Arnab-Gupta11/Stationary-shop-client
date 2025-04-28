@@ -57,11 +57,18 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="flex items-center">
-          <BiSearchAlt2 className="text-2xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
-          <CartIcon />
-          <BiGitCompare className="text-2xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer ml-4" />
-          <ThemeToggler />
+        <div className="flex items-center justify-around">
+          <span className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9 mr-3">
+            <BiSearchAlt2 className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
+          </span>
+
+          <div className="lg:flex lg:items-center lg:gap-3 hidden ">
+            <CartIcon />
+            <span className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9">
+              <BiGitCompare className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer " />
+            </span>
+            <ThemeToggler />
+          </div>
           <ProfileAvatar />
           <NavSidebar menuItems={menuItems} />
         </div>

@@ -28,7 +28,7 @@ const ProfileAvatar = () => {
   };
 
   return (
-    <div className="font-medium">
+    <div className="font-medium hidden lg:flex">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {user ? (

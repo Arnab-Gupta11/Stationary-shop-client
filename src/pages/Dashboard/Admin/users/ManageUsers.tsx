@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Loader from "@/components/shared/Loader";
-
-import { Button } from "@/components/ui/button";
-
 import toast from "react-hot-toast";
 import { useGetAllUsersQuery, useUpdateUserStatusMutation } from "@/redux/features/user/user.api";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
 import { useState } from "react";
+import { IUser } from "@/types/user.types";
+import { ColumnDef } from "@tanstack/react-table";
+import DashboardPageSection from "../../shared/DashboardPageSection";
+import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
+import { CustomTable } from "../../shared/CustomTable";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BsThreeDots } from "react-icons/bs";
 const ManageUsers = () => {
   const [page, setPage] = useState(1);
   const [updateStatus] = useUpdateUserStatusMutation(undefined);
@@ -27,62 +30,80 @@ const ManageUsers = () => {
     }
   };
 
+  const columns: ColumnDef<IUser>[] = [
+    {
+      header: "Profile Image",
+      cell: ({ row }) => (
+        <div className="flex items-center space-x-3">
+          <img
+            src={row.original.profilePicture}
+            alt={row.original.fullName}
+            className="w-12 h-12 md:w-16 md:h-16 bg-light-muted-bg dark:bg-dark-muted-bg p-2 rounded-2xl flex-shrink-0 object-contain"
+          />
+        </div>
+      ),
+    },
+    {
+      accessorKey: "fullName",
+      header: "Name",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "action",
+      header: () => <div>Status</div>,
+      cell: ({ row }) => (
+        <span
+          className={`px-2 py-1 rounded-md text-sm
+                  ${
+                    row.original.isBlocked === true
+                      ? "bg-[#FDEEEF] text-[#ff6a62] border border-[#f5f4f4]"
+                      : "bg-[#EDFBF3] text-[#71d057] border border-[#f5f4f4]"
+                  }`}
+        >
+          {row.original.isBlocked === true ? "Blocked" : "Active"}
+        </span>
+      ),
+    },
+    {
+      accessorKey: "action",
+      header: () => <div>Action</div>,
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="outline-none flex items-center justify-center hover:scale-105 active:scale-95 duration-700">
+            <BsThreeDots className="mt-2 text-xl" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="bottom" className=" flex flex-col">
+            <span
+              onClick={() => handleUpdateUserStatus(row.original._id, row.original.isBlocked)}
+              className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+            >
+              {row.original.isBlocked ? "Unblock User" : "Block User"}
+            </span>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
+  ];
+
   return (
     <div>
-      <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
-      {isLoading || isFetching ? (
-        <Loader />
-      ) : (
-        <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
-          <table className="w-full bg-white border border-[#f1f1f1] mb-5">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-2 text-left border w-32 border-[#f1f1f1]">Image</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Name</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Email</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Status</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userData?.data?.result?.map((item: any) => (
-                <tr key={item?._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border w-32 border-[#f1f1f1]">
-                    <img src={item?.profilePicture} alt="Product Image" className="w-16 h-16 bg-[#F7F7F7] p-2 rounded-lg flex-shrink-0" />
-                  </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.fullName}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.email}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
-                    <span
-                      className={`px-2 py-1 rounded-md text-sm
-                          ${
-                            item?.isBlocked === true
-                              ? "bg-[#FDEEEF] text-[#ff6a62] border border-[#f5f4f4]"
-                              : "bg-[#EDFBF3] text-[#71d057] border border-[#f5f4f4]"
-                          }`}
-                    >
-                      {item?.isBlocked === true ? "Blocked" : "Active"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 border w-20 border-[#f1f1f1]">
-                    <Button
-                      onClick={() => {
-                        handleUpdateUserStatus(item?._id, item?.isBlocked);
-                      }}
-                      type="submit"
-                      disabled={item?.status === "Shipping"}
-                      className="sm-mx:w-full"
-                    >
-                      Change Status
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <PaginationProduct meta={userData?.data?.meta as TMeta} page={page} setPage={setPage} />
+      <DashboardPageSection>
+        <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
+          <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">Manage Brands</h1>
         </div>
-      )}
+        {isLoading && <TableSkeletonLoader />}
+        {!isLoading && (
+          <>
+            <CustomTable columns={columns} data={userData?.data || []} isFetching={isFetching} />
+            <div className="mt-6 flex w-full justify-start">
+              {userData?.data && <PaginationProduct meta={userData?.meta as TMeta} page={page} setPage={setPage} />}
+            </div>
+          </>
+        )}
+      </DashboardPageSection>
     </div>
   );
 };

@@ -61,7 +61,7 @@ const ManageCategories = () => {
           <img
             src={row.original.icon}
             alt={row.original.name}
-            className="w-12 h-12 md:w-16 md:h-16 bg-light-muted-bg dark:bg-dark-muted-bg p-2 rounded-2xl flex-shrink-0 object-contain"
+            className="w-12 h-12 md:w-16 md:h-16 bg-light-muted-bg dark:bg-dark-muted-bg p-2 rounded-2xl flex-shrink-0 object-cover"
           />
         </div>
       ),

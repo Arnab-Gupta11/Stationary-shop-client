@@ -1,4 +1,4 @@
-import { ChevronsUpDown, LogOut, Menu } from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 import NavItem from "./NavItem";
 import { TNavMenuItem } from "@/constants/navbar.constant";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTrigger } from "@/components/ui/sheet";

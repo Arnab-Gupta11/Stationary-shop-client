@@ -51,7 +51,7 @@ const ProductCard = ({ product }: TProductProp) => {
   };
   const price = formatPrice(product?.price);
   return (
-    <Link to={`/products/${product?._id}`}>
+    <Link to={`/products/slug/${product?.slug}`}>
       <div className="rounded-3xl bg-transparent border-2 border-light-card-border dark:border-dark-border hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3 shadow-card-shadow duration-700 transition-all">
         <div className="bg-light-muted-bg dark:bg-dark-muted-bg h-56 flex justify-center items-center relative rounded-2xl">
           <img

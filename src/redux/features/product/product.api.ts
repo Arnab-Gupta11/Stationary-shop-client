@@ -30,7 +30,7 @@ const productManagementApi = baseApi.injectEndpoints({
     getProductDetails: builder.query({
       query: (args) => {
         return {
-          url: `/products/${args.id}`,
+          url: `/products/slug/${args.slug}`,
           method: "GET",
         };
       },

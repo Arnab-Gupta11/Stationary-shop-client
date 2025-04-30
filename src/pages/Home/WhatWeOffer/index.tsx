@@ -54,7 +54,7 @@ const WhatWeOffer = () => {
             return (
               <motion.div
                 key={item.title}
-                className="flex items-center justify-center gap-5 shadow-card-shadow-light rounded-3xl py-6 px-8 bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-card-border dark:border-dark-border"
+                className="flex items-center justify-center gap-5 shadow-card-shadow rounded-3xl py-6 px-8 bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-card-border dark:border-dark-border"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}

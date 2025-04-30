@@ -74,7 +74,7 @@ const CreateImageUploader = <T extends FieldValues>({
         }}
         onDragLeave={() => setDragging(false)}
         onDrop={handleImageDrop}
-        className={`mt-2 cursor-pointer flex items-center justify-center px-4 py-2 h-32 w-full rounded-2xl border-2 border-slate-100 dark:border-gray-950 text-sm text-light-secondary-text dark:text-dark-secondary-txt bg-slate-50 dark:bg-dark-muted-bg font-medium flex-col font-Exo transition-all hover:shadow-md dark:hover:shadow-dark-primary-bg hover:bg-slate-100 hover:dark:bg-slate-900
+        className={`mt-2 cursor-pointer flex items-center justify-center px-4 py-2 h-32 w-full rounded-2xl border-2 border-slate-100 dark:border-dark-muted-border text-sm text-light-secondary-text dark:text-dark-secondary-txt bg-slate-50 dark:bg-dark-muted-bg font-medium flex-col font-Exo transition-all hover:shadow-md dark:hover:shadow-dark-primary-bg hover:bg-slate-100 hover:dark:bg-slate-900
           ${
             dragging
               ? "border-blue-200 bg-blue-50 dark:border-blue-950 dark:bg-[#181a37]"

@@ -19,9 +19,9 @@ export function CustomTable<TData, TValue>({ columns, data, isFetching }: DataTa
 
   return (
     <>
-      <div className="overflow-x-auto border-4 rounded-2xl border-light-muted-bg dark:border-dark-muted-bg">
+      <div className="overflow-x-auto border-4 rounded-2xl border-light-muted-bg dark:border-[#121624]">
         <Table className="min-w-[600px] md:min-w-full table-auto rounded-2xl">
-          <TableHeader className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-t-2xl">
+          <TableHeader className="bg-light-muted-bg dark:bg-[#121624] rounded-t-2xl">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="border-slate-200 dark:border-dark-muted-bg">
                 {headerGroup.headers.map((header) => {
@@ -43,7 +43,7 @@ export function CustomTable<TData, TValue>({ columns, data, isFetching }: DataTa
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="border-[#e9eefc] dark:border-[#101417]">
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className=" border-[#e9eefc] dark:border-dark-border">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="font-medium text-light-secondary-text dark:text-dark-secondary-txt px-3 text-xs sm:text-sm" key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

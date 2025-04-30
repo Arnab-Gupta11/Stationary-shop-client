@@ -15,7 +15,7 @@ export function ThemeToggler() {
           size="icon"
           className="bg-none shadow-none hover:bg-none
       focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0
-      ring-0 outline-none rounded-xl border-2 border-slate-100 dark:border-gray-900 text-2xl "
+      ring-0 outline-none rounded-xl border-2 border-slate-100 dark:border-dark-border text-2xl "
         >
           <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-[#ffa538]" />
           <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-light-primary-text dark:text-dark-primary-txt" />

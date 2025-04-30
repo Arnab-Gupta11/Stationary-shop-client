@@ -52,15 +52,16 @@ export default {
         "light-primary-text": "#020617", //"rgb(16, 17, 30)",
         "light-secondary-text": "#334155",
         "light-card-border": "#f4f4f6",
-        "light-border": "#f7f7f7", //"#f7f7f7",
+        "light-border": "#edf0f9", //"#f7f7f7",
 
         //Dark-mode
-        "dark-primary-bg": "#04040C", //"#050505",
-        "dark-secondary-bg": "#090a10", //"#09090a",
-        "dark-muted-bg": "#101017", //"#111111", //"#0e1114",
+        "dark-primary-bg": "#000410", //"#02070D", //"#04040C", //"#050505",
+        "dark-secondary-bg": "#090b15", //"#090a10", //"#09090a",
+        "dark-muted-bg": "#121624", //"#111111", //"#0e1114",
         "dark-primary-txt": "#fdfeff",
         "dark-secondary-txt": "#b7bbc4",
-        "dark-border": "#0b0e10",
+        "dark-border": "#0d101e",
+        "dark-muted-border": "#0a0b17",
 
         // sidebar: {
         //   DEFAULT: "hsl(var(--sidebar-background))",
@@ -74,7 +75,8 @@ export default {
         // },
       },
       boxShadow: {
-        "card-shadow": "0 1px 4px #8080801c",
+        // "card-shadow": "0 1px 4px #8080801c",
+        "card-shadow": "inset 2px 2px 18px #2563eb1a",
         "box-shadow-light": "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px",
         "box-shadow-dark": "#101017 0px 2px 0px, #101017 0px 2px 8px",
         "dashboard-page-shadow-light": "rgba(17, 17, 26, 0.05) 0px 2px 2px 0px, rgba(17, 17, 26, 0.05) 0px 2px 2px 0px",

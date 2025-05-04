@@ -20,9 +20,9 @@ const CustomPassword = ({ form, fieldName, label, placeholder }: TCustomInput) =
               <Input className="pr-10" type={showPassword ? "text" : "password"} placeholder={placeholder} {...field} />
               <span className="hover:cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <Eye size={18} className="text-slate-400 absolute top-2 right-2" />
+                  <Eye size={18} className="text-slate-400 absolute top-3.5 right-2" />
                 ) : (
-                  <EyeOff size={18} className="text-slate-400 absolute top-2 right-2" />
+                  <EyeOff size={18} className="text-slate-400 absolute top-3.5 right-2" />
                 )}
               </span>
             </div>

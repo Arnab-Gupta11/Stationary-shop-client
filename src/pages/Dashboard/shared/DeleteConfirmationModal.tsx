@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 interface DeleteModalProps {
-  name: string | null;
+  name?: string | null;
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onConfirm: () => void;
   isDeleting: boolean;
 }
 
-const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({ name, isOpen, onOpenChange, onConfirm, isDeleting }) => {
+const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({ name = "", isOpen, onOpenChange, onConfirm, isDeleting }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>

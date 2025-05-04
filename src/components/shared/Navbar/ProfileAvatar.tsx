@@ -32,7 +32,7 @@ const ProfileAvatar = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {user ? (
-            <Avatar className=" cursor-pointer ml-4 flex items-center justify-center border-4 border-light-border dark:border-gray-800">
+            <Avatar className=" cursor-pointer ml-4 flex items-center justify-center border-4 border-light-border dark:border-dark-muted-bg">
               <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
               <AvatarFallback>DP</AvatarFallback>
             </Avatar>

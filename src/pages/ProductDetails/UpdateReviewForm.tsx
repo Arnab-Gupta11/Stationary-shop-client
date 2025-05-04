@@ -7,16 +7,19 @@ import { BiLoaderCircle } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { useUpdateReviewMutation } from "@/redux/features/review/review.api";
 import { TReview } from "@/types/review.types";
-import { useNavigate } from "react-router-dom";
 
-const UpdateReviewForm = ({ yourReview }: { yourReview: TReview | null }) => {
+type updateReviewFormProps = {
+  yourReview: TReview | null;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const UpdateReviewForm = ({ yourReview, setModalOpen }: updateReviewFormProps) => {
   const [updateReview] = useUpdateReviewMutation(undefined);
   const [rating, setRating] = useState(yourReview?.rating as number);
   const [hoverRating, setHoverRating] = useState(0);
   const [review, setReview] = useState(yourReview?.review as string);
   const [errors, setErrors] = useState({ rating: "", review: "" });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   // Handle Star Click
   const handleStarClick = (star: number) => {
@@ -56,7 +59,7 @@ const UpdateReviewForm = ({ yourReview }: { yourReview: TReview | null }) => {
       const res = await updateReview({ id: yourReview?._id, data: updatedReviewData }).unwrap();
       if (res?.success === true) {
         toast.success(res?.message);
-        navigate(`/products/${yourReview?.product}`);
+        setModalOpen(false);
       }
     } catch (err: any) {
       toast.error("We couldn't submit your review. Please check your connection and try again.");
@@ -69,7 +72,7 @@ const UpdateReviewForm = ({ yourReview }: { yourReview: TReview | null }) => {
     <div className="mt-2">
       {/* <h1 className="terxt-2xl font-semibold border-b border-[#f1f1f1] pb-2">Update Your Review</h1> */}
 
-      <div className="border border-gray-200 mt-3 rounded-lg p-3">
+      <div className="border border-light-border dark:border-dark-border mt-3 rounded-lg p-3">
         <form onSubmit={handleSubmit}>
           {/* Star Rating Input */}
           <div className="flex gap-2 mb-2">
@@ -91,7 +94,7 @@ const UpdateReviewForm = ({ yourReview }: { yourReview: TReview | null }) => {
             value={review}
             onChange={handleReviewChange}
             placeholder="Write your review..."
-            className="w-full p-2 border rounded-md focus:outline-none mt-3"
+            className="w-full p-2 border-2 rounded-2xl resize-none border-slate-100 dark:border-dark-muted-border px-3 py-1.5 text-light-secondary-text dark:text-dark-secondary-txt bg-slate-100 dark:bg-dark-muted-bg placeholder:text-muted-foreground shadow-sm focus-visible:outline-none focus-visible:ring-0  disabled:cursor-not-allowed disabled:opacity-50 font-Exo font-medium  overflow-y-auto custom-scrollbar mt-3 h-28"
           />
           {errors.review && <p className="text-red-500 text-sm">{errors.review}</p>}
 

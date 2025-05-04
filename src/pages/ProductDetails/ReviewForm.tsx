@@ -64,6 +64,7 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
       }
     } catch (err: any) {
       toast.error("We couldn't submit your review. Please check your connection and try again.");
+      console.log("REveiw Error : ", err);
     } finally {
       setLoading(false);
     }
@@ -71,9 +72,11 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
 
   return (
     <div className="mt-3">
-      <h1 className="terxt-2xl font-semibold border-b border-[#f1f1f1] pb-2">Leave a Review</h1>
+      <h1 className="terxt-2xl font-semibold border-b border-light-border dark:border-dark-border pb-2 text-light-primary-text dark:text-dark-primary-txt">
+        Leave a Review
+      </h1>
 
-      <div className="border border-gray-200 mt-3 rounded-lg p-3">
+      <div className="border-2 border-light-border dark:border-dark-border mt-3 rounded-lg p-3">
         <form onSubmit={handleSubmit}>
           {/* Star Rating Input */}
           <div className="flex gap-2 mb-2">
@@ -83,7 +86,7 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
                 onClick={() => handleStarClick(star)}
                 onMouseOver={() => handleMouseOver(star)}
                 onMouseLeave={handleMouseLeave}
-                className={`cursor-pointer ${(hoverRating || rating) >= star ? "text-yellow-400" : "text-gray-300"}`}
+                className={`cursor-pointer ${(hoverRating || rating) >= star ? "text-yellow-400" : "text-slate-400 dark:text-dark-secondary-txt"}`}
                 size={26}
               />
             ))}
@@ -95,7 +98,7 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
             value={review}
             onChange={handleReviewChange}
             placeholder="Write your review..."
-            className="w-full p-2 border rounded-md focus:outline-none mt-3"
+            className="w-full p-2 border-2 rounded-2xl resize-none border-slate-100 dark:border-dark-muted-border px-3 py-1.5 text-light-secondary-text dark:text-dark-secondary-txt bg-slate-100 dark:bg-dark-muted-bg placeholder:text-muted-foreground shadow-sm focus-visible:outline-none focus-visible:ring-0  disabled:cursor-not-allowed disabled:opacity-50 font-Exo font-medium  overflow-y-auto custom-scrollbar mt-3 h-28"
           />
           {errors.review && <p className="text-red-500 text-sm">{errors.review}</p>}
 

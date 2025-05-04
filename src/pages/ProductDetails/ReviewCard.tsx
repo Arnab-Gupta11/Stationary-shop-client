@@ -4,9 +4,9 @@ import StarRating from "./StarRating";
 import { TReview } from "@/types/review.types";
 const ReviewCard = ({ item }: { item: TReview }) => {
   return (
-    <div className="p-4 rounded-lg shadow-sm shadow-slate-200">
+    <div className="p-4 rounded-lg">
       <div className="flex items-start gap-4 w-full">
-        <Avatar className="border border-[#f1f1f1] w-16 h-16 ">
+        <Avatar className="border-2 border-light-border dark:border-dark-border w-16 h-16 ">
           <AvatarImage src={item?.user?.profilePicture || "https://github.com/shadcn.png"} alt="@shadcn " />
         </Avatar>
         <div className=" w-full">

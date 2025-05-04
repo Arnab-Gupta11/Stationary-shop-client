@@ -80,10 +80,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-primary-bg-light min-h-screen">
+    <div className="bg-light-primary-bg dark:bg-dark-primary-bg min-h-screen">
       <div className="grid place-items-center py-10 lg:py-28 mx-5 md:mx-0 ">
-        <Card className="bg-white shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
-          <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100">
+        <Card className="bg-light-secondary-bg dark:bg-dark-secondary-bg shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
+          <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100 dark:shadow-dark-muted-bg">
             <CardTitle className="mx-auto">
               <Link to={"/"}>
                 <Logo />
@@ -91,7 +91,7 @@ const LoginPage = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <h1 className="mt-5 text-lg sm:text-xl font-bold text-primary-text-light text-center">Welcome back</h1>
+            <h1 className="mt-5 text-lg sm:text-xl font-bold text-light-primary-text dark:text-dark-primary-txt text-center">Welcome back</h1>
             <CustomForm onSubmit={onSubmit} form={form}>
               <CustomInput form={form} fieldName={"email"} label={"Email"} inputType={"text"} placeholder={"Enter your email"} />
               <CustomPassword form={form} fieldName={"password"} label={"Password"} inputType={"password"} placeholder={"Enter your password"} />
@@ -101,16 +101,18 @@ const LoginPage = () => {
               </Button>
             </CustomForm>
           </CardContent>
-          <CardFooter className="text-sm font-medium text-slate-700 flex items-center justify-center">
+          <CardFooter className="text-sm font-medium text-slate-700 dark:text-dark-secondary-txt flex items-center justify-center">
             <div>
               Don&apos;t have an Account?
               <Link to="/register">
-                <span className="font-semibold text-primary-text hover:underline ml-1">Sign Up</span>
+                <span className="font-semibold text-primary hover:underline ml-1">Sign Up</span>
               </Link>
             </div>
           </CardFooter>
 
-          <h1 className="mx-6 border-t-2 border-gray-300 text-lg text-primary-text-light font-semibold py-4">Credential</h1>
+          <h1 className="mx-6 border-t-2 border-gray-300 dark:border-dark-border text-lg text-light-primary-text dark:text-dark-primary-txt font-semibold py-4">
+            Credential
+          </h1>
           <div className="grid grid-cols-2 pb-8 px-6  gap-5">
             <Button
               onClick={() => credentialLogin({ email: "guest@gmail.com", password: "12345678" })}

@@ -87,12 +87,12 @@ const SortProduct = ({ queryParams, setQuerParams }: TSortProductProps) => {
 
   return (
     <Select value={selectedSort} onValueChange={handleSortChange}>
-      <SelectTrigger className="w-full sm:w-[200px]">
-        <SelectValue placeholder="Sort Products" className="text-slate-500" />
+      <SelectTrigger className="w-full sm:w-[200px] bg-slate-100 border-slate-200">
+        <SelectValue placeholder="Sort Products" className="text-slate-500 dark:text-dark-primary-txt" />
       </SelectTrigger>
       <SelectContent className="bg-white">
         <SelectGroup>
-          <SelectLabel className="flex items-center gap-1">
+          <SelectLabel className="flex items-center gap-1 text-light-primary-text dark:text-dark-primary-txt">
             <BiSort size={12} />
             <span>Sort Options</span>
           </SelectLabel>

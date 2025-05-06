@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { TFilterParams } from ".";
 import { formatPrice } from "@/utils/formatePrice";
 import { useSearchParams } from "react-router-dom";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
+import { useTheme } from "@/Provider/ThemeProvider";
 
 type PriceFilterProps = {
   queryParams: TFilterParams[];
@@ -11,6 +14,7 @@ type PriceFilterProps = {
 };
 
 const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, initialMinPrice = 0, initialMaxPrice = 100 }) => {
+  const { theme } = useTheme();
   const [searchParams] = useSearchParams();
   // Get initial price from URL or default values
   const [minPrice, setMinPrice] = useState<number>(Number(searchParams.get("minPrice")) || initialMinPrice);
@@ -47,44 +51,62 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, i
       }
     }
   };
-
+  const trackBg = theme === "dark" ? "#1e293b" : "#e5e7eb"; // or use Tailwind token equivalents
+  const fillColor = "rgb(252,91,111)";
   return (
-    <div className="space-y-4 mt-6">
-      <h3 className="font-semibold text-slate-800 text-base pb-4 border-b-[1px] border-b-[#f1f1f1]">Filter by Price</h3>
-      <div className="flex items-center justify-between">
-        <span className="text-slate-800 text-sm">Min: {formatPrice(minPrice)}</span>
-        <span className="text-slate-800 text-sm">Max: {formatPrice(maxPrice)}</span>
-      </div>
-      <div className="space-y-2">
-        <div>
-          <label className="text-sm text-slate-700">Set Minimum Price</label>
-          <input
-            type="range"
-            min={initialMinPrice}
-            max={initialMaxPrice}
-            value={minPrice}
-            onChange={handleMinChange}
-            className="w-full appearance-none accent-primary-bg rounded-full h-2 border-none outline-none bg-green-200"
-            style={{
-              background: `linear-gradient(to right, #D51243 ${(minPrice / initialMaxPrice) * 100}%, #f1f1f1 ${(minPrice / initialMaxPrice) * 100}%)`,
-            }}
-          />
-        </div>
-        <div>
-          <label className="text-sm text-slate-700">Set Maximum Price</label>
-          <input
-            type="range"
-            min={initialMinPrice}
-            max={initialMaxPrice}
-            value={maxPrice}
-            onChange={handleMaxChange}
-            className="w-full appearance-none accent-primary-bg rounded-full h-2 border-none outline-none bg-green-200"
-            style={{
-              background: `linear-gradient(to right, #D51243 ${(maxPrice / initialMaxPrice) * 100}%, #f1f1f1 ${(maxPrice / initialMaxPrice) * 100}%)`,
-            }}
-          />
-        </div>
-      </div>
+    <div className="space-y-4">
+      <Collapsible>
+        <CollapsibleTrigger className="w-full text-start">
+          <div className="flex items-center justify-between pb-4 border-b-2 border-light-border dark:border-dark-muted-border  mt-6 w-full">
+            <h1 className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-base w-full">Filter by Price</h1>
+            <ChevronsUpDown className="h-4 w-4 text-light-primary-text dark:text-dark-primary-txt" />
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="flex items-center justify-between my-3">
+            <h1 className="text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm">
+              <span className="text-light-primary-text dark:text-dark-primary-txt font-semibold">Min:</span> {formatPrice(minPrice)}
+            </h1>
+            <h1 className="text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm">
+              <span className="text-light-primary-text dark:text-dark-primary-txt font-semibold">Max:</span> {formatPrice(maxPrice)}
+            </h1>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <label className="text-sm text-light-primary-text dark:text-dark-primary-txt font-semibold">Set Minimum Price</label>
+              <input
+                type="range"
+                min={initialMinPrice}
+                max={initialMaxPrice}
+                value={minPrice}
+                onChange={handleMinChange}
+                className="w-full appearance-none accent-primary rounded-full h-2 border-none outline-none"
+                style={{
+                  background: `linear-gradient(to right, ${fillColor} ${(minPrice / initialMaxPrice) * 100}%, ${trackBg} ${
+                    (minPrice / initialMaxPrice) * 100
+                  }%)`,
+                }}
+              />
+            </div>
+            <div>
+              <label className="text-sm text-light-primary-text dark:text-dark-primary-txt font-semibold">Set Maximum Price</label>
+              <input
+                type="range"
+                min={initialMinPrice}
+                max={initialMaxPrice}
+                value={maxPrice}
+                onChange={handleMaxChange}
+                className="w-full appearance-none accent-primary rounded-full h-2 border-none outline-none"
+                style={{
+                  background: `linear-gradient(to right, ${fillColor} ${(maxPrice / initialMaxPrice) * 100}%, ${trackBg} ${
+                    (maxPrice / initialMaxPrice) * 100
+                  }%)`,
+                }}
+              />
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };

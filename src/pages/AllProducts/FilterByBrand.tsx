@@ -1,21 +1,20 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { TFilterParams } from ".";
 import { ChevronsUpDown } from "lucide-react";
-import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
 import { TCategoryOptions } from "@/types/category.types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetAllBrandsQuery } from "@/redux/features/brand";
 type TFilterByCategoryProps = {
   queryParams: TFilterParams[];
   setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
 };
-const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps) => {
-  // const categories = ["Writing", "Office Supplies", "Art Supplies", "Educational", "Technology"];
-  const { data: categories, isLoading } = useGetAllSubCategoriesQuery(undefined);
+const FilterByBrand = ({ queryParams, setQuerParams }: TFilterByCategoryProps) => {
+  const { data: brands, isLoading } = useGetAllBrandsQuery(undefined);
 
   //Update the query params.
   const handleCategoryChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
     if (input.checked) {
-      const state: TFilterParams[] = [...queryParams, { name: "category", value: input.value }];
+      const state: TFilterParams[] = [...queryParams, { name: "brand", value: input.value }];
       setQuerParams(state);
     } else {
       const state = queryParams.filter((item) => item.value !== input.value);
@@ -26,7 +25,7 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
     <Collapsible>
       <CollapsibleTrigger className="w-full text-start">
         <div className="flex items-center justify-between pb-4 border-b-2 border-light-border dark:border-dark-muted-border  mt-6 w-full">
-          <h1 className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-base w-full">Filter By Category</h1>
+          <h1 className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-base w-full">Filter By Brands</h1>
           <ChevronsUpDown className="h-4 w-4 text-light-primary-text dark:text-dark-primary-txt" />
         </div>
       </CollapsibleTrigger>
@@ -43,13 +42,13 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
                 );
               })}
           </div>
-          {categories?.data?.map((item: TCategoryOptions) => (
+          {brands?.data?.map((item: TCategoryOptions) => (
             <li key={item._id} className="relative flex w-full items-center justify-center gap-2.5 mb-2.5">
               <input
                 type="checkbox"
                 id={item._id}
                 value={item._id}
-                checked={queryParams.some((param) => param.name === "category" && param.value === item._id)}
+                checked={queryParams.some((param) => param.name === "brand" && param.value === item._id)}
                 onChange={handleCategoryChange}
                 className="peer relative h-3 w-3 p-0.5 rounded-sm shrink-0 appearance-none focus:outline-none bg-[#E3E3E3] dark:bg-dark-muted-bg checked:bg-[rgb(252,91,111)] dark:checked:bg-[rgb(252,91,111)] checked:ring-primary cursor-pointer checkbox-icon"
               />
@@ -67,4 +66,4 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
   );
 };
 
-export default FilterByCategory;
+export default FilterByBrand;

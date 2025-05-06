@@ -16,6 +16,7 @@ import { PaginationProduct } from "./Pagination";
 import { TMeta } from "@/types/global";
 import FilterSidbar from "./FilterSidbar";
 import PageHeader from "@/components/shared/PageHeader";
+import FilterByBrand from "./FilterByBrand";
 export type TFilterParams = {
   name: string;
   value: string | number | boolean;
@@ -53,6 +54,7 @@ const AllProductsPage = () => {
 
   return (
     <>
+      {/* Page Header  */}
       <PageHeader title="All Products">
         <Breadcrumb>
           <BreadcrumbList>
@@ -71,7 +73,7 @@ const AllProductsPage = () => {
         <div className="grid grid-cols-1 bs:grid-cols-12 gap-5 pt-20 pb-24">
           <div className="bs:col-span-8 xl:col-span-9">
             {/* search option  */}
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between pb-2 border-b-[1px] border-b-[#f1f1f1]">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between pb-2 border-b-2 border-light-border dark:border-dark-muted-border">
               <div>
                 <SearchProducts queryParams={queryParams} setQuerParams={setQuerParams} />
               </div>
@@ -80,10 +82,12 @@ const AllProductsPage = () => {
                 <FilterSidbar queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={10000} />
               </div>
             </div>
+
+            {/* Products list  */}
             {isLoading || isFetching ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pt-6 w-full mb-16">
+              <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 bs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 pt-6 w-full mb-16">
                 {productData?.data && productData?.data?.length > 0 ? (
                   productData?.data?.map((product) => <ProductCard key={product._id} product={product} />)
                 ) : (
@@ -98,20 +102,25 @@ const AllProductsPage = () => {
               </div>
               // </>
             )}
-            <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />
+            {/* Pagination  */}
+            {productData?.data && productData?.data.length > 0 && (
+              <PaginationProduct meta={productData?.meta as TMeta} page={page} setPage={setPage} />
+            )}
           </div>
 
+          {/* Filter Sidebar  */}
           <div className="bs:col-span-4 xl:col-span-3 px-5 hidden bs:block">
-            <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
-              <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
+            <div className="flex items-center justify-between pt-3 pb-4 border-b-2 border-light-border dark:border-dark-muted-border w-full">
+              <div className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-xl">Filter Products</div>
               {/* {queryParams.length > 0 && (
                 <Button variant={"primary"} onClick={() => setQuerParams([])}>
                   Clear Filter
                 </Button>
               )} */}
             </div>
+            <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={20000} />
             <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
-            <PriceFilter queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={10000} />
+            <FilterByBrand queryParams={queryParams} setQuerParams={setQuerParams} />
             <AvailabilityFilter queryParams={queryParams} setQuerParams={setQuerParams} />
           </div>
         </div>

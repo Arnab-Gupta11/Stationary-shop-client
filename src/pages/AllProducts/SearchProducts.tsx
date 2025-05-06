@@ -20,13 +20,13 @@ const SearchProducts = ({ queryParams, setQuerParams }: TSearchProductsProps) =>
   };
   return (
     <div className="relative">
-      <Search className="absolute top-3 left-2 text-slate-500" size={14} />
+      <Search className="absolute top-[17px] left-3 text-slate-500" size={14} />
       <Input
         type="text"
         defaultValue={(searchValue?.value as string) || ""}
         onChange={handleSearchProducts}
         placeholder="Search Products..."
-        className="rounded-lg focus-visible:ring-0 w-full sm:w-56 pl-8 text-slate-700 font-normal"
+        className="focus-visible:ring-0 w-full sm:w-64 pl-8 text-slate-700 font-normal rounded-2xl bg-slate-100 border-slate-200"
       />
     </div>
   );

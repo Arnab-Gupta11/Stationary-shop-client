@@ -27,7 +27,7 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
   const { data: reviewData, isLoading, isFetching } = useGetAllReviewsQuery({ id });
 
   let yourReview: TReview | null = null;
-  let publicReviews: TReview[] = [];
+  let publicReviews: TReview[] = reviewData?.data;
 
   if (user && reviewData?.data) {
     yourReview = reviewData.data.find((review: TReview) => review?.user?._id === user?.userId) || null;
@@ -85,7 +85,7 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
             ) : (
               <>
                 {user && yourReview && (
-                  <div className="p-4 rounded-lg shadow-md shadow-slate-200 dark:shadow-dark-muted-bg border border-[#f1f1f1] dark:border-dark-border mt-3">
+                  <div className="p-4 rounded-2xl shadow-md shadow-slate-200 dark:shadow-dark-muted-bg border border-[#f1f1f1] dark:border-dark-border mt-3">
                     <div className="flex items-start gap-4 w-full">
                       <Avatar className="border-2 border-light-border dark:border-dark-muted-bg w-16 h-16 ">
                         <AvatarImage src={yourReview?.user?.profilePicture || "https://github.com/shadcn.png"} alt="@shadcn" />
@@ -97,7 +97,7 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
                               {yourReview?.user?.fullName}
                             </h1>
                             <span className="text-[10px] sm:text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">
-                              {formateDateTime(yourReview?.updatedAt)}
+                              {formateDateTime(yourReview?.createdAt)}
                             </span>
                           </div>
                           <StarRating rating={yourReview?.rating} starSize={15} />
@@ -145,7 +145,7 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
                   </div>
                 )}
 
-                {user && publicReviews.length > 0
+                {publicReviews.length > 0
                   ? publicReviews.map((item: TReview) => <ReviewCard item={item} key={item._id} />)
                   : reviewData?.data?.length < 1 && (
                       <div className="min-h-[calc(100vh-200px)] flex items-center justify-center">

@@ -5,6 +5,7 @@ import FilterByCategory from "./FilterByCategory";
 import PriceFilter from "./PriceFilter";
 import AvailabilityFilter from "./AvailabilityFilter";
 import { TFilterParams } from ".";
+import FilterByBrand from "./FilterByBrand";
 type TFilterSidebarProps = {
   queryParams: TFilterParams[];
   setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
@@ -22,16 +23,22 @@ const FilterSidbar = ({ queryParams, setQuerParams, initialMinPrice = 0, initial
       <SheetContent className="w-[90%] xs:w-[400px] bg-white overflow-y-scroll">
         <SheetHeader>
           <SheetDescription>
-            <div className="flex items-center justify-between pb-4 border-b-[1px] border-b-[#f1f1f1]">
-              <div className="font-semibold text-slate-800 text-lg ">Filter Products</div>
+            <div className="flex items-center justify-between pt-3 pb-4 border-b-2 border-light-border dark:border-slate-900 w-full">
+              <div className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-xl">Filter Products</div>
+              {/* {queryParams.length > 0 && (
+                <Button variant={"primary"} onClick={() => setQuerParams([])}>
+                  Clear Filter
+                </Button>
+              )} */}
             </div>
-            <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
             <PriceFilter
               queryParams={queryParams}
               setQuerParams={setQuerParams}
               initialMinPrice={initialMinPrice}
               initialMaxPrice={initialMaxPrice}
             />
+            <FilterByCategory queryParams={queryParams} setQuerParams={setQuerParams} />
+            <FilterByBrand queryParams={queryParams} setQuerParams={setQuerParams} />
             <AvailabilityFilter queryParams={queryParams} setQuerParams={setQuerParams} />
           </SheetDescription>
         </SheetHeader>

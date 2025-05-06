@@ -12,19 +12,18 @@ import { useLogoutMutation } from "@/redux/features/auth/authApi";
 import { logout, useCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Heart, LayoutDashboard, LogIn, LogOut, UserPlus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 const ProfileAvatar = () => {
-  const navigate = useNavigate();
   const user = useAppSelector(useCurrentUser);
   const [logoutUser] = useLogoutMutation(undefined);
   const dispatch = useAppDispatch();
   const handleLogout = async () => {
     dispatch(logout());
-    const res = await logoutUser(undefined).unwrap();
-    if (res?.success === true) {
-      navigate("/");
-    }
+    await logoutUser(undefined).unwrap();
+    // if (res?.success === true) {
+    //   navigate("/");
+    // }
   };
 
   return (

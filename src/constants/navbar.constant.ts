@@ -24,26 +24,6 @@ export const NavMenuOption = () => {
       path: "/about",
       show: true,
     },
-    {
-      label: "Home",
-      path: "/gsdg",
-      show: true,
-    },
-    {
-      label: "Shop",
-      path: "/shop",
-      show: true,
-    },
-    {
-      label: "About",
-      path: "/about",
-      show: true,
-    },
-    {
-      label: "About1",
-      path: "/about",
-      show: true,
-    },
   ];
   return menuItems;
 };

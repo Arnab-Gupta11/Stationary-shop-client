@@ -5,7 +5,7 @@ import male4 from "../assets/images/team/male4.png";
 import female1 from "../assets/images/team/female1.png";
 import female2 from "../assets/images/team/female2.png";
 import female3 from "../assets/images/team/female3.png";
-const teamMembers = [
+export const teamMembers = [
   {
     id: 1,
     name: "Alice Johnson",
@@ -49,5 +49,3 @@ const teamMembers = [
     image: female3,
   },
 ];
-
-export default teamMembers;

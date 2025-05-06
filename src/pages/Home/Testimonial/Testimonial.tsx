@@ -48,27 +48,27 @@ const Testimonial = () => {
           {/* Heading and Pagination Controls */}
           <div className="flex justify-end items-center mb-4">
             {/* Pagination and Navigation Buttons */}
-            <div className="flex items-center gap-4 bg-white">
+            <div className="flex items-center gap-4">
               {/* <p className="swiper-paginations text-sm font-medium text-gray-700"></p> */}
               <div className="flex items-center gap-2">
                 {/* Previous Button */}
                 <button
                   onClick={!isFirst ? handlePrev : undefined}
-                  className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 hover:shadow-slate-300 rounded-md transition ${
-                    isFirst ? "text-gray-400 cursor-not-allowed" : " hover:bg-primary hover:text-primary-bg duration-700 cursor-pointer"
+                  className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 dark:shadow-slate-800 border-2 border-light-muted-bg dark:border-dark-border bg-button-gradient dark:hover:bg-button-gradient-hover rounded-xl transition-transform ${
+                    isFirst ? "opacity-65 cursor-not-allowed" : "duration-700 cursor-pointer opacity-100"
                   }`}
                 >
-                  <BsArrowLeft className="text-xl " />
+                  <BsArrowLeft className="text-xl text-dark-primary-txt" />
                 </button>
 
                 {/* Next Button */}
                 <button
                   onClick={!isLast ? handleNext : undefined}
-                  className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 hover:shadow-slate-300 rounded-md transition ${
-                    isLast ? "text-gray-400 cursor-not-allowed" : " hover:bg-primary hover:text-primary-bg duration-700 cursor-pointer"
+                  className={`w-10 h-10 flex items-center justify-center shadow-sm shadow-slate-200 dark:shadow-slate-800 border-2 border-light-border dark:border-dark-border bg-button-gradient dark:hover:bg-button-gradient-hover rounded-xl transition-transform ${
+                    isLast ? "opacity-65 cursor-not-allowed" : "duration-700 cursor-pointer opacity-100"
                   }`}
                 >
-                  <BsArrowRight className="text-xl pointer-events-none" />
+                  <BsArrowRight className="text-xl text-dark-primary-txt pointer-events-none" />
                 </button>
               </div>
             </div>

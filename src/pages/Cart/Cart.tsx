@@ -82,6 +82,7 @@ const CartPage = () => {
         products: formattedProducts,
       };
       const res = await createOrder(userInfo).unwrap();
+      console.log("Response :", res);
       if (res?.success === true) {
         toast.success(res?.message);
 
@@ -90,7 +91,7 @@ const CartPage = () => {
         }, 1000);
       }
     } catch (err: any) {
-      toast.error(err?.data?.message);
+      console.log(err?.data?.message);
     } finally {
       setIsLoading(false);
     }
@@ -117,8 +118,6 @@ const CartPage = () => {
       </PageHeader>
       <Section>
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0 mb-20 md:mb-28">
-          <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl"></h2>
-
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="space-y-6">
@@ -127,45 +126,45 @@ const CartPage = () => {
                     return (
                       <div
                         key={item.product}
-                        className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm md:p-6 xsm-mx:flex xsm-mx:items-center xsm-mx:justify-center"
+                        className="rounded-3xl border-2 border-light-card-border dark:border-dark-border p-4 md:p-6 xsm-mx:flex xsm-mx:items-center xsm-mx:justify-center shadow-card-shadow"
                       >
                         <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                          <div className="shrink-0 md:order-1 bg-[#F7F7F7] rounded-3xl h-24 w-24 flex items-center justify-center">
-                            <img className="h-20 w-20" src={item?.image} alt="imac image" />
+                          <div className="shrink-0 md:order-1 bg-light-muted-bg dark:bg-dark-muted-bg rounded-3xl h-24 w-24 flex items-center justify-center">
+                            <img className="h-20 w-20 rounded-3xl object-cover" src={item?.image} alt="Product image" />
                           </div>
                           <div className="flex flex-col xsm:flex-row xsm:items-center xsm:justify-between md:order-3 md:justify-end gap-8">
                             {/* price */}
                             <div className="flex flex-col gap-2 xs:items-center">
-                              <span className="text-sm font-medium text-slate-600">Choose Quantity</span>
+                              <span className="text-sm font-medium text-light-secondary-text dark:text-dark-secondary-txt">Choose Quantity</span>
                               <div className="flex items-center gap-3">
                                 <Button
                                   onClick={() => handleDecreaseQuantity({ product: item.product })}
                                   variant={"outline"}
-                                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#f1f1f1] bg-[#F7F7F7]"
+                                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 bg-light-muted-bg dark:bg-dark-muted-bg border-light-card-border dark:border-dark-border"
                                 >
-                                  <GrFormPrevious />
+                                  <GrFormPrevious className="text-light-primary-text dark:text-dark-primary-txt" />
                                 </Button>
-                                <span>{item.quantity}</span>
+                                <span className="text-light-primary-text dark:text-dark-primary-txt">{item.quantity}</span>
                                 <Button
                                   onClick={() => handleIncreaseQuantity({ product: item.product, inStock: item.inStock, quantity: item.quantity })}
                                   variant={"outline"}
-                                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-[#f1f1f1] bg-[#F7F7F7]"
+                                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 bg-light-muted-bg dark:bg-dark-muted-bg border-light-card-border dark:border-dark-border"
                                 >
-                                  <GrFormNext />
+                                  <GrFormNext className="text-light-primary-text dark:text-dark-primary-txt" />
                                 </Button>
                               </div>
                             </div>
                             <div className="text-end md:order-4  flex items-center gap-5">
-                              <p className="text-base font-bold text-gray-900 ">{formatPrice(item.totalPrice)}</p>
+                              <p className="text-base font-bold text-light-primary-text dark:text-dark-primary-txt">{formatPrice(item.totalPrice)}</p>
                               <div onClick={() => handleProductRemove(item.product)}>
-                                <MdOutlineDeleteForever className="text-red-600 hover:scale-110 active:scale-95 duration-700 cursor-pointer text-xl  sm:text-2xl shadow-md rounded-lg " />
+                                <MdOutlineDeleteForever className="text-red-600 hover:scale-110 active:scale-95 duration-700 cursor-pointer text-xl  sm:text-2xl shadow-md rounded-lg bg-light-muted-bg dark:bg-dark-muted-bg" />
                               </div>
                             </div>
                           </div>
 
                           <div className="w-full min-w-0 flex-1 space-y-1 md:order-2 md:max-w-md">
-                            <h1 className="text-lg font-semibold text-slate-900">{item.productName}</h1>
-                            <p className="text-sm font-medium text-slate-600">{item.brand}</p>
+                            <h1 className="text-lg font-semibold text-light-primary-text dark:text-dark-primary-txt">{item.productName}</h1>
+                            <p className="text-sm font-medium text-light-secondary-text dark:text-dark-secondary-txt">{item.brand}</p>
                           </div>
                         </div>
                       </div>
@@ -183,18 +182,20 @@ const CartPage = () => {
             <div>
               {cartItems?.length > 0 && (
                 <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-                  <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm ">
-                    <p className="text-xl font-semibold text-gray-900 dark:text-white">Billing details</p>
+                  <div className="space-y-4 rounded-3xl border border-light-border dark:border-dark-border bg-white dark:bg-dark-secondary-bg dark:bg p-4 shadow-sm ">
+                    <p className="text-xl font-bold text-light-primary-text dark:text-dark-primary-txt">Billing details</p>
 
                     <div className="space-y-4">
                       <CustomForm onSubmit={onSubmit} form={form}>
-                        <div className=" gap-4 border-t border-gray-200 pt-2">
+                        <div className=" gap-4 border-t border-light-border dark:border-dark-border pt-2">
                           <FormField
                             control={form.control}
                             name={"fullName"}
                             render={({ field }) => (
                               <FormItem className="mt-4">
-                                <FormLabel className="text-slate-800 dark:text-slate-200 text-start">{"Full Name"}</FormLabel>
+                                <FormLabel className="text-light-primary-text dark:text-dark-primary-txt text-start ml-1 font-medium">
+                                  Full Name
+                                </FormLabel>
                                 <FormControl>
                                   <Input readOnly type={"text"} placeholder={"Enter your FullName"} {...field} />
                                 </FormControl>
@@ -207,7 +208,9 @@ const CartPage = () => {
                             name={"email"}
                             render={({ field }) => (
                               <FormItem className="mt-4">
-                                <FormLabel className="text-slate-800 dark:text-slate-200 text-start">{"Email"}</FormLabel>
+                                <FormLabel className="text-light-primary-text dark:text-dark-primary-txt text-start ml-1 font-medium">
+                                  Email
+                                </FormLabel>
                                 <FormControl>
                                   <Input readOnly type={"text"} placeholder={"Enter your email"} {...field} />
                                 </FormControl>
@@ -223,24 +226,30 @@ const CartPage = () => {
                             {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Sign In"}
                           </Button> */}
                         </div>
-                        <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm mt-6">
-                          <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
+                        <div className="space-y-4 rounded-lg border-2 border-light-border dark:border-dark-border p-4 shadow-sm mt-6">
+                          <p className="text-xl font-semibold text-light-primary-text dark:text-dark-primary-txt">Order summary</p>
 
                           <div className="space-y-4">
-                            <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
-                              <div className="text-base font-bold text-gray-900 dark:text-white">Total Price</div>
-                              <div className="text-base font-medium text-slate-800">{formatPrice(totalPrice)}</div>
+                            <div className="flex items-center justify-between gap-4 border-t-2 border-light-border dark:border-dark-border pt-2">
+                              <div className="text-base font-bold text-light-primary-text dark:text-dark-primary-txt">Total Price</div>
+                              <div className="text-base font-medium text-light-secondary-text dark:text-dark-secondary-txt">
+                                {formatPrice(totalPrice)}
+                              </div>
                             </div>
-                            <div className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 ">
-                              <div className="text-base font-bold text-slate-900 ">Total Quantity</div>
-                              <div className="text-base font-medium text-slate-800">{totalQuantity}</div>
+                            <div className="flex items-center justify-between gap-4 border-t-2 border-light-border dark:border-dark-border pt-2 ">
+                              <div className="text-base font-bold text-light-primary-text dark:text-dark-primary-txt">Total Quantity</div>
+                              <div className="text-base font-medium text-light-secondary-text dark:text-dark-secondary-txt">{totalQuantity}</div>
                             </div>
                           </div>
 
                           <Button type="submit" disabled={isLoading || loginUser?.role === "admin"} className="w-full">
                             {isLoading ? <BiLoaderCircle className="animate-spin" /> : "Order Now"}
                           </Button>
-                          <Button type="button" variant={"outline"} className="w-full">
+                          <Button
+                            type="button"
+                            variant={"outline"}
+                            className="w-full text-light-primary-text dark:text-dark-primary-txt border-4 border-light-border dark:border-dark-border shadow-box-shadow-light dark:shadow-box-shadow-dark py-2"
+                          >
                             <Link to={"/shop?page=1"}>Continue Shopping</Link>
                           </Button>
                         </div>

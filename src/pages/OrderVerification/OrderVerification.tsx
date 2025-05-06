@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 export default function OrderVerification() {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
+  console.log(searchParams);
 
   useEffect(() => {
     dispatch(clearCart());
@@ -35,7 +36,9 @@ export default function OrderVerification() {
       className="w-full md:max-w-[90%] mx-auto p-6 py-20"
     >
       <div className="flex items-center flex-col xs:flex-row justify-center xsm:justify-between  flex-wrap mb-8 gap-3">
-        <h1 className="text-2xl md:text-4xl text-center xs:text-start font-bold">Order Verification</h1>
+        <h1 className="text-2xl md:text-4xl text-light-primary-text dark:text-dark-primary-txt text-center xs:text-start font-bold">
+          Order Verification
+        </h1>
         <Button>
           <Link to={"/dashboard/view-orders"}>View Orders</Link>
         </Button>
@@ -43,64 +46,66 @@ export default function OrderVerification() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Order Details */}
-        <Card className="shadow-lg rounded-lg">
-          <CardHeader className="bg-gray-100 rounded-t-lg">
-            <CardTitle className="text-lg">Order Details</CardTitle>
+        <Card className="shadow-box-shadow-light dark:shadow-box-shadow-dark bg-white dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border rounded-3xl">
+          <CardHeader className="bg-gray-100 dark:bg-dark-muted-bg rounded-t-3xl">
+            <CardTitle className="text-lg text-light-primary-text dark:text-dark-primary-txt font-semibold">Order Details</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="grid gap-3 text-sm mt-4">
-              <dt className="font-semibold">Order ID:</dt>
-              <dd>{orderData?.order_id}</dd>
-              <dt className="font-semibold">Amount:</dt>
-              <dd className="text-green-600">
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Order ID:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.order_id}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Amount:</dt>
+              <dd className="text-green-600 font-medium">
                 {orderData?.currency} {orderData?.amount?.toFixed(2)}
               </dd>
-              <dt className="font-semibold">Status:</dt>
-              <dd className="capitalize">{orderData?.bank_status}</dd>
-              <dt className="font-semibold">Date:</dt>
-              <dd>{new Date(orderData?.date_time).toLocaleString()}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Status:</dt>
+              <dd className="capitalize text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.bank_status}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Date:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">
+                {new Date(orderData?.date_time).toLocaleString()}
+              </dd>
             </dl>
           </CardContent>
         </Card>
 
         {/* Payment Information */}
-        <Card className="shadow-lg rounded-lg">
-          <CardHeader className="bg-gray-100 rounded-t-lg">
-            <CardTitle className="text-lg">Payment Information</CardTitle>
+        <Card className="shadow-box-shadow-light dark:shadow-box-shadow-dark bg-white dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border rounded-3xl">
+          <CardHeader className="bg-gray-100 dark:bg-dark-muted-bg rounded-t-3xl">
+            <CardTitle className="text-lg text-light-primary-text dark:text-dark-primary-txt font-semibold">Payment Information</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="grid gap-3 text-sm mt-4">
-              <dt className="font-semibold">Method:</dt>
-              <dd>{orderData?.method}</dd>
-              <dt className="font-semibold">Transaction ID:</dt>
-              <dd>{orderData?.bank_trx_id}</dd>
-              <dt className="font-semibold">Invoice No:</dt>
-              <dd>{orderData?.invoice_no}</dd>
-              <dt className="font-semibold">SP Code:</dt>
-              <dd>{orderData?.sp_code}</dd>
-              <dt className="font-semibold">SP Message:</dt>
-              <dd>{orderData?.sp_message}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Method:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.method}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Transaction ID:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.bank_trx_id}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Invoice No:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.invoice_no}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">SP Code:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.sp_code}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">SP Message:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.sp_message}</dd>
             </dl>
           </CardContent>
         </Card>
 
         {/* Customer Information */}
-        <Card className="shadow-lg rounded-lg">
-          <CardHeader className="bg-gray-100 rounded-t-lg">
-            <CardTitle className="text-lg">Customer Information</CardTitle>
+        <Card className="shadow-box-shadow-light dark:shadow-box-shadow-dark bg-white dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border rounded-3xl">
+          <CardHeader className="bg-gray-100 dark:bg-dark-muted-bg rounded-t-3xl">
+            <CardTitle className="text-lg text-light-primary-text dark:text-dark-primary-txt font-semibold">Customer Information</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="grid gap-3 text-sm mt-4">
-              <dt className="font-semibold">Name:</dt>
-              <dd>{orderData?.name}</dd>
-              <dt className="font-semibold">Email:</dt>
-              <dd>{orderData?.email}</dd>
-              <dt className="font-semibold">Phone:</dt>
-              <dd>{orderData?.phone_no}</dd>
-              <dt className="font-semibold">Address:</dt>
-              <dd>{orderData?.address}</dd>
-              <dt className="font-semibold">City:</dt>
-              <dd>{orderData?.city}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Name:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.name}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Email:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.email}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Phone:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.phone_no}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Address:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.address}</dd>
+              <dt className="font-semibold text-light-primary-text dark:text-dark-primary-txt">City:</dt>
+              <dd className="text-light-secondary-text dark:text-dark-secondary-txt font-medium">{orderData?.city}</dd>
             </dl>
           </CardContent>
         </Card>

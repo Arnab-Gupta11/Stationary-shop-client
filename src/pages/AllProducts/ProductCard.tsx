@@ -52,14 +52,15 @@ const ProductCard = ({ product }: TProductProp) => {
   const price = formatPrice(product?.price);
   return (
     <Link to={`/products/slug/${product?.slug}`}>
-      <div className="rounded-3xl bg-transparent border-2 border-light-card-border dark:border-dark-border hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3 shadow-card-shadow duration-700 transition-shadow">
+      <div className="rounded-3xl bg-transparent border-2 border-light-card-border dark:border-dark-border hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3 shadow-card-shadow duration-700 transition-shadow group">
+        {/* Product Img  */}
         <div className="bg-light-muted-bg dark:bg-dark-muted-bg h-56 flex justify-center items-center relative rounded-2xl">
           <img
             src={product?.images[0]}
             alt="img1"
             className="w-full h-full object-fill group-hover:scale-105 transition-all duration-1000 rounded-2xl"
           />
-          <span className="bg-primary-bg text-xs font-semibold text-white px-2 py-0.5 absolute top-2 right-1 rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700">
+          <span className="bg-primary border-2 border-[rgb(222,58,66)] text-xs font-semibold text-white px-2 py-0.5 absolute top-2 right-1 rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700">
             {product?.inStock ? "In Stock" : "Out Of Stock"}
           </span>
           <div
@@ -73,11 +74,12 @@ const ProductCard = ({ product }: TProductProp) => {
                 e.preventDefault();
                 addProductToCart();
               }}
-              className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md"
+              className="text-xl hover:scale-110 active:scale-95 hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md border-2 border-light-border"
             />
             {/* <FaRegHeart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md" /> */}
           </div>
         </div>
+        {/* Product Info  */}
         <div className="pt-4 p-1 space-y-2">
           <StarRating rating={product?.rating} starSize={12} />
           <h1 className="text-lg font-medium text-primary-text-light dark:text-dark-primary-txt truncate">{product?.name}</h1>

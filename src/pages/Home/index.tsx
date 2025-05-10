@@ -2,6 +2,7 @@ import Banner from "./Banner";
 import Categories from "./Categories/Categories";
 import FeaturedProducts from "./FeaturedProducts";
 import Testimonial from "./Testimonial/Testimonial";
+import Trending from "./Trending/Trending";
 import WhatWeOffer from "./WhatWeOffer";
 
 const HomePage = () => {
@@ -11,6 +12,7 @@ const HomePage = () => {
       <Categories />
       <WhatWeOffer />
       <FeaturedProducts />
+      <Trending />
       <Testimonial />
     </div>
   );

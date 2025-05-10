@@ -66,13 +66,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           { title: "Deleted Blogs", url: "/dashboard/admin/deleted-blogs" },
         ],
       },
-
-      //User routes
       {
         title: "Users",
         url: "/dashboard/admin/manage-users",
         icon: SquareTerminal,
         show: user?.role === "admin",
+      },
+      {
+        title: "View Orders",
+        url: "/dashboard/users/view-orders",
+        icon: SquareTerminal,
+        show: user?.role === "user",
       },
 
       {

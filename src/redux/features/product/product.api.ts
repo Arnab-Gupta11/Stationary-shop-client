@@ -27,6 +27,7 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    //Get product details.
     getProductDetails: builder.query({
       query: (args) => {
         return {
@@ -97,6 +98,24 @@ const productManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+
+    //Get Top selling products
+    getTopSellingProducts: builder.query({
+      query: () => ({
+        url: "/products/trending-products",
+        method: "GET",
+      }),
+      providesTags: ["review", "product"],
+    }),
+
+    //Get Top rated products
+    getTopRatedProducts: builder.query({
+      query: () => ({
+        url: "/products/top-rated-products",
+        method: "GET",
+      }),
+      providesTags: ["review", "product"],
+    }),
   }),
 });
 export const {
@@ -107,4 +126,6 @@ export const {
   useDeleteProductMutation,
   useGetAllDeletedProductsQuery,
   useRestoreProductMutation,
+  useGetTopSellingProductsQuery,
+  useGetTopRatedProductsQuery,
 } = productManagementApi;

@@ -104,15 +104,6 @@ const authSlice = createSlice({
     clearCart: (state) => {
       state.cart = []; // Clear all products from the cart
     },
-    // updateProductQuantity: (state, action: PayloadAction<{ product: string; quantity: number }>) => {
-    //   const { product, quantity } = action.payload;
-    //   const existingItem = state.cart.find((item) => item.product === product);
-
-    //   if (existingItem) {
-    //     existingItem.quantity = quantity;
-    //     existingItem.totalPrice = existingItem.quantity * existingItem.price;
-    //   }
-    // },
   },
 });
 

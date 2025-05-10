@@ -40,7 +40,7 @@ export default function OrderVerification() {
           Order Verification
         </h1>
         <Button>
-          <Link to={"/dashboard/view-orders"}>View Orders</Link>
+          <Link to={"/dashboard/users/view-orders"}>View Orders</Link>
         </Button>
       </div>
 

@@ -174,14 +174,16 @@ const About = () => {
                 >
                   {teamMembers?.map((item) => (
                     <SwiperSlide className="z-10 h-auto py-14 px-2.5" key={item.id}>
-                      <div className="flex flex-col gap-6 mb-20 group relative shadow-box-shadow rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 duration-500">
-                        <div className="bg-slate-100 rounded-lg group-hover:scale-105 duration-700 ease-in-out">
-                          <img className="w-full object-contain h-64 rounded-lg" src={item.image} alt="team-member" />
+                      <div className="flex flex-col gap-6 mb-20 group relative shadow-box-shadow rounded-3xl overflow-hidden cursor-pointer hover:-translate-y-1 duration-500">
+                        <div className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-3xl group-hover:scale-105 duration-700 ease-in-out transition-transform">
+                          <img className="w-full object-contain h-64 rounded-3xl" src={item.image} alt="team-member" />
                         </div>
 
                         <div className="flex flex-col gap-1 items-center">
-                          <h1 className="text-lg sm:text-xl font-Cormorant-Garamond font-bold text-slate-900 text-center">{item.name}</h1>
-                          <p className="text-sm text-center sm:text-base text-slate-700 font-medium pb-5">{item.role} </p>
+                          <h1 className="text-lg sm:text-xl font-bold text-light-primary-text dark:text-dark-primary-txt text-center">{item.name}</h1>
+                          <p className="text-sm text-center sm:text-base text-light-secondary-text dark:text-dark-secondary-txt font-medium pb-5">
+                            {item.role}{" "}
+                          </p>
                         </div>
                       </div>
                     </SwiperSlide>

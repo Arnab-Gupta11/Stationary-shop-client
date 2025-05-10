@@ -1,3 +1,5 @@
+import { IProduct } from "./product.types";
+
 type OrderStatus = "Pending" | "Shipping";
 type PaymentStatus = "Pending" | "Paid" | "Cancelled";
 
@@ -11,19 +13,19 @@ export interface ITransaction {
   sp_message: string;
 }
 
-export interface IProduct {
-  _id: string;
-  name: string;
-  brand: string;
-  price: number;
-  category: string;
-  description: string;
-  quantity: number;
-  inStock: boolean;
-  image: string;
-  createdAt: string; // Can be Date if preferred
-  updatedAt: string;
-}
+// export interface IProduct {
+//   _id: string;
+//   name: string;
+//   brand: string;
+//   price: number;
+//   category: string;
+//   description: string;
+//   quantity: number;
+//   inStock: boolean;
+//   image: string;
+//   createdAt: string; // Can be Date if preferred
+//   updatedAt: string;
+// }
 
 export interface IOrderItem {
   product: IProduct;

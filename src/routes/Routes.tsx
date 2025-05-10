@@ -10,7 +10,6 @@ import OrderVerification from "@/pages/OrderVerification/OrderVerification";
 import RegisterPage from "@/pages/Register";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 
 import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
 import AdminRoute from "./AdminRoute";
@@ -32,6 +31,7 @@ import UpdateBlog from "@/pages/Dashboard/Admin/blogs/UpdateBlog";
 import DeletedBlogs from "@/pages/Dashboard/Admin/blogs/DeletedBlogs";
 import ManageUsers from "@/pages/Dashboard/Admin/users/ManageUsers";
 import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
+import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 
 const router = createBrowserRouter([
   {
@@ -212,7 +212,7 @@ const router = createBrowserRouter([
 
       // User Routes
       {
-        path: "view-orders",
+        path: "users/view-orders",
         element: (
           <UserRoutes>
             <ViewOrders />

@@ -82,8 +82,8 @@ const ProductCard = ({ product }: TProductProp) => {
         {/* Product Info  */}
         <div className="pt-4 p-1 space-y-2">
           <StarRating rating={product?.rating} starSize={12} />
-          <h1 className="text-lg font-medium text-primary-text-light dark:text-dark-primary-txt truncate">{product?.name}</h1>
-          <h4 className="font-bold text-primary">{price}</h4>
+          <h1 className="text-base font-medium text-primary-text-light dark:text-dark-primary-txt truncate">{product?.name}</h1>
+          <h4 className="font-bold text-primary text-sm">{price}</h4>
         </div>
       </div>
     </Link>

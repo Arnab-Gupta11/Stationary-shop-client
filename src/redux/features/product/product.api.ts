@@ -116,6 +116,24 @@ const productManagementApi = baseApi.injectEndpoints({
       }),
       providesTags: ["review", "product"],
     }),
+
+    //Get featured products
+    getFeaturedProducts: builder.query({
+      query: () => ({
+        url: "/products/fetured-product",
+        method: "GET",
+      }),
+      providesTags: ["review", "product"],
+    }),
+
+    //Update featured product status.
+    updateFeaturedProductsStatus: builder.mutation({
+      query: (id) => ({
+        url: `/products/fetured-product/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
 export const {
@@ -128,4 +146,6 @@ export const {
   useRestoreProductMutation,
   useGetTopSellingProductsQuery,
   useGetTopRatedProductsQuery,
+  useGetFeaturedProductsQuery,
+  useUpdateFeaturedProductsStatusMutation,
 } = productManagementApi;

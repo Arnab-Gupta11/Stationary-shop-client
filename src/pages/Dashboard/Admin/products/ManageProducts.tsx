@@ -12,11 +12,11 @@ import { BsThreeDots } from "react-icons/bs";
 
 import DeleteConfirmationModal from "../../shared/DeleteConfirmationModal";
 import toast from "react-hot-toast";
-import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import { useDeleteProductMutation, useGetAllProductsQuery, useUpdateFeaturedProductsStatusMutation } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 const ManageProducts = () => {
   //Hooks
@@ -25,9 +25,27 @@ const ManageProducts = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  // const [isUpadingStatusLoading, setIsUpdatingStatusLoading] = useState<boolean>(false);
+
+  // const [isUpadingStatusLoading, setIsUpdatingStatusLoading] = useState<boolean>(false);
+  const [updateStatus, { isLoading: isUpdatingStatus }] = useUpdateFeaturedProductsStatusMutation(undefined);
 
   //Categories
   const { data: productData, isLoading, isFetching } = useGetAllProductsQuery([{ name: "page", value: page }]);
+
+  const handleUpdateFeturedStatus = async (id: string) => {
+    try {
+      // setIsDeleting(true);
+      const res = await updateStatus(id).unwrap();
+      if (res?.success === true) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.data?.message || "Something went wrong. Try again later.");
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
+  };
 
   //Delete Category
   const [deleteProduct] = useDeleteProductMutation(undefined);
@@ -83,6 +101,24 @@ const ManageProducts = () => {
       header: "Quantity",
     },
     {
+      header: "Featured Status",
+      cell: ({ row }) => {
+        const status = row.original.isFeatured;
+        return (
+          <span
+            className={`px-2 py-0.5 rounded-lg font-medium
+                          ${
+                            status === true
+                              ? "bg-[#fefad0] dark:bg-[#493A1D] dark:border-[#FFC422] text-yellow-500 dark:text-white text-sm border-2 border-[#FFC422]"
+                              : "bg-light-muted-bg dark:bg-dark-muted-bg dark:border-dark-border text-light-secondary-text dark:text-dark-secondary-txt text-sm border-[4px] border-light-border"
+                          }`}
+          >
+            {status === true ? "Featured" : "Regular"}
+          </span>
+        );
+      },
+    },
+    {
       accessorKey: "action",
       header: () => <div>Action</div>,
       cell: ({ row }) => (
@@ -102,6 +138,13 @@ const ManageProducts = () => {
               className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
             >
               Delete
+            </span>
+            <span
+              onClick={() => handleUpdateFeturedStatus(row.original._id)}
+              className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+            >
+              {isUpdatingStatus && <Loader2 className="animate-spin" />}
+              {!isUpdatingStatus && row.original.isFeatured ? "Mark as regular" : "Mark ad featured"}
             </span>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -24,7 +24,6 @@ import DeletedProducts from "@/pages/Dashboard/Admin/products/DeletedProducts";
 import ManageCategories from "@/pages/Dashboard/Admin/categories/ManageCategories";
 import ManageBrands from "@/pages/Dashboard/Admin/brands/ManageBrands";
 import DeletedBrands from "@/pages/Dashboard/Admin/brands/DeletedBrands";
-import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
 import ManageBlogs from "@/pages/Dashboard/Admin/blogs/ManageBlogs";
 import AddBlog from "@/pages/Dashboard/Admin/blogs/AddBlog";
 import UpdateBlog from "@/pages/Dashboard/Admin/blogs/UpdateBlog";
@@ -33,6 +32,7 @@ import ManageUsers from "@/pages/Dashboard/Admin/users/ManageUsers";
 import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
 import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
+import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
 
 const router = createBrowserRouter([
   {
@@ -225,7 +225,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manage-profile",
+        path: "/dashboard/users/manage-profile",
         element: (
           <UserRoutes>
             <ManageProfile />

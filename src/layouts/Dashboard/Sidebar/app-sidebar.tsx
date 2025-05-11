@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText, SquareTerminal, Settings } from "lucide-react";
+import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText, SquareTerminal } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -78,18 +78,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: SquareTerminal,
         show: user?.role === "user",
       },
-
       {
-        title: "Settings",
-        url: "#",
-        icon: Settings,
+        title: "Manage Profile",
+        url: "/dashboard/users/manage-profile",
+        icon: SquareTerminal,
         show: user?.role === "user",
-        items: [
-          {
-            title: "Profile",
-            url: "/profile",
-          },
-        ],
       },
     ],
   };

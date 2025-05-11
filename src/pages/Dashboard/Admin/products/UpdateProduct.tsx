@@ -32,7 +32,7 @@ type TFormValues = z.infer<typeof updateProductValidationSchema>;
 
 const UpdateProduct = () => {
   const { id } = useParams();
-  const { data: productData, isLoading } = useGetProductDetailsQuery({ id });
+  const { data: productData, isLoading } = useGetProductDetailsQuery({ slug: id });
   const productDetails = productData?.data as IProduct;
   const defaultImages = productDetails?.images || [];
   const [updateProduct] = useUpdateProductMutation(undefined);
@@ -85,6 +85,9 @@ const UpdateProduct = () => {
       });
     }
   }, [productDetails, form]);
+
+  console.log(productDetails);
+  console.log("Params Id", id);
 
   const [uploading, setUploading] = useState(false);
 

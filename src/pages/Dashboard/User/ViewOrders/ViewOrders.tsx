@@ -86,17 +86,19 @@ const ViewOrders = () => {
     {
       header: "Delivery Status",
       cell: ({ row }) => {
-        const status = row.original.paymentStatus;
+        const status = row.original.status;
         return (
           <span
             className={`px-2 py-0.5 rounded-lg font-medium
                           ${
-                            status === "Cancelled"
+                            status === "Pending"
                               ? "bg-[#ffe5ef] dark:bg-[#361422] dark:border-[#FF4388] text-[#ef4986] dark:text-white text-sm border-2 border-[#FF4388]"
-                              : status === "Paid"
-                              ? "bg-[#dbfed0] dark:bg-[#192B1D] dark:border-[#347D3F] text-green-600 dark:text-white text-sm border-2 border-green-500"
-                              : status === "Pending"
+                              : status === "Confirmed"
+                              ? "bg-[#d0d8fe] dark:bg-[#191a2b] dark:border-[#34347d] text-blue-600 dark:text-white text-sm border-2 border-blue-500"
+                              : status === "Shipping"
                               ? "bg-[#fefad0] dark:bg-[#493A1D] dark:border-[#FFC422] text-yellow-500 dark:text-white text-sm border-2 border-[#FFC422]"
+                              : status === "Delivered"
+                              ? "bg-[#dbfed0] dark:bg-[#192B1D] dark:border-[#347D3F] text-green-600 dark:text-white text-sm border-2 border-green-500"
                               : "bg-none text-slate-800"
                           }`}
           >

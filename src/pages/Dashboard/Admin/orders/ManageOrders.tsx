@@ -1,123 +1,157 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Loader from "@/components/shared/Loader";
-import { useState } from "react";
+import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loader/TableSkeletonLoader";
+import DashboardPageSection from "../../shared/DashboardPageSection";
+import { CustomTable } from "../../shared/CustomTable";
 import { PaginationProduct } from "@/pages/AllProducts/Pagination";
 import { TMeta } from "@/types/global";
-import { Button } from "@/components/ui/button";
-import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from "@/redux/features/order/order.api";
+import { ColumnDef } from "@tanstack/react-table";
+import { useState } from "react";
+import { useGetAllOrdersQuery } from "@/redux/features/order/order.api";
 import { IOrder } from "@/types/order.type";
-import { formatMongoDateToDate } from "@/utils/formateDate";
-import { formatPrice } from "@/utils/formatePrice";
-import toast from "react-hot-toast";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BsThreeDots } from "react-icons/bs";
+import { formateDateTime } from "@/utils/formateDateTime";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { FiMoreVertical } from "react-icons/fi";
 import OrderDetails from "../../User/ViewOrders/OrderDetails";
+import UpdateDeleveryStatusModal from "./UpdateDeliveryStatusModal";
+
 const ManageOrders = () => {
+  //Hooks
   const [page, setPage] = useState(1);
-  const [updateStatus] = useUpdateOrderStatusMutation(undefined);
+  const [isUpdateStatusModalOpen, setIsUpdateStatusModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+
+  //Categories
   const { data: orderData, isLoading, isFetching } = useGetAllOrdersQuery([{ name: "page", value: page }]);
 
-  const handleUpdateOrderStatus = async (_id: string) => {
-    try {
-      const statusInfo = {
-        status: "Shipping",
-      };
-      const res = await updateStatus({ id: _id, data: statusInfo }).unwrap();
-      if (res?.success === true) {
-        toast.success(res?.message);
-      }
-    } catch (err: any) {
-      toast.error(err?.data?.message);
-    }
+  const handleUpdateStatus = (id: string) => {
+    setSelectedOrderId(id);
+    setIsUpdateStatusModalOpen(true);
   };
 
+  const columns: ColumnDef<IOrder>[] = [
+    {
+      header: "Order",
+      cell: ({ row }) => {
+        return <span>{row.original.transaction.id}</span>;
+      },
+    },
+    {
+      header: "Customer Name",
+      cell: ({ row }) => {
+        return <span>{row.original.user.fullName}</span>;
+      },
+    },
+    {
+      header: "Customer Email",
+      cell: ({ row }) => {
+        return <span>{row.original.user.email}</span>;
+      },
+    },
+    {
+      header: "Date",
+      cell: ({ row }) => {
+        return <span>{formateDateTime(row.original.createdAt)}</span>;
+      },
+    },
+    {
+      header: "Payment Status",
+      cell: ({ row }) => {
+        const status = row.original.paymentStatus;
+        return (
+          <span
+            className={`px-2 py-0.5 rounded-lg font-medium
+                          ${
+                            status === "Cancelled"
+                              ? "bg-[#ffe5ef] dark:bg-[#361422] dark:border-[#FF4388] text-[#ef4986] dark:text-white text-sm border-2 border-[#FF4388]"
+                              : status === "Paid"
+                              ? "bg-[#dbfed0] dark:bg-[#192B1D] dark:border-[#347D3F] text-green-600 dark:text-white text-sm border-2 border-green-500"
+                              : status === "Pending"
+                              ? "bg-[#fefad0] dark:bg-[#493A1D] dark:border-[#FFC422] text-yellow-500 dark:text-white text-sm border-2 border-[#FFC422]"
+                              : "bg-none text-slate-800"
+                          }`}
+          >
+            {status}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "totalOrderPrice",
+      header: "Total Price",
+    },
+    {
+      header: "Total Quantity",
+      cell: ({ row }) => <span>{row.original.products.length}</span>,
+    },
+    {
+      header: "Delivery Status",
+      cell: ({ row }) => {
+        const status = row.original.status;
+        return (
+          <span
+            className={`px-2 py-0.5 rounded-lg font-medium
+                          ${
+                            status === "Pending"
+                              ? "bg-[#ffe5ef] dark:bg-[#361422] dark:border-[#FF4388] text-[#ef4986] dark:text-white text-sm border-2 border-[#FF4388]"
+                              : status === "Confirmed"
+                              ? "bg-[#d0d8fe] dark:bg-[#191a2b] dark:border-[#34347d] text-blue-600 dark:text-white text-sm border-2 border-blue-500"
+                              : status === "Shipping"
+                              ? "bg-[#fefad0] dark:bg-[#493A1D] dark:border-[#FFC422] text-yellow-500 dark:text-white text-sm border-2 border-[#FFC422]"
+                              : status === "Delivered"
+                              ? "bg-[#dbfed0] dark:bg-[#192B1D] dark:border-[#347D3F] text-green-600 dark:text-white text-sm border-2 border-green-500"
+                              : "bg-none text-slate-800"
+                          }`}
+          >
+            {status}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "action",
+      header: () => <div>Action</div>,
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="outline-none flex items-center justify-center hover:scale-105 active:scale-95 duration-700">
+            <BsThreeDots className="mt-2 text-xl" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="bottom" className=" flex flex-col">
+            <Dialog>
+              <DialogTrigger>
+                <span className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
+                  Product Details
+                </span>
+              </DialogTrigger>
+              <OrderDetails productDetails={row.original.products} />
+            </Dialog>
+            <span
+              onClick={() => handleUpdateStatus(row.original._id)}
+              className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3"
+            >
+              Update Order Status
+            </span>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
+  ];
   return (
     <div>
-      <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5"></div>
-      {isLoading || isFetching ? (
-        <Loader />
-      ) : (
-        <div className="overflow-x-auto rounded-lg shadow-sm pb-10">
-          <table className="w-full bg-white border border-[#f1f1f1] mb-5">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-2 text-left border w-32 border-[#f1f1f1]">Order</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Date</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Customer</th>
-                <th className="px-4 py-2 text-left w-20 border border-[#f1f1f1]">Payment Status</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Total</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Items</th>
-                <th className="px-4 py-2 text-left w-20 border border-[#f1f1f1]">Order Status</th>
-                <th className="px-4 py-2 text-left border border-[#f1f1f1]">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderData?.data?.result?.map((item: IOrder) => (
-                <tr key={item?._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border w-32 border-[#f1f1f1] text-sm">{item?._id}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatMongoDateToDate(item?.createdAt)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.user?.fullName}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
-                    <span
-                      className={`px-2 py-1 rounded-md
-                          ${
-                            item?.paymentStatus === "Cancelled"
-                              ? "bg-[#FDEEEF] text-[#ff6a62] border border-[#f5f4f4]"
-                              : item?.paymentStatus === "Paid"
-                              ? "bg-[#EDFBF3] text-[#71d057] border border-[#f5f4f4]"
-                              : item?.paymentStatus === "Pending"
-                              ? "bg-[#FFFEF4] text-yellow-600 border border-[#f5f4f4]"
-                              : "bg-none text-slate-800"
-                          }`}
-                    >
-                      {item?.paymentStatus}
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{formatPrice(item?.totalOrderPrice)}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">{item?.products?.length}</td>
-                  <td className="px-4 py-2 border border-[#f1f1f1] text-sm">
-                    {
-                      <span
-                        className={`px-2 py-1 rounded-md
-                          ${
-                            item?.status === "Pending"
-                              ? "bg-[#fdfcea] text-yellow-500 border border-[#f5f4f4]"
-                              : item?.status === "Shipping"
-                              ? "bg-[#EDFBF3] text-[#71d057] border border-[#f5f4f4]"
-                              : "bg-none text-slate-800"
-                          }`}
-                      >
-                        {item?.status}
-                      </span>
-                    }
-                  </td>
-                  <td className="px-4 py-2 border-b border-[#f1f1f1] ">
-                    <div className="flex items-center justify-center gap-3">
-                      <Button
-                        onClick={() => {
-                          handleUpdateOrderStatus(item?._id);
-                        }}
-                        type="submit"
-                        disabled={item?.status === "Shipping"}
-                        className="sm-mx:w-full"
-                      >
-                        {item?.status === "Shipping" ? "Approved" : "Approve"}
-                      </Button>
-                      <Dialog>
-                        <DialogTrigger>
-                          <FiMoreVertical className="mx-auto hover:scale-110 hover:cursor-pointer" size={18} />
-                        </DialogTrigger>
-                        <OrderDetails productDetails={item?.products} />
-                      </Dialog>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <PaginationProduct meta={orderData?.data?.meta as TMeta} page={page} setPage={setPage} />
+      <DashboardPageSection>
+        <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
+          <h1 className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">View Orders</h1>
         </div>
-      )}
+        {isLoading && <TableSkeletonLoader />}
+        {!isLoading && (
+          <>
+            <CustomTable columns={columns} data={orderData?.data || []} isFetching={isFetching} />
+            <div className="mt-6 flex w-full justify-start">
+              {orderData?.data && orderData?.data.length > 0 && <PaginationProduct meta={orderData?.meta as TMeta} page={page} setPage={setPage} />}
+            </div>
+          </>
+        )}
+      </DashboardPageSection>
+      <UpdateDeleveryStatusModal isOpen={isUpdateStatusModalOpen} onOpenChange={setIsUpdateStatusModalOpen} orderId={selectedOrderId} />
     </div>
   );
 };

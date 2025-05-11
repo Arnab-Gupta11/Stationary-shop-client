@@ -1,6 +1,6 @@
 import { IProduct } from "./product.types";
 
-type OrderStatus = "Pending" | "Shipping";
+type OrderStatus = "Pending" | "Confirmed" | "Shipping" | "Delivered";
 type PaymentStatus = "Pending" | "Paid" | "Cancelled";
 
 export interface ITransaction {

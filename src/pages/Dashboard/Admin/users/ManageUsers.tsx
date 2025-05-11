@@ -59,8 +59,8 @@ const ManageUsers = () => {
           className={`px-2 py-1 rounded-md text-sm
                   ${
                     row.original.isBlocked === true
-                      ? "bg-[#FDEEEF] text-[#ff6a62] border border-[#f5f4f4]"
-                      : "bg-[#EDFBF3] text-[#71d057] border border-[#f5f4f4]"
+                      ? "bg-[#ffe5ef] dark:bg-[#361422] dark:border-[#FF4388] text-[#ef4986] dark:text-white text-sm border-2 border-[#FF4388]"
+                      : "bg-[#dbfed0] dark:bg-[#192B1D] dark:border-[#347D3F] text-green-600 dark:text-white text-sm border-2 border-green-500"
                   }`}
         >
           {row.original.isBlocked === true ? "Blocked" : "Active"}

@@ -32,6 +32,7 @@ import DeletedBlogs from "@/pages/Dashboard/Admin/blogs/DeletedBlogs";
 import ManageUsers from "@/pages/Dashboard/Admin/users/ManageUsers";
 import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategories";
 import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
+import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/shop",
         element: <AllProductsPage />,
+      },
+      {
+        path: "/category/:categoryId",
+        element: <CategoryProducts />,
       },
       {
         path: "/products/slug/:slug",

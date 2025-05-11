@@ -61,6 +61,16 @@ const categoryManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["category"],
     }),
+    //Get all sub-categories
+    getAllSubCategoriesOfACategory: builder.query({
+      query: (id) => {
+        return {
+          url: `/category/${id}/subcategories`,
+          method: "GET",
+        };
+      },
+      providesTags: ["category"],
+    }),
 
     //Get All Categories option.
     getAllCategoriesOption: builder.query({
@@ -131,4 +141,5 @@ export const {
   useGetAllDeletedCategoriesQuery,
   useRestoreCategoryMutation,
   useGetAllSubCategoriesQuery,
+  useGetAllSubCategoriesOfACategoryQuery,
 } = categoryManagementApi;

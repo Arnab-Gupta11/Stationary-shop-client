@@ -7,6 +7,7 @@ import SwiperCore from "swiper";
 import { useGetAllCategoriesOptionQuery } from "@/redux/features/categories/categories.api";
 import { TCategoryOptions } from "@/types/category.types";
 import CategoryCardSkeletonLoader from "@/components/shared/loader/CategoryCardSkeltonLoader";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const sliderRef = useRef<SwiperCore | null>(null);
@@ -62,12 +63,14 @@ const Categories = () => {
             <div className="flex items-stretch">
               {categoryOption?.data?.map((item: TCategoryOptions) => (
                 <SwiperSlide key={item?._id} className="h-full">
-                  <div className="grid h-full place-items-center">
-                    <div className="flex flex-col h-full items-center justify-between shadow-card-shadow rounded-3xl p-4 bg-transparent border-2 border-light-border dark:border-dark-border w-full min-h-[180px]">
-                      <img src={item?.icon} alt="Category" className="rounded-3xl w-full h-32 object-fill" />
-                      <h1 className="text-base font-bold text-light-primary-text dark:text-dark-primary-txt pt-3 text-center">{item?.name}</h1>
+                  <Link to={`/category/${item?._id}`}>
+                    <div className="grid h-full place-items-center hover:cursor-pointer ">
+                      <div className="flex flex-col h-full items-center justify-between shadow-card-shadow rounded-3xl p-4 bg-transparent border-2 border-light-border dark:border-dark-border w-full min-h-[180px]">
+                        <img src={item?.icon} alt="Category" className="rounded-3xl w-full h-32 object-fill hover:scale-105 duration-700" />
+                        <h1 className="text-base font-bold text-light-primary-text dark:text-dark-primary-txt pt-3 text-center">{item?.name}</h1>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               ))}
             </div>

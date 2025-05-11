@@ -1,5 +1,5 @@
 import Section from "@/components/shared/Section";
-import { useGetFeaturedProductsQuery } from "@/redux/features/product/product.api";
+import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import ProductCard from "@/pages/AllProducts/ProductCard";
 import SectionHeader from "../SectionHeader/SectionHeader";
 import SliderWrapper from "@/components/shared/SliderWrapper";
@@ -8,12 +8,11 @@ import { useRef, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import { IProduct } from "@/types/product.types";
 import ProductCardSkeleton from "@/components/shared/loader/ProductCardSkeletonLoader";
-const FeaturedProducts = () => {
+const NewArrivalsProducts = () => {
   const sliderRef = useRef<SwiperCore | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(true);
-  const { data: productData, isLoading } = useGetFeaturedProductsQuery([{ name: "limit", value: 8 }]);
-  console.log(productData?.data);
+  const { data: productData, isLoading } = useGetAllProductsQuery([{ name: "limit", value: 8 }]);
   const breakpoints = {
     0: {
       slidesPerView: 1,
@@ -41,7 +40,7 @@ const FeaturedProducts = () => {
     <div className="pt-24">
       <Section>
         {/* Heading  */}
-        <SectionHeader heading="Featured" subheading="Collection" />
+        <SectionHeader heading="New" subheading="Arrivals" />
 
         {isLoading && (
           <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 ">
@@ -74,4 +73,4 @@ const FeaturedProducts = () => {
   );
 };
 
-export default FeaturedProducts;
+export default NewArrivalsProducts;

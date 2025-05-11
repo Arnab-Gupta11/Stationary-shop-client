@@ -27,6 +27,30 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    //Get All products of a category.
+    getAllProductsOfACategory: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args.params) {
+          args.params.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: `/products/category/${args.id}`,
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["product"],
+      transformResponse: (response: TResponseRedux<IProduct[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
     //Get product details.
     getProductDetails: builder.query({
       query: (args) => {
@@ -148,4 +172,5 @@ export const {
   useGetTopRatedProductsQuery,
   useGetFeaturedProductsQuery,
   useUpdateFeaturedProductsStatusMutation,
+  useGetAllProductsOfACategoryQuery
 } = productManagementApi;

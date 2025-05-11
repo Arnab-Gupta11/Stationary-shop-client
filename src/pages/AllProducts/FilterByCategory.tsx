@@ -1,16 +1,16 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { TFilterParams } from ".";
 import { ChevronsUpDown } from "lucide-react";
-import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
-import { TCategoryOptions } from "@/types/category.types";
+import { TCategory } from "@/types/category.types";
 import { Skeleton } from "@/components/ui/skeleton";
 type TFilterByCategoryProps = {
   queryParams: TFilterParams[];
   setQuerParams: React.Dispatch<React.SetStateAction<TFilterParams[]>>;
+  categories: TCategory[];
+  isLoading: boolean;
 };
-const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps) => {
+const FilterByCategory = ({ queryParams, setQuerParams, categories, isLoading }: TFilterByCategoryProps) => {
   // const categories = ["Writing", "Office Supplies", "Art Supplies", "Educational", "Technology"];
-  const { data: categories, isLoading } = useGetAllSubCategoriesQuery(undefined);
 
   //Update the query params.
   const handleCategoryChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ const FilterByCategory = ({ queryParams, setQuerParams }: TFilterByCategoryProps
                 );
               })}
           </div>
-          {categories?.data?.map((item: TCategoryOptions) => (
+          {categories?.map((item: TCategory) => (
             <li key={item._id} className="relative flex w-full items-center justify-center gap-2.5 mb-2.5">
               <input
                 type="checkbox"

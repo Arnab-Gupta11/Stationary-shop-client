@@ -1,29 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Section from "@/components/shared/Section";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PriceFilter from "./PriceFilter";
-import AvailabilityFilter from "./AvailabilityFilter";
-import FilterByCategory from "./FilterByCategory";
-import SortProduct from "./SortProduct";
-import SearchProducts from "./SearchProducts";
-import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
-import ProductCard from "./ProductCard";
+import { useGetAllProductsOfACategoryQuery } from "@/redux/features/product/product.api";
 import { MdProductionQuantityLimits } from "react-icons/md";
-import { PaginationProduct } from "./Pagination";
 import { TMeta } from "@/types/global";
-import FilterSidbar from "./FilterSidbar";
 import PageHeader from "@/components/shared/PageHeader";
-import FilterByBrand from "./FilterByBrand";
-import { useGetAllSubCategoriesQuery } from "@/redux/features/categories/categories.api";
+import SearchProducts from "../AllProducts/SearchProducts";
+import SortProduct from "../AllProducts/SortProduct";
+import FilterSidbar from "../AllProducts/FilterSidbar";
+import ProductCard from "../AllProducts/ProductCard";
+import { PaginationProduct } from "../AllProducts/Pagination";
+import PriceFilter from "../AllProducts/PriceFilter";
+import FilterByCategory from "../AllProducts/FilterByCategory";
+import FilterByBrand from "../AllProducts/FilterByBrand";
+import AvailabilityFilter from "../AllProducts/AvailabilityFilter";
+import { useGetAllSubCategoriesOfACategoryQuery, useGetCategoryDetailsQuery } from "@/redux/features/categories/categories.api";
 import ProductCardSkeleton from "@/components/shared/loader/ProductCardSkeletonLoader";
+
 export type TFilterParams = {
   name: string;
   value: string | number | boolean;
 };
-const AllProductsPage = () => {
+const CategoryProducts = () => {
   const navigate = useNavigate();
+  const { categoryId } = useParams();
   const [searchParams] = useSearchParams();
 
   //Restore filters from URL params on page load
@@ -51,20 +53,27 @@ const AllProductsPage = () => {
     const updatedQueryParams = queryParams.filter((item) => item.name !== "page");
     setQuerParams([...updatedQueryParams, { name: "page", value: page }]);
   }, [page]);
-  const { data: productData, isLoading, isFetching } = useGetAllProductsQuery([...queryParams, { name: "limit", value: 12 }]);
-  const { data: categories, isLoading: isCategoryLoading } = useGetAllSubCategoriesQuery(undefined);
+  const {
+    data: productData,
+    isLoading,
+    isFetching,
+  } = useGetAllProductsOfACategoryQuery({ params: [...queryParams, { name: "limit", value: 12 }], id: categoryId });
+
+  const { data: categories, isLoading: isCategoryLoading } = useGetAllSubCategoriesOfACategoryQuery(categoryId);
+  const { data: categoriesDetails } = useGetCategoryDetailsQuery({ id: categoryId });
+
   return (
     <>
       {/* Page Header  */}
-      <PageHeader title="All Products">
+      <PageHeader title={categoriesDetails?.data?.name}>
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem>
+            <BreadcrumbItem className="hover:text-primary font-medium">
               <Link to="/">Home</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Shop</BreadcrumbPage>
+            <BreadcrumbItem className="font-medium">
+              <BreadcrumbPage>{categoriesDetails?.data?.slug}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -136,4 +145,4 @@ const AllProductsPage = () => {
   );
 };
 
-export default AllProductsPage;
+export default CategoryProducts;

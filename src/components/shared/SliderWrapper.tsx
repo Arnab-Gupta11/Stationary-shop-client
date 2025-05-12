@@ -41,7 +41,7 @@ const SliderWrapper = ({ children, sliderRef, isBeginning, setIsBeginning, isEnd
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group/slider">
       <Swiper
         onSwiper={(swiper) => {
           sliderRef.current = swiper;
@@ -58,7 +58,7 @@ const SliderWrapper = ({ children, sliderRef, isBeginning, setIsBeginning, isEnd
       {!isBeginning && (
         <button
           onClick={() => sliderRef.current?.slidePrev()}
-          className="absolute z-10 top-1/2 -translate-y-1/2 bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-[10px] w-7 h-7 flex items-center justify-center cursor-pointer opacity-0 left-0 group-hover:opacity-100 group-hover:left-2 duration-700 transition-all"
+          className="absolute z-10 top-1/2 -translate-y-1/2 bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-[10px] w-7 h-7 flex items-center justify-center cursor-pointer opacity-0 left-0 group-hover/slider:opacity-100 group-hover/slider:left-2 duration-700 transition-all"
         >
           <TbArrowBadgeLeft className="text-lg" />
         </button>
@@ -67,7 +67,7 @@ const SliderWrapper = ({ children, sliderRef, isBeginning, setIsBeginning, isEnd
       {!isEnd && (
         <button
           onClick={() => sliderRef.current?.slideNext()}
-          className="absolute z-10 top-1/2 -translate-y-1/2 bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-[10px] w-7 h-7 flex items-center justify-center cursor-pointer opacity-0 right-0 group-hover:opacity-100 group-hover:right-2 duration-700 transition-all"
+          className="absolute z-10 top-1/2 -translate-y-1/2 bg-button-gradient text-white shadow hover:bg-button-gradient-hover font-semibold rounded-[10px] w-7 h-7 flex items-center justify-center cursor-pointer opacity-0 right-0 group-hover/slider:opacity-100 group-hover/slider:right-2 duration-700 transition-all"
         >
           <TbArrowBadgeRight className="text-lg" />
         </button>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import StarRating from "@/pages/ProductDetails/StarRating";
 import { IProduct } from "@/types/product.types";
@@ -5,10 +6,9 @@ import { formatPrice } from "@/utils/formatePrice";
 import { MoveUpRight, SearchIcon, X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { CgSearch } from "react-icons/cg";
 import { FaBoxOpen } from "react-icons/fa";
 import { LuSearch } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchingProducts = () => {
   const [input, setInput] = useState("");

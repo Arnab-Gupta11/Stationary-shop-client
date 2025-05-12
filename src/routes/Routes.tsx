@@ -33,6 +33,7 @@ import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategor
 import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
 import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
+import CompareProducts from "@/pages/CompareProducts/CompareProducts";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CartPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/compare-products",
+        element: (
+          <PrivateRoute>
+            <CompareProducts />
           </PrivateRoute>
         ),
       },

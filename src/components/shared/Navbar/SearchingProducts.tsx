@@ -24,13 +24,11 @@ const SearchingProducts = () => {
     try {
       if (chacheProductList[input]) {
         setProducts(chacheProductList[input]);
-        console.log("Chache Calling");
         return;
       }
       setLoading(true);
       const res = await fetch(`http://localhost:5000/api/v1/products?searchTerm=${input}&limit=6`);
       const result = await res.json();
-      console.log("Data Fetching");
       setProducts(result?.data);
       setCacheProductList((prev) => ({ ...prev, [input]: result?.data }));
     } catch (error) {

@@ -9,13 +9,13 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addProductIntoCart, useCartItems } from "@/redux/features/auth/authSlice";
 import Review from "./Review";
 import StarRating from "./StarRating";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { PiDotDuotone } from "react-icons/pi";
 import ProductDetailsSkeletonLoader from "@/components/shared/loader/ProdctDetailsSkeletonLoader";
 import ProductImages from "./ProductImages";
+import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
 
 const ProductDetails = () => {
   const cartItems = useAppSelector(useCartItems);

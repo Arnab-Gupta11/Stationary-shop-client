@@ -13,7 +13,6 @@ const FeaturedProducts = () => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(true);
   const { data: productData, isLoading } = useGetFeaturedProductsQuery([{ name: "limit", value: 8 }]);
-  console.log(productData?.data);
   const breakpoints = {
     0: {
       slidesPerView: 1,

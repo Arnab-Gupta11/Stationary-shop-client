@@ -59,7 +59,6 @@ const ManageProducts = () => {
       setIsDeleting(true);
       if (selectedId) {
         const res = await deleteProduct(selectedId).unwrap();
-        console.log(res);
         if (res?.success === true) {
           toast.success(res?.message);
           setDeleteModalOpen(false);

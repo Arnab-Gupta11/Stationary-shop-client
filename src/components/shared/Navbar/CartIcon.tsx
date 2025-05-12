@@ -1,4 +1,4 @@
-import { useCartItems } from "@/redux/features/auth/authSlice";
+import { useCartItems } from "@/redux/features/cart/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";

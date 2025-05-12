@@ -1,18 +1,30 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
+import cartReducer from "./features/cart/cartSlice";
 import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-const persistConfig = {
+
+//Persist Auth reducer.
+const authPersistConfig = {
   key: "auth",
   storage,
 };
-const authPersistedReducer = persistReducer(persistConfig, authReducer);
+const authPersistedReducer = persistReducer(authPersistConfig, authReducer);
+
+// Persist Cart reducer.
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+};
+const cartPersistedReducer = persistReducer(cartPersistConfig, cartReducer);
+const rootReducer = combineReducers({
+  [baseApi.reducerPath]: baseApi.reducer,
+  auth: authPersistedReducer,
+  cart: cartPersistedReducer,
+});
 export const store = configureStore({
-  reducer: {
-    [baseApi.reducerPath]: baseApi.reducer,
-    auth: authPersistedReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

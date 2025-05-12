@@ -3,9 +3,10 @@ import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addProductIntoCart, useCartItems, useCurrentUser } from "@/redux/features/auth/authSlice";
+import {  useCurrentUser } from "@/redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 import StarRating from "../ProductDetails/StarRating";
+import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
 type TProductProp = {
   product: IProduct;
 };

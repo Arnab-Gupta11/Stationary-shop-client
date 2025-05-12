@@ -42,10 +42,8 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
   const handleDeleteConfirm = async () => {
     try {
       setIsDeleting(true);
-      console.log("selectedId :", selectedId);
       if (selectedId) {
         const res = await deleteReview({ id: selectedId }).unwrap();
-        console.log("delete review : ", res);
         if (res?.success === true) {
           toast.success(res?.message);
           setDeleteModalOpen(false);

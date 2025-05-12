@@ -86,9 +86,6 @@ const UpdateProduct = () => {
     }
   }, [productDetails, form]);
 
-  console.log(productDetails);
-  console.log("Params Id", id);
-
   const [uploading, setUploading] = useState(false);
 
   const {

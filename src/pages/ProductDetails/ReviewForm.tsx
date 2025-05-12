@@ -64,7 +64,6 @@ const ReviewForm = ({ productId, yourReview }: { productId: string; yourReview: 
       }
     } catch (err: any) {
       toast.error("We couldn't submit your review. Please check your connection and try again.");
-      console.log("REveiw Error : ", err);
     } finally {
       setLoading(false);
     }

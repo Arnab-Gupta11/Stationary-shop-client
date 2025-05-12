@@ -2,13 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import {
-  getTotalPrice,
-  getTotalQuantity,
-  increaseProductQuantity,
-  reduceProductQuantity,
-  removeProductFromCart,
-  TCartItem,
-  useCartItems,
   useCurrentUser,
 } from "@/redux/features/auth/authSlice";
 import { MdOutlineDeleteForever } from "react-icons/md";
@@ -31,6 +24,8 @@ import { BiLoaderCircle } from "react-icons/bi";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PageHeader from "@/components/shared/PageHeader";
+import { getTotalPrice, getTotalQuantity, increaseProductQuantity, reduceProductQuantity, removeProductFromCart, TCartItem, useCartItems } from "@/redux/features/cart/cartSlice";
+
 const CartPage = () => {
   const loginUser = useAppSelector(useCurrentUser);
   const [createOrder] = useCreateOrderMutation();
@@ -82,7 +77,6 @@ const CartPage = () => {
         products: formattedProducts,
       };
       const res = await createOrder(userInfo).unwrap();
-      console.log("Response :", res);
       if (res?.success === true) {
         toast.success(res?.message);
 

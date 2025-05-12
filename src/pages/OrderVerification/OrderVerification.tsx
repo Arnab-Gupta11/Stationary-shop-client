@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { clearCart } from "@/redux/features/auth/authSlice";
 import { useVerifyOrderQuery } from "@/redux/features/order/order.api";
 import { useAppDispatch } from "@/redux/hooks";
 import { TOrderData } from "@/types/order.type";
@@ -8,11 +7,11 @@ import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { clearCart } from "@/redux/features/cart/cartSlice";
 
 export default function OrderVerification() {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
 
   useEffect(() => {
     dispatch(clearCart());

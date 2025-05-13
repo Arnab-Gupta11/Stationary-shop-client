@@ -7,16 +7,20 @@ import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 import StarRating from "../ProductDetails/StarRating";
 import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
-import { RiHeartLine } from "react-icons/ri";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 import { BiGitCompare } from "react-icons/bi";
 import { LuEye } from "react-icons/lu";
 import { addProductIntoCompareProductsList, compareProductSelector } from "@/redux/features/compareProducts/compareProductsSlice";
+import { addToWishlist, removeFromWishlist, wishlistSelector } from "@/redux/features/wishlist/wishlistSlice";
+import { useEffect, useState } from "react";
 type TProductProp = {
   product: IProduct;
 };
 const ProductCard = ({ product }: TProductProp) => {
   const cartItems = useAppSelector(useCartItems);
   const compareItems = useAppSelector(compareProductSelector);
+  const wishlistItems = useAppSelector(wishlistSelector);
+  const [isProductExistInWishlist, setIsProductExistInWishlist] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(useCurrentUser);
   const addProductToCart = () => {
@@ -68,7 +72,28 @@ const ProductCard = ({ product }: TProductProp) => {
       toast.error("You can only compare up to 5 products at a time.");
     }
   };
+  useEffect(() => {
+    const isProductExistInWishlist = wishlistItems.find((item) => item._id === product._id);
+    if (isProductExistInWishlist) {
+      setIsProductExistInWishlist(true);
+    } else {
+      setIsProductExistInWishlist(false);
+    }
+  }, [wishlistItems]);
+
+  console.log("isProductExistInWishlist=====>", isProductExistInWishlist);
+
+  const addRemoveFromWishlist = () => {
+    if (isProductExistInWishlist) {
+      dispatch(removeFromWishlist(product._id));
+      toast.success("Product Removed from your wishlist.");
+    } else {
+      dispatch(addToWishlist(product));
+      toast.success("Product added to your wishlist.");
+    }
+  };
   const price = formatPrice(product?.price);
+  const Icon = isProductExistInWishlist ? RiHeartFill : RiHeartLine;
   return (
     <Link to={`/products/slug/${product?.slug}`}>
       <div className="rounded-3xl bg-transparent border-2 border-light-card-border dark:border-dark-border hover:shadow-box-shadow-light dark:hover:shadow-box-shadow-dark cursor-pointer p-3 shadow-card-shadow duration-700 transition-shadow group">
@@ -97,7 +122,16 @@ const ProductCard = ({ product }: TProductProp) => {
               }}
               className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
             />
-            <RiHeartLine className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary" />
+            <Icon
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                addRemoveFromWishlist();
+              }}
+              className={`text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg  rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary ${
+                isProductExistInWishlist ? "text-red-600 " : "text-light-primary-text dark:text-dark-primary-txt"
+              }`}
+            />
             <BiGitCompare
               onClick={(e) => {
                 e.stopPropagation();

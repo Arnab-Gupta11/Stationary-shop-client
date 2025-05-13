@@ -34,6 +34,7 @@ import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
 import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
 import CompareProducts from "@/pages/CompareProducts/CompareProducts";
+import Wishlist from "@/pages/Wishlist/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "/compare-products",
         element: <CompareProducts />,
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist/>,
       },
       {
         path: "/order/verification",

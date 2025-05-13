@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import Section from "@/components/shared/Section";
 import { formatPrice } from "@/utils/formatePrice";
 import toast from "react-hot-toast";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { MdCompareArrows } from "react-icons/md";
+import EmptyState from "@/components/shared/EmptyState";
 const CompareProducts = () => {
   const compareProductList = useAppSelector(compareProductSelector);
   const dispatch = useAppDispatch();
@@ -35,14 +36,16 @@ const CompareProducts = () => {
       <div className="my-20">
         <Section>
           {compareProductList.length === 0 && (
-            <div className="min-h-[calc(100vh-200px)] flex items-center justify-center">
-              <div className="text-slate-500 flex flex-col items-center justify-center  px-4 gap-4 ">
-                <MdOutlineRemoveShoppingCart className="text-7xl sm:text-[120px]" />
-                <span className="font-semibold text-lg sm:text-2xl text-center">
-                  Your comparison list is empty. Add products to compare them side by side!
-                </span>
-              </div>
-            </div>
+            <EmptyState
+              icon={<MdCompareArrows className="text-7xl sm:text-[120px]" />}
+              title="No products to compare."
+              subtitle="Add multiple products to your compare list to evaluate their features side by side."
+              action={
+                <Link to="/shop">
+                  <Button className="py-2 md:py-6">Browse Products</Button>
+                </Link>
+              }
+            />
           )}
           {compareProductList.length > 0 && (
             <div className="overflow-hidden rounded-3xl">

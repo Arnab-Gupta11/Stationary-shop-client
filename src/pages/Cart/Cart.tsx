@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
-import {
-  useCurrentUser,
-} from "@/redux/features/auth/authSlice";
-import { MdOutlineDeleteForever } from "react-icons/md";
-import { MdProductionQuantityLimits } from "react-icons/md";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
+import { MdOutlineDeleteForever, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import Section from "@/components/shared/Section";
@@ -24,7 +21,16 @@ import { BiLoaderCircle } from "react-icons/bi";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PageHeader from "@/components/shared/PageHeader";
-import { getTotalPrice, getTotalQuantity, increaseProductQuantity, reduceProductQuantity, removeProductFromCart, TCartItem, useCartItems } from "@/redux/features/cart/cartSlice";
+import {
+  getTotalPrice,
+  getTotalQuantity,
+  increaseProductQuantity,
+  reduceProductQuantity,
+  removeProductFromCart,
+  TCartItem,
+  useCartItems,
+} from "@/redux/features/cart/cartSlice";
+import EmptyState from "@/components/shared/EmptyState";
 
 const CartPage = () => {
   const loginUser = useAppSelector(useCurrentUser);
@@ -165,11 +171,16 @@ const CartPage = () => {
                     );
                   })
                 ) : (
-                  <div className="min-h-[calc(100vh-200px)] flex items-center justify-center ">
-                    <div className="text-slate-500 flex items-center justify-center font-semibold text-xl sm:text-2xl gap-5">
-                      <MdProductionQuantityLimits /> <span> Your cart is currently empty. Start shopping now!</span>
-                    </div>
-                  </div>
+                  <EmptyState
+                    icon={<MdOutlineRemoveShoppingCart className="text-7xl sm:text-[120px]" />}
+                    title="Your cart is empty."
+                    subtitle="Looks like you haven’t added anything to your cart yet. Start shopping now!"
+                    action={
+                      <Link to="/shop">
+                        <Button className="py-2 md:py-6">Start Shopping</Button>
+                      </Link>
+                    }
+                  />
                 )}
               </div>
             </div>

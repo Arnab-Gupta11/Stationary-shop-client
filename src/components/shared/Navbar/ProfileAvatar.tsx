@@ -89,10 +89,12 @@ const ProfileAvatar = () => {
               </Link>
             )}
             {user && user.role === "user" && (
-              <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
-                <Heart className="w-4 h-4 mr-2" />
-                Wishlist
-              </DropdownMenuItem>
+              <Link to={"/wishlist"}>
+                <DropdownMenuItem className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-light-muted-bg dark:hover:bg-dark-muted-bg py-1 rounded-xl hover:text-primary px-3">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Wishlist
+                </DropdownMenuItem>
+              </Link>
             )}
           </DropdownMenuGroup>
           {user && (

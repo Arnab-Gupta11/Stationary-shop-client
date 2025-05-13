@@ -11,7 +11,7 @@ const RootLayout = () => {
       <ScrollToTop />
       {location?.pathname === "/" && <Promotion />}
       <Navbar />
-      <div>
+      <div className="min-h-screen">
         <Outlet />
       </div>
       <Footer />

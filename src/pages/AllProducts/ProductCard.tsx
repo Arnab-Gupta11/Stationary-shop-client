@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";

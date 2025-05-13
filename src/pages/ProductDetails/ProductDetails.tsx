@@ -113,7 +113,7 @@ const ProductDetails = () => {
               <StarRating rating={rating} starSize={15} />
               <span className="text-sm text-light-secondary-text dark:text-dark-secondary-txt">({totalReviews} customer reviews)</span>
             </div>
-            <p className="text-xl font-semibold text-primary mt-3">{formatPrice(price)}</p>
+            <p className="text-xl font-semibold text-gradient mt-3">{formatPrice(price)}</p>
             <p className="text-light-secondary-text dark:text-dark-secondary-txt font-medium mt-5">{description}</p>
             <h4 className="text-light-secondary-text dark:text-dark-secondary-txt font-medium mt-2">
               <span className="font-semibold text-light-primary-text dark:text-dark-primary-txt">Categorie:</span> {categoryName}

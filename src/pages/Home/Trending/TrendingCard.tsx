@@ -18,7 +18,7 @@ const TrendingCard = ({ product }: { product: IProduct }) => {
             {product.name}
           </h2>
           <StarRating rating={product?.rating} starSize={10} />
-          <p className="text-xs sm:text-sm font-bold text-primary mt-2">{formatPrice(product.price)}</p>
+          <p className="text-xs sm:text-sm font-bold text-gradient mt-2">{formatPrice(product.price)}</p>
         </div>
       </div>
     </Link>

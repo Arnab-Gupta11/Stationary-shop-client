@@ -10,12 +10,13 @@ import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlic
 import { RiHeartLine } from "react-icons/ri";
 import { BiGitCompare } from "react-icons/bi";
 import { LuEye } from "react-icons/lu";
-import { addProductIntoCompareProductsList } from "@/redux/features/compareProducts/compareProductsSlice";
+import { addProductIntoCompareProductsList, compareProductSelector } from "@/redux/features/compareProducts/compareProductsSlice";
 type TProductProp = {
   product: IProduct;
 };
 const ProductCard = ({ product }: TProductProp) => {
   const cartItems = useAppSelector(useCartItems);
+  const compareItems = useAppSelector(compareProductSelector);
   const dispatch = useAppDispatch();
   const user = useAppSelector(useCurrentUser);
   const addProductToCart = () => {
@@ -54,6 +55,19 @@ const ProductCard = ({ product }: TProductProp) => {
       toast.success("Item added to your cart successfully!");
     }
   };
+  const addCompareProduct = () => {
+    const isProductExist = compareItems.find((item) => product._id === item._id);
+    if (isProductExist) {
+      toast.error("This product is already in your comparison list.");
+      return;
+    }
+    if (compareItems.length < 5) {
+      dispatch(addProductIntoCompareProductsList(product));
+      toast.success("Product added to your comparison list.");
+    } else {
+      toast.error("You can only compare up to 5 products at a time.");
+    }
+  };
   const price = formatPrice(product?.price);
   return (
     <Link to={`/products/slug/${product?.slug}`}>
@@ -88,7 +102,7 @@ const ProductCard = ({ product }: TProductProp) => {
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                dispatch(addProductIntoCompareProductsList(product));
+                addCompareProduct();
               }}
               className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
             />

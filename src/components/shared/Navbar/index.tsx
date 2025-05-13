@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { NavMenuOption } from "@/constants/navbar.constant";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import NavItem from "./NavItem";
 import ProfileAvatar from "./ProfileAvatar";
 import NavSidebar from "./NavSidebar";
 import CartIcon from "./CartIcon";
 import Logo from "../Logo";
 import { ThemeToggler } from "../ThemeToggler";
-import { BiGitCompare } from "react-icons/bi";
 import SearchingProducts from "./SearchingProducts";
+import CompareProductIcon from "./CompareProductIcon";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const menuItems = NavMenuOption();
@@ -61,11 +61,7 @@ const Navbar = () => {
           <SearchingProducts />
           <div className="lg:flex lg:items-center lg:gap-3 hidden ">
             <CartIcon />
-            <Link to={"/compare-products"}>
-              <span className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9">
-                <BiGitCompare className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer " />
-              </span>
-            </Link>
+            <CompareProductIcon />
             <ThemeToggler />
           </div>
           <ProfileAvatar />

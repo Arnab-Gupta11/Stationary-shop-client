@@ -16,10 +16,14 @@ const compareProductSlice = createSlice({
     addProductIntoCompareProductsList: (state, action: PayloadAction<IProduct>) => {
       state.items.push(action.payload);
     },
+    removeProductFromCompareProductsList: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter((item) => item._id !== action.payload);
+    },
   },
 });
-export const { addProductIntoCompareProductsList } = compareProductSlice.actions;
+export const { addProductIntoCompareProductsList, removeProductFromCompareProductsList } = compareProductSlice.actions;
 export default compareProductSlice.reducer;
 
 //selector
 export const compareProductSelector = (state: RootState) => state.compareProduct.items;
+export const totalCompareProductItemsSelector = (state: RootState) => state.compareProduct.items.length;

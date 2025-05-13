@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -70,6 +72,7 @@ export default {
       backgroundImage: {
         "main-bg-dark": "linear-gradient(135deg, #0f1b1d 0%, #162528 50%, #1e363b 100%)",
         "main-bg-light": "linear-gradient(to right bottom, #E0F2FE 0%, #D5EAF6 30%, #F6F6F6 70%, #EAEAEA 100%)",
+        "text-gradient": "linear-gradient(to right, rgb(250,65,75) 0%, rgb(252,91,111) 49%, rgb(253,124,80) 100%)",
         "button-gradient": "linear-gradient(90deg, rgb(250,65,75) 0%, rgb(252,91,111) 49%, rgb(253,124,80) 100%)",
         "button-gradient-hover": "linear-gradient(270deg, rgb(250,65,75) 0%, rgb(252,91,111) 49%, rgb(253,124,80) 100%)",
       },
@@ -97,5 +100,17 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".text-gradient": {
+          backgroundImage: "linear-gradient(to right, rgb(250,65,75) 0%, rgb(252,91,111) 49%, rgb(253,124,80) 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        },
+      });
+    }),
+  ],
 };

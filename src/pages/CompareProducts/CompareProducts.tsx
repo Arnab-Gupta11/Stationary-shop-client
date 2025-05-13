@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { TbTrash } from "react-icons/tb";
 import img from "@/assets/images/banner/banner2.png";
+import { useAppSelector } from "@/redux/hooks";
+import { compareProductSelector } from "@/redux/features/compareProducts/compareProductsSlice";
+import PageHeader from "@/components/shared/PageHeader";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
+import Section from "@/components/shared/Section";
+import { formatPrice } from "@/utils/formatePrice";
 const products = [
   {
     id: 1,
@@ -45,66 +52,113 @@ const products = [
 ];
 
 const CompareProducts = () => {
+  const compareProductList = useAppSelector(compareProductSelector);
+  console.log(compareProductList);
   return (
-    <div className="w-full overflow-x-auto border border-gray-700 rounded-lg">
-      <table className="min-w-[1000px] border-collapse text-sm text-white text-center">
-        <thead>
-          <tr className="border-b border-gray-700 bg-gray-800">
-            <th className="p-2">Action</th>
-            {products.map((product) => (
-              <th key={product.id} className="p-2 font-semibold">
-                <Button size="sm" variant="ghost" className="text-red-500">
-                  <TbTrash className="mr-1" /> Remove
-                </Button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-b border-gray-700">
-            <td className="p-2 font-medium">Product name</td>
-            {products.map((product) => (
-              <td key={product.id} className="p-2">
-                {product.name}
-              </td>
-            ))}
-          </tr>
+    <>
+      <PageHeader title="Compare Products">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <Link to="/">Home</Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>compare-products</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </PageHeader>
+      <div className="my-20">
+        <Section>
+          <div className="w-full overflow-x-auto border-l-4 border-b-4 border-r-2 border-light-muted-bg dark:border-[#121624] rounded-3xl">
+            <table className="min-w-[1000px] border-collapse text-sm text-white text-center">
+              <thead>
+                <tr className="border-b-2 border-light-muted-bg dark:border-[#121624] bg-light-muted-bg dark:bg-[#121624]">
+                  <th className="p-2 border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-semibold">
+                    Action
+                  </th>
+                  {compareProductList?.map((product) => (
+                    <th key={product._id} className="font-semibold border-r-2 border-light-muted-bg dark:border-[#121624]">
+                      <div className="text-red-400 flex items-center justify-center gap-2  rounded-t-xl hover:text-red-600 cursor-pointer">
+                        <TbTrash />
+                        <span className="mt-0.5">Remove</span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b-2 border-light-muted-bg dark:border-[#121624]">
+                  <td className="p-2 border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-semibold">
+                    Product name
+                  </td>
+                  {compareProductList?.map((product) => (
+                    <td
+                      key={product._id}
+                      className="p-2 border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-medium"
+                    >
+                      {product.name}
+                    </td>
+                  ))}
+                </tr>
 
-          <tr className="border-b border-gray-700">
-            <td className="p-2 font-medium">Product image</td>
-            {products.map((product) => (
-              <td key={product.id} className="p-4">
-                <div className="flex flex-col items-center">
-                  <img src={product.image} alt={product.name} className="w-40 h-40 rounded-md object-contain" />
-                  <span className="text-red-500 mt-2 font-medium">On Sale Tk {product.price.toLocaleString()}</span>
-                  <Button size="sm" variant="link" className="text-white text-xs mt-1">
-                    View Product
-                  </Button>
-                </div>
-              </td>
-            ))}
-          </tr>
+                <tr className="border-b-2 border-light-muted-bg dark:border-[#121624]">
+                  <td className="p-2 border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-semibold">
+                    Product image
+                  </td>
+                  {compareProductList.map((product) => (
+                    <td key={product._id} className="p-4 border-r-2 border-light-muted-bg dark:border-[#121624]">
+                      <div className="flex flex-col items-center">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="w-40 h-40 object-contain rounded-3xl p-2 bg-light-muted-bg dark:bg-dark-muted-bg"
+                        />
+                        <span className="mt-2 text-light-primary-text dark:text-dark-primary-txt font font-medium">
+                          On Sale Tk <h1 className="text-gradient font-semibold">{formatPrice(product.price)}</h1>
+                        </span>
+                        <Button size="sm" variant="primary" className="mt-1">
+                          View Product
+                        </Button>
+                      </div>
+                    </td>
+                  ))}
+                </tr>
 
-          <tr className="border-b border-gray-700">
-            <td className="p-2 font-medium">Product description</td>
-            {products.map((product) => (
-              <td key={product.id} className="p-3 text-xs leading-relaxed">
-                {product.description}
-              </td>
-            ))}
-          </tr>
+                <tr className="border-b-2 border-light-muted-bg dark:border-[#121624]">
+                  <td className="p-2 text-light-primary-text dark:text-dark-primary-txt font font-semibold border-r-2 border-light-muted-bg dark:border-[#121624]">
+                    Product description
+                  </td>
+                  {compareProductList.map((product) => (
+                    <td
+                      key={product._id}
+                      className="p-3 text-xs leading-relaxed border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-medium"
+                    >
+                      {product.description}
+                    </td>
+                  ))}
+                </tr>
 
-          <tr>
-            <td className="p-2 font-medium">Availability</td>
-            {products.map((product) => (
-              <td key={product.id} className="p-2">
-                {product.availability}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                <tr>
+                  <td className="p-2 text-light-primary-text dark:text-dark-primary-txt font font-semibold border-r-2 border-light-muted-bg dark:border-[#121624]">
+                    Availability
+                  </td>
+                  {compareProductList.map((product) => (
+                    <td
+                      key={product._id}
+                      className="p-2 border-r-2 border-light-muted-bg dark:border-[#121624] text-light-primary-text dark:text-dark-primary-txt font font-medium"
+                    >
+                      {product.inStock ? " Available in stock" : "Out of stock"}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Section>
+      </div>
+    </>
   );
 };
 

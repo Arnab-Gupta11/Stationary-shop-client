@@ -27,7 +27,7 @@ const Banner = () => {
                 style={{ lineHeight: "1.4" }}
                 variants={textVariants}
               >
-                Your One-Stop <span className="text-primary-bg">Stationery</span> Haven!
+                Your One-Stop <span className="text-gradient">Stationery</span> Haven!
               </motion.p>
 
               <motion.div

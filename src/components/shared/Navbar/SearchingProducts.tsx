@@ -5,11 +5,10 @@ import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { MoveUpRight, SearchIcon, X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { FaBoxOpen } from "react-icons/fa";
 import { LuSearch } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-
+import { IoSearch } from "react-icons/io5";
 const SearchingProducts = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -85,7 +84,7 @@ const SearchingProducts = () => {
             onClick={() => setSheetOpen(true)}
             className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9 mr-3"
           >
-            <BiSearchAlt2 className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
+            <IoSearch className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
           </span>
         </SheetTrigger>
         <SheetContent side={"top"} className="h-screen w-full font-Exo  overflow-y-scroll">

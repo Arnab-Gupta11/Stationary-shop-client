@@ -61,7 +61,7 @@ const About = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </PageHeader>
-      <div className="bg-light-bg-100 mt-20">
+      <div className="mt-20">
         <Section>
           {/* First section */}
           <div className="grid grid-cols-1 bs:grid-cols-2 gap-5 bs:gap-10 items-center group">

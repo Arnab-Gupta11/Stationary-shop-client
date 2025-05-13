@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import cartReducer from "./features/cart/cartSlice";
+import compareProductReducer from "./features/compareProducts/compareProductsSlice";
 import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -18,10 +19,18 @@ const cartPersistConfig = {
   storage,
 };
 const cartPersistedReducer = persistReducer(cartPersistConfig, cartReducer);
+
+// Persist compare product reducer.
+const compareProductPersistConfig = {
+  key: "compareProduct",
+  storage,
+};
+const compareProductPersistReducer = persistReducer(compareProductPersistConfig, compareProductReducer);
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   auth: authPersistedReducer,
   cart: cartPersistedReducer,
+  compareProduct: compareProductPersistReducer,
 });
 export const store = configureStore({
   reducer: rootReducer,

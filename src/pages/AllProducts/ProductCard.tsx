@@ -3,10 +3,14 @@ import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {  useCurrentUser } from "@/redux/features/auth/authSlice";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 import StarRating from "../ProductDetails/StarRating";
 import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
+import { RiHeartLine } from "react-icons/ri";
+import { BiGitCompare } from "react-icons/bi";
+import { LuEye } from "react-icons/lu";
+import { addProductIntoCompareProductsList } from "@/redux/features/compareProducts/compareProductsSlice";
 type TProductProp = {
   product: IProduct;
 };
@@ -65,26 +69,36 @@ const ProductCard = ({ product }: TProductProp) => {
             {product?.inStock ? "In Stock" : "Out Of Stock"}
           </span>
           <div
-            className={`flex flex-col items-center justify-center gap-3 absolute right-1 bottom-1 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-700 ${
+            className={`flex items-center justify-center gap-3 absolute bottom-5 opacity-0 group-hover:opacity-100 group-hover:translate-y-2 transition-all duration-700 ${
               user?.role === "admin" && "hidden"
             }`}
           >
+            <LuEye className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary" />
+
             <MdOutlineShoppingCart
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 addProductToCart();
               }}
-              className="text-xl hover:scale-110 active:scale-95 hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md border-2 border-light-border"
+              className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
             />
-            {/* <FaRegHeart className="text-xl hover:scale-110 active:scale-95 hover:text-primary-bg cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white rounded-md shadow-md" /> */}
+            <RiHeartLine className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary" />
+            <BiGitCompare
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                dispatch(addProductIntoCompareProductsList(product));
+              }}
+              className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
+            />
           </div>
         </div>
         {/* Product Info  */}
         <div className="pt-4 p-1 space-y-2">
           <StarRating rating={product?.rating} starSize={12} />
           <h1 className="text-base font-medium text-primary-text-light dark:text-dark-primary-txt truncate">{product?.name}</h1>
-          <h4 className="font-bold text-primary text-sm">{price}</h4>
+          <h4 className="font-bold text-gradient text-sm">{price}</h4>
         </div>
       </div>
     </Link>

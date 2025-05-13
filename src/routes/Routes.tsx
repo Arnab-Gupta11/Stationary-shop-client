@@ -71,11 +71,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/compare-products",
-        element: (
-          <PrivateRoute>
-            <CompareProducts />
-          </PrivateRoute>
-        ),
+        element: <CompareProducts />,
       },
       {
         path: "/order/verification",

@@ -53,7 +53,9 @@ const ProductImages = ({ images }: { images: string[] }) => {
         {activeImgIdx > 0 && (
           <span
             className="absolute left-4 top-1/2 w-8 h-8 flex items-center justify-center rounded-xl bg-light-muted-bg shadow-box-shadow-light hover:scale-105 active:scale-95 text-slate-900 hover:text-primary duration-700 transition-transform opacity-0 group-hover:opacity-100 group-hover:duration-700 group-hover:transition-opacity cursor-pointer z-10"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               setPrevImgIdx(activeImgIdx);
               setActiveImgIdx((prev) => prev - 1);
             }}
@@ -66,7 +68,9 @@ const ProductImages = ({ images }: { images: string[] }) => {
         {activeImgIdx < images.length - 1 && (
           <span
             className="absolute right-4 top-1/2 w-8 h-8 flex items-center justify-center rounded-xl bg-light-muted-bg shadow-box-shadow-light hover:scale-105 active:scale-95 text-slate-900 hover:text-primary duration-700 transition-transform opacity-0 group-hover:opacity-100 group-hover:duration-700 group-hover:transition-opacity cursor-pointer z-10"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               setPrevImgIdx(activeImgIdx);
               setActiveImgIdx((prev) => prev + 1);
             }}
@@ -85,7 +89,9 @@ const ProductImages = ({ images }: { images: string[] }) => {
               className={`rounded-xl cursor-pointer w-full h-12 xsm:h-16 xs:h-20 sm:h-28 object-fill ${
                 activeImgIdx === idx && "border-primary border-4 brightness-50"
               }`}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 setPrevImgIdx(activeImgIdx);
                 setActiveImgIdx(idx);
               }}

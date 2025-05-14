@@ -10,10 +10,12 @@ import StarRating from "../ProductDetails/StarRating";
 import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
 import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 import { BiGitCompare } from "react-icons/bi";
-import { LuEye } from "react-icons/lu";
 import { addProductIntoCompareProductsList, compareProductSelector } from "@/redux/features/compareProducts/compareProductsSlice";
 import { addToWishlist, removeFromWishlist, wishlistSelector } from "@/redux/features/wishlist/wishlistSlice";
 import { useEffect, useState } from "react";
+import CustomTooltip from "@/components/shared/CustomTooltip";
+import { LuEye } from "react-icons/lu";
+import QuickViewModal from "./QuickView/QuickViewModal";
 type TProductProp = {
   product: IProduct;
 };
@@ -22,6 +24,7 @@ const ProductCard = ({ product }: TProductProp) => {
   const compareItems = useAppSelector(compareProductSelector);
   const wishlistItems = useAppSelector(wishlistSelector);
   const [isProductExistInWishlist, setIsProductExistInWishlist] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(useCurrentUser);
   const addProductToCart = () => {
@@ -113,36 +116,56 @@ const ProductCard = ({ product }: TProductProp) => {
               user?.role === "admin" && "hidden"
             }`}
           >
-            <LuEye className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary" />
+            {/* Quick view  */}
+            <CustomTooltip tooltip="Quick View">
+              <LuEye
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setOpen(true);
+                }}
+                className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
+              />
+            </CustomTooltip>
 
-            <MdOutlineShoppingCart
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                addProductToCart();
-              }}
-              className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
-            />
-            <Icon
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                addRemoveFromWishlist();
-              }}
-              className={`text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg  rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary ${
-                isProductExistInWishlist ? "text-red-600 " : "text-light-primary-text dark:text-dark-primary-txt"
-              }`}
-            />
-            <BiGitCompare
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                addCompareProduct();
-              }}
-              className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
-            />
+            {/* Cart  */}
+            <CustomTooltip tooltip="Add to cart">
+              <MdOutlineShoppingCart
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  addProductToCart();
+                }}
+                className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
+              />
+            </CustomTooltip>
+            {/* Whishlist  */}
+            <CustomTooltip tooltip={isProductExistInWishlist ? "Remove from wishlist" : "Add to wislist"}>
+              <Icon
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  addRemoveFromWishlist();
+                }}
+                className={`text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg  rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary ${
+                  isProductExistInWishlist ? "text-red-600 " : "text-light-primary-text dark:text-dark-primary-txt"
+                }`}
+              />
+            </CustomTooltip>
+            {/* Compare Product  */}
+            <CustomTooltip tooltip="Add to compare">
+              <BiGitCompare
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  addCompareProduct();
+                }}
+                className="text-xl hover:scale-110 active:scale-95 hover:text-primary dark:hover:text-primary cursor-pointer transition-all duration-700 p-1 w-8 h-8 bg-white dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt rounded-md shadow-md  border-2 shadow-slate-400 dark:shadow-slate-400 border-light-border dark:border-dark-muted-border hover:border-primary dark:hover:border-primary"
+              />
+            </CustomTooltip>
           </div>
         </div>
+        <QuickViewModal images={product?.images} open={open} setOpen={setOpen} />
         {/* Product Info  */}
         <div className="pt-4 p-1 space-y-2">
           <StarRating rating={product?.rating} starSize={12} />

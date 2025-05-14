@@ -24,6 +24,16 @@ export const NavMenuOption = () => {
       path: "/about",
       show: true,
     },
+    {
+      label: "Contact",
+      path: "/contact-us",
+      show: true,
+    },
+    {
+      label: "Faq",
+      path: "/faq",
+      show: true,
+    },
   ];
   return menuItems;
 };

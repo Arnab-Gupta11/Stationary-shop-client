@@ -35,6 +35,8 @@ import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
 import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
 import CompareProducts from "@/pages/CompareProducts/CompareProducts";
 import Wishlist from "@/pages/Wishlist/Wishlist";
+import FAQ from "@/pages/FAQ/FAQ";
+import ContactUs from "@/pages/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/faq",
+        element: <FAQ />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
       },
       {
         path: "/shop",
@@ -76,7 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/wishlist",
-        element: <Wishlist/>,
+        element: <Wishlist />,
       },
       {
         path: "/order/verification",

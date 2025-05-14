@@ -85,8 +85,6 @@ const ProductCard = ({ product }: TProductProp) => {
     }
   }, [wishlistItems]);
 
-  console.log("isProductExistInWishlist=====>", isProductExistInWishlist);
-
   const addRemoveFromWishlist = () => {
     if (isProductExistInWishlist) {
       dispatch(removeFromWishlist(product._id));

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Section from "@/components/shared/Section";
 import { useGetProductDetailsQuery } from "@/redux/features/product/product.api";
 import { useParams } from "react-router-dom";
@@ -6,7 +7,7 @@ import { formatPrice } from "@/utils/formatePrice";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Review from "./Review";
@@ -16,13 +17,28 @@ import { PiDotDuotone } from "react-icons/pi";
 import ProductDetailsSkeletonLoader from "@/components/shared/loader/ProdctDetailsSkeletonLoader";
 import ProductImages from "./ProductImages";
 import { addProductIntoCart, useCartItems } from "@/redux/features/cart/cartSlice";
+import { addProductIntoCompareProductsList, compareProductSelector } from "@/redux/features/compareProducts/compareProductsSlice";
+import { addToWishlist, removeFromWishlist, wishlistSelector } from "@/redux/features/wishlist/wishlistSlice";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
+import { BiGitCompare } from "react-icons/bi";
 
 const ProductDetails = () => {
   const cartItems = useAppSelector(useCartItems);
+  const compareItems = useAppSelector(compareProductSelector);
+  const wishlistItems = useAppSelector(wishlistSelector);
+  const [isProductExistInWishlist, setIsProductExistInWishlist] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { slug } = useParams();
   const [productQuantity, setProductQuantity] = useState(1);
   const { data: productData, isLoading } = useGetProductDetailsQuery({ slug });
+  useEffect(() => {
+    const isProductExistInWishlist = wishlistItems.find((item) => item._id === productData?.data?._id);
+    if (isProductExistInWishlist) {
+      setIsProductExistInWishlist(true);
+    } else {
+      setIsProductExistInWishlist(false);
+    }
+  }, [wishlistItems]);
 
   if (isLoading) {
     return <ProductDetailsSkeletonLoader />;
@@ -92,6 +108,32 @@ const ProductDetails = () => {
     }
   };
 
+  const addCompareProduct = () => {
+    const isProductExist = compareItems.find((item) => _id === item._id);
+    if (isProductExist) {
+      toast.error("This product is already in your comparison list.");
+      return;
+    }
+    if (compareItems.length < 5) {
+      dispatch(addProductIntoCompareProductsList(productData?.data));
+      toast.success("Product added to your comparison list.");
+    } else {
+      toast.error("You can only compare up to 5 products at a time.");
+    }
+  };
+
+  const addRemoveFromWishlist = () => {
+    if (isProductExistInWishlist) {
+      dispatch(removeFromWishlist(_id));
+      toast.success("Product Removed from your wishlist.");
+    } else {
+      dispatch(addToWishlist(productData?.data));
+      toast.success("Product added to your wishlist.");
+    }
+  };
+
+  const Icon = isProductExistInWishlist ? RiHeartFill : RiHeartLine;
+
   return (
     <div className="mb-20">
       <Section>
@@ -124,6 +166,7 @@ const ProductDetails = () => {
 
             <div className="border-t-2 border-light-border dark:border-dark-border mt-5" />
             <Accordion type="single" collapsible className="w-full">
+              {/* Key feature  */}
               <AccordionItem value="item-1">
                 <AccordionTrigger className="text-base font-semibold text-light-primary-text dark:text-dark-primary-txt">
                   Key Features
@@ -137,6 +180,7 @@ const ProductDetails = () => {
                   ))}
                 </AccordionContent>
               </AccordionItem>
+              {/* Specification  */}
               <AccordionItem value="item-2">
                 <AccordionTrigger className="text-base font-semibold text-light-primary-text dark:text-dark-primary-txt">
                   Specification
@@ -155,7 +199,7 @@ const ProductDetails = () => {
               </AccordionItem>
             </Accordion>
             <div className="mt-5 flex flex-col xsm:flex-row items-center gap-4">
-              <div className="flex w-full xsm:w-36 border-[2px] items-center justify-around py-2 text-xl border-[#e5e5e5] dark:border-dark-muted-bg rounded-xl">
+              <div className="flex w-full xsm:w-36 border-[3px] items-center justify-around py-2 text-xl border-[#e5e5e5] dark:border-dark-muted-bg rounded-xl">
                 <span className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-md p-1 group" onClick={handleReduceQuantity}>
                   <Minus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-light-primary-text dark:text-dark-primary-txt group-hover:text-primary" />
                 </span>
@@ -166,13 +210,28 @@ const ProductDetails = () => {
                 </span>
               </div>
               <div className="flex items-center gap-4 w-full">
-                <Button className="flex xsm-mx:w-full items-center justify-center gap-3 py-6 select-none" onClick={addProductToCart}>
+                <Button
+                  variant={"primary"}
+                  className="flex xsm-mx:w-full items-center justify-center gap-3 py-6 select-none"
+                  onClick={addProductToCart}
+                >
                   <MdOutlineShoppingCart />
                   <span>Add To Cart</span>
                 </Button>
-                {/* <Button className="py-7 rounded-lg group  bg-none border-[#e5e5e5] border-[2px] hover:bg-none hover:border-primary-bg duration-700 ">
-                  <Heart size={234} className="text-[#d1c6c6] font-bold text-2xl group-hover:text-primary-bg duration-700" />
-                </Button> */}
+                <Button
+                  onClick={addRemoveFromWishlist}
+                  className={`w-[50px] h-[50px] group  bg-none border-light-border dark:border-dark-border border-[3px] hover:bg-none hover:border-primary dark:hover:border-primary duration-700 rounded-2xl ${
+                    isProductExistInWishlist ? "text-red-600 " : "text-light-primary-text dark:text-dark-primary-txt"
+                  }`}
+                >
+                  <Icon className="font-bold text-5xl group-hover:text-primary duration-700" />
+                </Button>
+                <Button
+                  onClick={addCompareProduct}
+                  className="w-[50px] h-[50px] group  bg-none border-light-border dark:border-dark-border border-[3px] hover:bg-none hover:border-primary dark:hover:border-primary duration-700 rounded-2xl"
+                >
+                  <BiGitCompare className="text-light-primary-text dark:text-dark-primary-txt text-3xl group-hover:text-primary duration-700" />
+                </Button>
               </div>
             </div>
           </div>

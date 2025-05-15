@@ -68,7 +68,7 @@ const AddNewProduct = () => {
       <DashboardPageSection>
         <div className="pt-10 px-4 bs:px-0">
           <div className="flex items-center justify-between mb-5 pt-8 md:px-14">
-            <h2 className="text-base sm:text-lg bs:text-xl font-bold text-light-text-100 dark:text-dark-text-100 ">Update Your Profile</h2>
+            <h2 className="text-base sm:text-lg bs:text-xl font-bold text-light-primary-text dark:text-dark-primary-txt ">Update Your Profile</h2>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-start gap-8 md:px-14 rounded-md pb-10">

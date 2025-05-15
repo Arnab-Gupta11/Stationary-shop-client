@@ -47,7 +47,7 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "border-b-[3px] border-primary text-primary"
-                      : "text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary ease-in-outs duration-700"
+                      : "text-light-primary-text dark:text-dark-primary-txt font-medium hover:text-primary dark:hover:text-primary"
                   }
                 >
                   <NavItem label={menuItem.label} active={true} />

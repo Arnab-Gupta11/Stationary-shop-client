@@ -2,6 +2,7 @@ import Loader from "@/components/shared/Loader";
 import { useGetMetadataQuery } from "@/redux/features/meta/meta.api";
 import { TUserMetaData } from "@/types/metadata.types";
 import UserStates from "./UserStates";
+import UserStatesChart from "./UserStatesChart";
 
 const OverviewUser = () => {
   const { data: metaData, isLoading } = useGetMetadataQuery(undefined);
@@ -14,7 +15,7 @@ const OverviewUser = () => {
           {/* States card  */}
           <UserStates statesData={userMetadata?.stateData} />
           {/* Charts  */}
-          {/* <CategoryProductDistributionChart data={adminMetadata?.getProductDistributionByParentCategory} /> */}
+          <UserStatesChart data={userMetadata?.userStatesChart} />
           {/* Table  */}
           {/* <LatestOrdersByAdmin orderData={adminMetadata?.latestOrders} /> */}
         </>

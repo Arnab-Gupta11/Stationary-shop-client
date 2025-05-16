@@ -1,7 +1,7 @@
 import { baseApi } from "@/redux/api/baseApi";
 const metaDataApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
-    getMetadata: build.query({
+  endpoints: (builder) => ({
+    getMetadata: builder.query({
       query: () => {
         return {
           url: "/meta",

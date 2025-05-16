@@ -37,6 +37,7 @@ import CompareProducts from "@/pages/CompareProducts/CompareProducts";
 import Wishlist from "@/pages/Wishlist/Wishlist";
 import FAQ from "@/pages/FAQ/FAQ";
 import ContactUs from "@/pages/ContactUs/ContactUs";
+import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
 
 const router = createBrowserRouter([
   {
@@ -237,7 +238,15 @@ const router = createBrowserRouter([
 
       // User Routes
       {
-        path: "users/view-orders",
+        path: "user/overview",
+        element: (
+          <UserRoutes>
+            <OverviewUser />
+          </UserRoutes>
+        ),
+      },
+      {
+        path: "user/view-orders",
         element: (
           <UserRoutes>
             <ViewOrders />
@@ -245,7 +254,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/users/manage-profile",
+        path: "user/manage-profile",
         element: (
           <UserRoutes>
             <ManageProfile />

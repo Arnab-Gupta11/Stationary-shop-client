@@ -44,7 +44,7 @@ export type TAdminMetaData = {
 
 //User metadata types.
 
-export type TUserMetadata = {
+export type TUserStatedata = {
   totalOrders: number;
   totalPayments: number;
   totalReviews: number;
@@ -56,7 +56,7 @@ export type TUserStatesChart = {
   raw: number;
 };
 export type TUserMetaData = {
-  stateData: TUserMetaData;
+  stateData: TUserStatedata;
   userStatesChart: TUserStatesChart[];
   latestOrders: TLatestOrdersStates[];
 };

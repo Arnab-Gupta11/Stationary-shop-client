@@ -1,7 +1,11 @@
-"use client";
-
 import * as React from "react";
-import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText, SquareTerminal } from "lucide-react";
+import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText } from "lucide-react";
+import {
+  HiOutlineUsers, // Users
+  HiOutlineChartPie, // Overview
+  HiOutlineClipboardList, // View Orders
+  HiOutlineUserCircle, // Manage Profile
+} from "react-icons/hi";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -69,19 +73,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: "Users",
         url: "/dashboard/admin/manage-users",
-        icon: SquareTerminal,
+        icon: HiOutlineUsers,
         show: user?.role === "admin",
       },
       {
+        title: "Overview",
+        url: "/dashboard/user/overview",
+        icon: HiOutlineChartPie,
+        show: user?.role === "user",
+      },
+      {
         title: "View Orders",
-        url: "/dashboard/users/view-orders",
-        icon: SquareTerminal,
+        url: "/dashboard/user/view-orders",
+        icon: HiOutlineClipboardList,
         show: user?.role === "user",
       },
       {
         title: "Manage Profile",
-        url: "/dashboard/users/manage-profile",
-        icon: SquareTerminal,
+        url: "/dashboard/user/manage-profile",
+        icon: HiOutlineUserCircle,
         show: user?.role === "user",
       },
     ],

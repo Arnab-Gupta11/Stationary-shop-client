@@ -5,11 +5,12 @@ import { VscDebugBreakpointLogUnverified } from "react-icons/vsc";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
+import { IconType } from "react-icons/lib";
 
 export type TSidbarItem = {
   title: string;
   url?: string;
-  icon: LucideIcon;
+  icon: LucideIcon | IconType;
   show: boolean;
   isActive?: boolean | undefined;
   items?:

@@ -26,13 +26,9 @@ const LatestUsers = ({ userData }: { userData: TLatestUsersStates[] }) => {
   ];
 
   return (
-    <div>
-      <div className="p-4 bg-light-secondary-bg dark:bg-dark-secondary-bg cursor-pointer  border-2 border-light-border dark:border-dark-border rounded-3xl shadow-dashboard-page-shadow-light dark:shadow-dashboard-page-shadow-dark">
-        <div className="mb-5 flex flex-col xs:flex-row items-center xs:justify-between gap-5">
-          <h1 className="font-semibold text-light-primary-text dark:text-dark-primary-txt leading-relaxed ">Latest Users</h1>
-        </div>
-        <CustomTable columns={columns} data={userData || []} />
-      </div>
+    <div className="p-4 bg-light-secondary-bg dark:bg-dark-secondary-bg cursor-pointer  border-2 border-light-border dark:border-dark-border rounded-3xl shadow-dashboard-page-shadow-light dark:shadow-dashboard-page-shadow-dark">
+      <h1 className="font-semibold text-light-primary-text dark:text-dark-primary-txt leading-relaxed mb-3">Latest Users</h1>
+      <CustomTable columns={columns} data={userData || []} />
     </div>
   );
 };

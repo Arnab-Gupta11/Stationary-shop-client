@@ -18,7 +18,7 @@ const CategoryProductDistributionChart = ({ data }: { data: TGetProductDistribut
   } satisfies ChartConfig;
   return (
     <div className="p-4 bg-light-secondary-bg dark:bg-dark-secondary-bg cursor-pointer  border-2 border-light-border dark:border-dark-border rounded-3xl shadow-dashboard-page-shadow-light dark:shadow-dashboard-page-shadow-dark">
-      <div className="font-semibold text-light-primary-text dark:text-dark-primary-txt leading-relaxed">Category-wise Products Distribution</div>
+      <div className="font-semibold text-light-primary-text dark:text-dark-primary-txt leading-relaxed ">Category-wise Products Distribution</div>
       {data && (
         <div>
           <ChartContainer config={chartConfig} className="max-h-[300px] mt-5 mx-auto">

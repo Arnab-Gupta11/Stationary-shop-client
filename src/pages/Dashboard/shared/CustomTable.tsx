@@ -7,10 +7,10 @@ import TableSkeletonLoader from "@/components/shared/loader/table-skeleton-loade
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  isFetching: boolean;
+  isFetching?: boolean;
 }
 
-export function CustomTable<TData, TValue>({ columns, data, isFetching }: DataTableProps<TData, TValue>) {
+export function CustomTable<TData, TValue>({ columns, data, isFetching = false }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,

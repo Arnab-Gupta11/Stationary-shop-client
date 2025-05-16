@@ -22,6 +22,7 @@ import { z } from "zod";
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location);
   const dispatch = useAppDispatch();
   const [loginUser] = useLoginMutation(undefined);
   const [isLoading, setIsLoading] = useState(false);

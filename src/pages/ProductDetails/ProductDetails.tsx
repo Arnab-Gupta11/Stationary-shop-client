@@ -4,7 +4,7 @@ import { useGetProductDetailsQuery } from "@/redux/features/product/product.api"
 import { useParams } from "react-router-dom";
 import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useEffect, useState } from "react";
@@ -21,9 +21,11 @@ import { addProductIntoCompareProductsList, compareProductSelector } from "@/red
 import { addToWishlist, removeFromWishlist, wishlistSelector } from "@/redux/features/wishlist/wishlistSlice";
 import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 import { BiGitCompare } from "react-icons/bi";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
 
 const ProductDetails = () => {
   const cartItems = useAppSelector(useCartItems);
+  const loginUser = useAppSelector(useCurrentUser);
   const compareItems = useAppSelector(compareProductSelector);
   const wishlistItems = useAppSelector(wishlistSelector);
   const [isProductExistInWishlist, setIsProductExistInWishlist] = useState<boolean>(false);
@@ -200,17 +202,18 @@ const ProductDetails = () => {
             </Accordion>
             <div className="mt-5 flex flex-col xsm:flex-row items-center gap-4">
               <div className="flex w-full xsm:w-36 border-[3px] items-center justify-around py-2 text-xl border-[#e5e5e5] dark:border-dark-muted-bg rounded-xl">
-                <span className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-md p-1 group" onClick={handleReduceQuantity}>
+                <button className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-md p-1 group" onClick={handleReduceQuantity}>
                   <Minus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-light-primary-text dark:text-dark-primary-txt group-hover:text-primary" />
-                </span>
+                </button>
 
                 <span className="font-medium text-slate-800 dark:text-dark-primary-txt select-none">{productQuantity}</span>
-                <span className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-md p-1 group" onClick={handleIncreaseQuantity}>
+                <button className="bg-light-muted-bg dark:bg-dark-muted-bg rounded-md p-1 group" onClick={handleIncreaseQuantity}>
                   <Plus className="hover:scale-105 active:scale-95 duration-700 hover:cursor-pointer text-light-primary-text dark:text-dark-primary-txt group-hover:text-primary" />
-                </span>
+                </button>
               </div>
               <div className="flex items-center gap-4 w-full">
                 <Button
+                  disabled={loginUser?.role === "admin"}
                   variant={"primary"}
                   className="flex xsm-mx:w-full items-center justify-center gap-3 py-6 select-none"
                   onClick={addProductToCart}
@@ -220,6 +223,7 @@ const ProductDetails = () => {
                 </Button>
                 <Button
                   onClick={addRemoveFromWishlist}
+                  disabled={loginUser?.role === "admin"}
                   className={`w-[50px] h-[50px] group  bg-none border-light-border dark:border-dark-border border-[3px] hover:bg-none hover:border-primary dark:hover:border-primary duration-700 rounded-2xl ${
                     isProductExistInWishlist ? "text-red-600 " : "text-light-primary-text dark:text-dark-primary-txt"
                   }`}
@@ -228,6 +232,7 @@ const ProductDetails = () => {
                 </Button>
                 <Button
                   onClick={addCompareProduct}
+                  disabled={loginUser?.role === "admin"}
                   className="w-[50px] h-[50px] group  bg-none border-light-border dark:border-dark-border border-[3px] hover:bg-none hover:border-primary dark:hover:border-primary duration-700 rounded-2xl"
                 >
                   <BiGitCompare className="text-light-primary-text dark:text-dark-primary-txt text-3xl group-hover:text-primary duration-700" />

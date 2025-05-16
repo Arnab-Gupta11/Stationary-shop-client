@@ -80,12 +80,12 @@ const SearchingProducts = () => {
     <div>
       <Sheet open={sheetOpen}>
         <SheetTrigger>
-          <span
+          <button
             onClick={() => setSheetOpen(true)}
             className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9 mr-3"
           >
             <IoSearch className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
-          </span>
+          </button>
         </SheetTrigger>
         <SheetContent side={"top"} className="h-screen w-full font-Exo  overflow-y-scroll">
           <SheetClose asChild>

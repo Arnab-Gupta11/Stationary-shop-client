@@ -9,8 +9,11 @@ import Logo from "../Logo";
 import { ThemeToggler } from "../ThemeToggler";
 import SearchingProducts from "./SearchingProducts";
 import CompareProductIcon from "./CompareProductIcon";
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const loginUser = useAppSelector(useCurrentUser);
   const menuItems = NavMenuOption();
   const handleChangeBackgroundOnScroll = () => {
     if (window.scrollY > 0) {
@@ -60,7 +63,8 @@ const Navbar = () => {
         <div className="flex items-center justify-around">
           <SearchingProducts />
           <div className="lg:flex lg:items-center lg:gap-3 hidden ">
-            <CartIcon />
+            {loginUser?.role === "admin" || <CartIcon />}
+
             <CompareProductIcon />
             <ThemeToggler />
           </div>

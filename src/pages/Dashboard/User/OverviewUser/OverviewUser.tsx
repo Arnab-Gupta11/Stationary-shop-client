@@ -3,6 +3,7 @@ import { useGetMetadataQuery } from "@/redux/features/meta/meta.api";
 import { TUserMetaData } from "@/types/metadata.types";
 import UserStates from "./UserStates";
 import UserStatesChart from "./UserStatesChart";
+import LatestOrders from "../../Admin/overview/LatestOrders";
 
 const OverviewUser = () => {
   const { data: metaData, isLoading } = useGetMetadataQuery(undefined);
@@ -17,7 +18,9 @@ const OverviewUser = () => {
           {/* Charts  */}
           <UserStatesChart data={userMetadata?.userStatesChart} />
           {/* Table  */}
-          {/* <LatestOrdersByAdmin orderData={adminMetadata?.latestOrders} /> */}
+          <div className="mt-5">
+            <LatestOrders orderData={userMetadata?.latestOrders} />
+          </div>
         </>
       )}
     </div>

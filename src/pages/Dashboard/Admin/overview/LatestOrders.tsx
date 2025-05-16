@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { formateDateTime } from "@/utils/formateDateTime";
 import { TLatestOrdersStates } from "@/types/metadata.types";
 
-const LatestOrdersByAdmin = ({ orderData }: { orderData: TLatestOrdersStates[] }) => {
+const LatestOrders = ({ orderData }: { orderData: TLatestOrdersStates[] }) => {
   const columns: ColumnDef<TLatestOrdersStates>[] = [
     {
       header: "Order",
@@ -80,4 +80,4 @@ const LatestOrdersByAdmin = ({ orderData }: { orderData: TLatestOrdersStates[] }
   );
 };
 
-export default LatestOrdersByAdmin;
+export default LatestOrders;

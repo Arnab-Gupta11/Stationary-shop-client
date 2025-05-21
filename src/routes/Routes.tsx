@@ -40,6 +40,7 @@ import ContactUs from "@/pages/ContactUs/ContactUs";
 import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 import TermsAndServices from "@/pages/TermsAndServices/TermsAndServices";
+import ShippingPolicy from "@/pages/ShippingPolicy/ShippingPolicy";
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
       {
         path: "/terms-of-service",
         element: <TermsAndServices />,
+      },
+      {
+        path: "/shipping-policy",
+        element: <ShippingPolicy />,
       },
       {
         path: "/order/verification",

@@ -41,6 +41,7 @@ import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 import TermsAndServices from "@/pages/TermsAndServices/TermsAndServices";
 import ShippingPolicy from "@/pages/ShippingPolicy/ShippingPolicy";
+import ManageContactMessage from "@/pages/Dashboard/Admin/contact/ManageContactMessage";
 
 const router = createBrowserRouter([
   {
@@ -247,6 +248,15 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      //Maange Contact message Routes
+      {
+        path: "admin/contact-message",
+        element: (
+          <AdminRoute>
+            <ManageContactMessage />
           </AdminRoute>
         ),
       },

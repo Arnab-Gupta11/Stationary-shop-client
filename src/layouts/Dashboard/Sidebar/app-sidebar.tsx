@@ -4,7 +4,8 @@ import {
   HiOutlineUsers, // Users
   HiOutlineChartPie, // Overview
   HiOutlineClipboardList, // View Orders
-  HiOutlineUserCircle, // Manage Profile
+  HiOutlineUserCircle,
+  HiOutlineInbox, // Manage Profile
 } from "react-icons/hi";
 
 import { NavMain } from "./nav-main";
@@ -60,20 +61,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ShoppingCart,
         show: user?.role === "admin",
       },
-      {
-        title: "Blogs",
-        icon: FileText,
-        show: user?.role === "admin",
-        items: [
-          { title: "Manage Blogs", url: "/dashboard/admin/manage-blogs" },
-          { title: "Add Blogs", url: "/dashboard/admin/add-blogs" },
-          { title: "Deleted Blogs", url: "/dashboard/admin/deleted-blogs" },
-        ],
-      },
+      // {
+      //   title: "Blogs",
+      //   icon: FileText,
+      //   show: user?.role === "admin",
+      //   items: [
+      //     { title: "Manage Blogs", url: "/dashboard/admin/manage-blogs" },
+      //     { title: "Add Blogs", url: "/dashboard/admin/add-blogs" },
+      //     { title: "Deleted Blogs", url: "/dashboard/admin/deleted-blogs" },
+      //   ],
+      // },
       {
         title: "Users",
         url: "/dashboard/admin/manage-users",
         icon: HiOutlineUsers,
+        show: user?.role === "admin",
+      },
+      {
+        title: "Contact Messages",
+        url: "/dashboard/admin/contact-message",
+        icon: HiOutlineInbox,
         show: user?.role === "admin",
       },
       {

@@ -4,7 +4,7 @@ import { useGetProductDetailsQuery } from "@/redux/features/product/product.api"
 import { useParams } from "react-router-dom";
 import { IProduct } from "@/types/product.types";
 import { formatPrice } from "@/utils/formatePrice";
-import { Minus, Plus, User } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useEffect, useState } from "react";

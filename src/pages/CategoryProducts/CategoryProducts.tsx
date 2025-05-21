@@ -89,7 +89,14 @@ const CategoryProducts = () => {
               </div>
               <div className="flex items-center gap-4">
                 <SortProduct queryParams={queryParams} setQuerParams={setQuerParams} />
-                <FilterSidbar queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={10000} />
+                <FilterSidbar
+                  queryParams={queryParams}
+                  setQuerParams={setQuerParams}
+                  initialMinPrice={0}
+                  initialMaxPrice={10000}
+                  categories={categories?.data}
+                  isLoading={isCategoryLoading}
+                />
               </div>
             </div>
 

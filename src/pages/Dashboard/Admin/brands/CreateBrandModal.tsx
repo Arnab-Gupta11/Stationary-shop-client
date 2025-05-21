@@ -14,6 +14,7 @@ import { uploadFile } from "@/utils/uploadFile";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import { useAddNewBrandMutation } from "@/redux/features/brand";
 import { createBrandValidationSchema } from "@/schemas/brand";
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 
 type TFormValues = z.infer<typeof createBrandValidationSchema>;
 
@@ -81,6 +82,7 @@ const CreateBrandModal = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
+        <DialogCloseBtn />
         <div className="p-6 overflow-y-auto w-full h-full">
           <DialogHeader>
             <DialogTitle className="text-xl text-light-primary-text dark:text-dark-primary-txt font-bold font-Aclonica">

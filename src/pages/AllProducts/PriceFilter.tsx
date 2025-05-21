@@ -73,7 +73,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ queryParams, setQuerParams, i
           </div>
           <div className="space-y-2">
             <div>
-              <label className="text-sm text-light-primary-text dark:text-dark-primary-txt font-semibold">Set Minimum Price</label>
+              <label className="text-sm text-light-primary-text dark:text-dark-primary-txt font-semibold text-left">Set Minimum Price</label>
               <input
                 type="range"
                 min={initialMinPrice}

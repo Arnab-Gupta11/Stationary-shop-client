@@ -12,8 +12,8 @@ const TestimonialCard = ({ item }: { item: ITestimonial }) => {
           <AvatarImage src={item.image} alt="@shadcn" />
           <AvatarFallback>DP</AvatarFallback>
         </Avatar>
-        <RiDoubleQuotesL className="absolute text-3xl top-5 left-5" />
-        <RiDoubleQuotesR className="absolute text-3xl top-5 right-5" />
+        <RiDoubleQuotesL className="absolute text-3xl top-5 left-5 text-slate-800 dark:text-slate-500" />
+        <RiDoubleQuotesR className="absolute text-3xl top-5 right-5 text-slate-800 dark:text-slate-500" />
       </div>
       <div className="px-5 pb-5 flex flex-col items-center ">
         <h1 className="text-[#020617] dark:text-dark-primary-txt text-lg font-semibold text-center mb-2">{item.name}</h1>

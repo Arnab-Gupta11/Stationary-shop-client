@@ -33,7 +33,7 @@ const Navbar = () => {
     >
       <div className="max-w-[90%]  mx-auto flex justify-between items-center  my-auto h-full">
         <div>
-          <div className="hidden xs:flex">
+          <div className="">
             {/* <h1 className="text-black text-2xl font-bold">
               Note<span className="text-primary-bg">fy</span>
             </h1> */}
@@ -64,12 +64,11 @@ const Navbar = () => {
           <SearchingProducts />
           <div className="lg:flex lg:items-center lg:gap-3 hidden ">
             {loginUser?.role === "admin" || <CartIcon />}
-
             <CompareProductIcon />
             <ThemeToggler />
           </div>
-          <ProfileAvatar />
           <NavSidebar menuItems={menuItems} />
+          <ProfileAvatar />
         </div>
       </div>
     </div>

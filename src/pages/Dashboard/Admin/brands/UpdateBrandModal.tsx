@@ -15,6 +15,7 @@ import CustomTextArea from "@/components/form/CustomTextArea";
 import { useGetBrandDetailsQuery, useUpdateBrandMutation } from "@/redux/features/brand";
 import { updateBrandValidationSchema } from "@/schemas/brand";
 import { updateImageUpload } from "@/utils/updateImageUpload";
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 
 type TUpdateBrandModalProp = {
   id: string;
@@ -76,6 +77,7 @@ const UpdateBrandModal = ({ id }: TUpdateBrandModalProp) => {
         </span>
       </DialogTrigger>
       <DialogContent className="h-96 md:h-[450px] overflow-hidden p-0">
+        <DialogCloseBtn />
         <div className="p-6 overflow-y-auto w-full h-full">
           <DialogHeader>
             <DialogTitle className="text-xl text-light-primary-text dark:text-dark-primary-txt font-semibold font-Aclonica">

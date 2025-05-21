@@ -1,6 +1,6 @@
 import Section from "@/components/shared/Section";
-import about1 from "../../assets/images/about/about1.jpg";
-import about2 from "../../assets/images/about/about2.jpg";
+import about1 from "../../assets/images/about/about1.webp";
+import about2 from "../../assets/images/about/about2.webp";
 import "./about.css";
 import AboutImage from "./AboutImage";
 import AboutLeftSection from "./AboutLeftSection";

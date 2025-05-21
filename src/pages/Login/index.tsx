@@ -22,7 +22,6 @@ import { z } from "zod";
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   const dispatch = useAppDispatch();
   const [loginUser] = useLoginMutation(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,10 +84,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-light-primary-bg dark:bg-dark-primary-bg min-h-screen">
+    <div className="min-h-screen">
       <div className="grid place-items-center py-10 lg:py-28 mx-5 md:mx-0 ">
-        <Card className="bg-light-secondary-bg dark:bg-dark-secondary-bg shadow-card-shadow-light border-none w-full xs:w-[400px] mx-3 xs:mx-5">
-          <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100 dark:shadow-dark-muted-bg">
+        <Card className="bg-light-secondary-bg dark:bg-dark-secondary-bg w-full xs:w-[400px] mx-3 xs:mx-5 border-2 border-light-border dark:border-dark-border rounded-3xl shadow-dashboard-page-shadow-light dark:shadow-dashboard-page-shadow-dark">
+          <CardHeader className="rounded-t-3xl rounded-b-[40px] shadow-lg shadow-light-muted-bg dark:shadow-dark-muted-bg">
             <CardTitle className="mx-auto">
               <Link to={"/"}>
                 <Logo />

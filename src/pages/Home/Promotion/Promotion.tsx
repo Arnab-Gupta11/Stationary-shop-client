@@ -15,7 +15,7 @@ const Promotion = () => {
     "Easy Order Tracking",
   ];
   return (
-    <div className="bg-button-gradient py-0.5 text-sm font-semibold text-white overflow-hidden w-full">
+    <div className="bg-button-gradient py-0.5 text-xs md:text-sm font-semibold text-white overflow-hidden w-full">
       <div className="max-w-screen-md mx-auto">
         <Marquee pauseOnHover direction="left" gradient={false}>
           {promotions.map((promotion, index) => (

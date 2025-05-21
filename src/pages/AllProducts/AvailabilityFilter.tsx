@@ -72,7 +72,7 @@ const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ queryParams, se
                   onChange={handleOptionChange}
                   className="peer appearance-none w-3 h-3 p-0.5 bg-[#E3E3E3] dark:bg-dark-muted-bg rounded-full checked:bg-[rgb(252,91,111)] dark:checked:bg-[rgb(252,91,111)] checked:ring-primary cursor-pointer shrink-0"
                 />
-                <span className="w-full cursor-pointer font-base text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm font-base">
+                <span className="cursor-pointer font-base text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm font-base">
                   {item.label}
                 </span>
               </label>

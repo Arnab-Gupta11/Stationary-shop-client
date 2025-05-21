@@ -26,7 +26,7 @@ const SearchingProducts = () => {
         return;
       }
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/v1/products?searchTerm=${input}&limit=6`);
+      const res = await fetch(`https://stationery-shop-server-jet.vercel.app/api/v1/products?searchTerm=${input}&limit=6`);
       const result = await res.json();
       setProducts(result?.data);
       setCacheProductList((prev) => ({ ...prev, [input]: result?.data }));
@@ -82,7 +82,7 @@ const SearchingProducts = () => {
         <SheetTrigger>
           <button
             onClick={() => setSheetOpen(true)}
-            className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9 mr-3"
+            className="rounded-xl border-2 border-slate-100 dark:border-gray-900 flex items-center justify-center h-9 w-9 lg:mr-3"
           >
             <IoSearch className="text-xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 cursor-pointer" />
           </button>

@@ -5,7 +5,6 @@ import { TGetProductDistributionByParentCategory } from "@/types/metadata.types"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 
 const CategoryProductDistributionChart = ({ data }: { data: TGetProductDistributionByParentCategory[] }) => {
-  console.log(data);
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
   const chartData = [...data];

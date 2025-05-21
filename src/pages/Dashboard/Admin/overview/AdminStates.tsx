@@ -15,7 +15,6 @@ type TAdminStatesProp = {
 };
 
 const AdminStates: React.FC<TAdminStatesProp> = ({ statesData }) => {
-  console.log(statesData);
   return (
     <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-5">
       <OverviewStateCard label="Total Products" state={statesData?.totalProducts} Icon={HiOutlineCube} />

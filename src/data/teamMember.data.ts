@@ -1,10 +1,10 @@
-import male1 from "../assets/images/team/male1.png";
-import male2 from "../assets/images/team/male2.png";
-import male3 from "../assets/images/team/male3.png";
-import male4 from "../assets/images/team/male4.png";
-import female1 from "../assets/images/team/female1.png";
-import female2 from "../assets/images/team/female2.png";
-import female3 from "../assets/images/team/female3.png";
+import male1 from "../assets/images/team/male1.webp";
+import male2 from "../assets/images/team/male2.webp";
+import male3 from "../assets/images/team/male3.webp";
+import male4 from "../assets/images/team/male4.webp";
+import female1 from "../assets/images/team/female1.webp";
+import female2 from "../assets/images/team/female2.webp";
+import female3 from "../assets/images/team/female3.webp";
 export const teamMembers = [
   {
     id: 1,

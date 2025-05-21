@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import header1Img from "../../assets/images/header/header1.png";
-import header2Img from "../../assets/images/header/header2.png";
+import header1Img from "../../assets/images/header/header1.webp";
+import header2Img from "../../assets/images/header/header2.webp";
 const PageHeader = ({ children, title }: { children: ReactNode; title: string }) => {
   return (
     <div className="h-40  bg-[#E0F2FE] dark:bg-[#0f1b1d] flex items-center justify-center my-auto relative">

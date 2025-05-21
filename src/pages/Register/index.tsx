@@ -46,8 +46,8 @@ const RegisterPage = () => {
   return (
     <div className="bg-light-primary-bg dark:bg-dark-primary-bg min-h-screen">
       <div className="grid place-items-center py-10 lg:py-20 mx-5 md:mx-0 ">
-        <Card className="bg-light-secondary-bg dark:bg-dark-secondary-bg shadow-light-muted-bg dark:shadow-dark-muted-bg border-none w-full xs:w-[400px] mx-3 xs:mx-5">
-          <CardHeader className="rounded-t-xl rounded-b-3xl shadow-md shadow-slate-100 dark:shadow-dark-muted-bg">
+        <Card className="bg-light-secondary-bg dark:bg-dark-secondary-bg border-2 border-light-border dark:border-dark-border rounded-3xl shadow-dashboard-page-shadow-light dark:shadow-dashboard-page-shadow-dark w-full xs:w-[400px] mx-3 xs:mx-5">
+          <CardHeader className="rounded-t-3xl rounded-b-[40px] shadow-lg shadow-light-muted-bg dark:shadow-dark-muted-bg">
             <CardTitle className="mx-auto">
               <CardTitle className="mx-auto">
                 <Link to={"/"}>

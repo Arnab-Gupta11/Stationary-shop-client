@@ -11,6 +11,7 @@ import { useUpdateOrderStatusMutation } from "@/redux/features/order/order.api";
 import CustomForm from "@/components/form/CustomForm";
 import CustomSelect from "@/components/form/CustomSelect";
 import { SelectItem } from "@/components/ui/select";
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 
 interface IupdateDeleveryStatuModalProps {
   isOpen: boolean;
@@ -58,6 +59,7 @@ const UpdateDeleveryStatuModal: React.FC<IupdateDeleveryStatuModalProps> = ({ is
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
+        <DialogCloseBtn />
         <DialogHeader>
           <DialogTitle>Update Delevery Status</DialogTitle>
           <DialogDescription></DialogDescription>

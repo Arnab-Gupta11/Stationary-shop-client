@@ -1,7 +1,6 @@
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { SheetClose } from "@/components/ui/sheet";
 import { TContact } from "@/types/contact.types";
-import { X } from "lucide-react";
 
 const ViewMessage = ({ message }: { message: TContact }) => {
   return (
@@ -13,12 +12,7 @@ const ViewMessage = ({ message }: { message: TContact }) => {
       </DialogTrigger>
 
       <DialogContent>
-        <SheetClose asChild>
-          <button className="absolute right-5  top-3 p-2 rounded-full transition">
-            <X className="w-8 h-8 text-light-secondary-text dark:text-dark-secondary-txt hover:text-primary hover:dark:text-primary duration-700 scale-105" />
-            <span className="sr-only">Close</span>
-          </button>
-        </SheetClose>
+        <DialogCloseBtn />
         <DialogHeader>
           <DialogTitle>Contact Message</DialogTitle>
         </DialogHeader>

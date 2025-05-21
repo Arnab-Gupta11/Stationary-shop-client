@@ -2,6 +2,7 @@ import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 
 interface DeleteModalProps {
   name?: string | null;
@@ -15,6 +16,7 @@ const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({ name = "", isOpen
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
+        <DialogCloseBtn />
         <DialogHeader>
           <DialogTitle>Delete Item</DialogTitle>
           <DialogDescription>

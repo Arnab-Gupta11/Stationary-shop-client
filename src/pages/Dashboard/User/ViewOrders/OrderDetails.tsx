@@ -1,3 +1,4 @@
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { IOrderItem } from "@/types/order.type";
 import { formatPrice } from "@/utils/formatePrice";
@@ -5,6 +6,7 @@ import { formatPrice } from "@/utils/formatePrice";
 const OrderDetails = ({ productDetails }: { productDetails: IOrderItem[] }) => {
   return (
     <DialogContent className="bg-light-secondary-bg dark:bg-dark-secondary-bg rounded-lg h-96 overflow-y-scroll">
+      <DialogCloseBtn />
       <DialogHeader>
         <DialogTitle className="text-xl font-semibold">Order Details</DialogTitle>
       </DialogHeader>

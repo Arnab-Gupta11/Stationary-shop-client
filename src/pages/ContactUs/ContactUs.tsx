@@ -84,7 +84,7 @@ export default function ContactUs() {
                     <input
                       type="text"
                       placeholder="Enter your name"
-                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
+                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 dark:border-dark-border border-light-border bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
                       {...register("name", {
                         required: "Name is required",
                         minLength: {
@@ -104,7 +104,7 @@ export default function ContactUs() {
                     <input
                       type="email"
                       placeholder="Enter email address"
-                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2  bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
+                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 dark:border-dark-border border-light-border  bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
                       {...register("email", {
                         required: "Email is required",
                         pattern: {
@@ -124,7 +124,7 @@ export default function ContactUs() {
                     <input
                       type="text"
                       placeholder="Enter phone number"
-                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
+                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 dark:border-dark-border border-light-border bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
                       {...register("phone", {
                         required: "Phone number is required",
                         pattern: {
@@ -144,7 +144,7 @@ export default function ContactUs() {
                     <input
                       type="text"
                       placeholder="Enter subject"
-                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2  bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
+                      className={`w-full pl-10 pr-4 py-2 h-12 rounded-2xl border-2 dark:border-dark-border border-light-border  bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
                       {...register("subject", {
                         required: "Subject is required",
                         minLength: {
@@ -165,7 +165,7 @@ export default function ContactUs() {
                   <textarea
                     placeholder="Enter message"
                     rows={5}
-                    className={`w-full pl-10 pr-4 pt-2.5 py-2 rounded-2xl border-2 bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
+                    className={`w-full pl-10 pr-4 pt-2.5 py-2 rounded-2xl border-2 dark:border-dark-border border-light-border bg-slate-50 dark:bg-dark-muted-bg text-light-primary-text dark:text-dark-primary-txt text-sm font-Exo font-medium focus:outline-none focus-visible:shadow-md dark:focus-visible:shadow-dark-primary-bg transition-colors`}
                     {...register("message", {
                       required: "Message is required",
                       minLength: {

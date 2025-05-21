@@ -44,7 +44,7 @@ const FilterByCategory = ({ queryParams, setQuerParams, categories, isLoading }:
               })}
           </div>
           {categories?.map((item: TCategory) => (
-            <li key={item._id} className="relative flex w-full items-center justify-center gap-2.5 mb-2.5">
+            <li key={item._id} className="relative flex w-full items-center gap-2.5 mb-2.5">
               <input
                 type="checkbox"
                 id={item._id}
@@ -55,7 +55,7 @@ const FilterByCategory = ({ queryParams, setQuerParams, categories, isLoading }:
               />
               <label
                 htmlFor={item._id}
-                className="w-full cursor-pointer font-base text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm"
+                className="cursor-pointer font-base text-light-secondary-text dark:text-dark-secondary-txt font-medium text-sm"
               >
                 {item.name}
               </label>

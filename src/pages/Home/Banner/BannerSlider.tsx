@@ -1,9 +1,9 @@
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
-import banner1 from "../../../assets/images/banner/banner1.png";
-import banner2 from "../../../assets/images/banner/banner2.png";
-import banner3 from "../../../assets/images/banner/banner3.png";
+import banner1 from "../../../assets/images/banner/banner1.webp";
+import banner2 from "../../../assets/images/banner/banner2.webp";
+import banner3 from "../../../assets/images/banner/banner3.webp";
 
 const BannerSlider = () => {
   const bannerImages = [

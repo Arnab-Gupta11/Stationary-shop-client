@@ -11,7 +11,6 @@ import {
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
 import Logo from "@/components/shared/Logo";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentUser } from "@/redux/features/auth/authSlice";
@@ -109,19 +108,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link to="/">
-                <div className="flex items-center justify-center">
-                  <Logo />
-                </div>
-                {/* <div className="grid flex-1 text-left text-sm leading-tight">
-                  <h2 className="font-bold text-xl">NextMart</h2>
-                </div> */}
-              </Link>
+              <div className="mt-2">
+                <Logo />
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="mt-3">
+      <SidebarContent className="mt-2">
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>

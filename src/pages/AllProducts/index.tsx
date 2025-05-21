@@ -80,7 +80,14 @@ const AllProductsPage = () => {
               </div>
               <div className="flex items-center gap-4">
                 <SortProduct queryParams={queryParams} setQuerParams={setQuerParams} />
-                <FilterSidbar queryParams={queryParams} setQuerParams={setQuerParams} initialMinPrice={0} initialMaxPrice={10000} />
+                <FilterSidbar
+                  queryParams={queryParams}
+                  setQuerParams={setQuerParams}
+                  initialMinPrice={0}
+                  initialMaxPrice={10000}
+                  categories={categories?.data}
+                  isLoading={isCategoryLoading}
+                />
               </div>
             </div>
 
@@ -116,7 +123,7 @@ const AllProductsPage = () => {
           </div>
 
           {/* Filter Sidebar  */}
-          <div className="bs:col-span-4 xl:col-span-3 px-5 hidden bs:block">
+          <div className="bs:col-span-4 xl:col-span-3 px-5 hidden bs:block sticky top-0">
             <div className="flex items-center justify-between pt-3 pb-4 border-b-2 border-light-border dark:border-dark-muted-border w-full">
               <div className="font-semibold text-light-primary-text dark:text-dark-primary-txt text-xl">Filter Products</div>
               {/* {queryParams.length > 0 && (

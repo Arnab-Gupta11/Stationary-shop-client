@@ -27,17 +27,17 @@ const ProfileAvatar = () => {
   };
 
   return (
-    <div className="font-medium hidden lg:flex">
+    <div className="font-medium ">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {user ? (
-            <Avatar className=" cursor-pointer ml-4 flex items-center justify-center border-4 border-light-border dark:border-dark-muted-bg">
+            <Avatar className=" cursor-pointer flex items-center justify-center border-4 border-light-border dark:border-dark-muted-bg ml-4 lg:ml-0">
               <AvatarImage src={user ? user?.profilePicture : "https://github.com/shadcn.png"} alt="@shadcn" />
               <AvatarFallback>DP</AvatarFallback>
             </Avatar>
           ) : (
             <span>
-              <CgProfile className="text-3xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 ml-5 cursor-pointer" />
+              <CgProfile className="text-3xl text-light-primary-text dark:text-dark-primary-txt hover:text-primary dark:hover:text-primary transition hover:scale-105 ml-4 lg:ml-0 cursor-pointer" />
             </span>
           )}
         </DropdownMenuTrigger>

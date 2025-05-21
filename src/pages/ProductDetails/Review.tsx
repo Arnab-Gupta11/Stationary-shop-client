@@ -17,6 +17,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import DeleteConfirmationModal from "../Dashboard/shared/DeleteConfirmationModal";
 import ReviewCardSkeleton from "@/components/shared/loader/ReviewCardSkeletonLoader";
+import DialogCloseBtn from "@/components/ui/core/DialogCloseBtn";
 
 const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalReviews: number; id: string }) => {
   const user = useAppSelector(useCurrentUser);
@@ -111,6 +112,7 @@ const Review = ({ totalRating, totalReviews, id }: { totalRating: number; totalR
                                 />
                               </DialogTrigger>
                               <DialogContent className="sm:max-w-[425px] bg-white">
+                                <DialogCloseBtn />
                                 <DialogHeader>
                                   <DialogTitle className="text-lg font-semibold dark:text-dark-primary-txt text-light-primary-text">
                                     Update Your Review.

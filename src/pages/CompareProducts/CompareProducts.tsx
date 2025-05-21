@@ -13,7 +13,6 @@ import EmptyState from "@/components/shared/EmptyState";
 const CompareProducts = () => {
   const compareProductList = useAppSelector(compareProductSelector);
   const dispatch = useAppDispatch();
-  console.log(compareProductList);
   const handleRemoveProduct = (id: string) => {
     dispatch(removeProductFromCompareProductsList(id));
     toast.success("Product removed from compare product list.");

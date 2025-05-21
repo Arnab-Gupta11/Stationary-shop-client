@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart, FileText } from "lucide-react";
+import { LayoutDashboard, FolderOpen, BadgeCheck, Boxes, ShoppingCart } from "lucide-react";
 import {
   HiOutlineUsers, // Users
   HiOutlineChartPie, // Overview

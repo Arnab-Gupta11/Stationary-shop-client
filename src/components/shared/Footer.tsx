@@ -1,17 +1,5 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaYoutube,
-  FaInstagram,
-  FaTiktok,
-  FaAmazonPay,
-  FaApplePay,
-  FaBitcoin,
-  FaGooglePay,
-  FaPaypal,
-  FaCcVisa,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
@@ -26,52 +14,64 @@ export default function Footer() {
             Notefy is a dynamic and innovative online stationary shop that offers a wide range of products to customers worldwide.
           </p>
           <div className="flex space-x-4 text-xl text-white">
-            <FaFacebookF />
-            <FaTwitter />
-            <FaYoutube />
-            <FaInstagram />
-            <FaTiktok />
+            <FaFacebookF className="hover:text-primary hover:scale-105 cursor-pointer" />
+            <FaTwitter className="hover:text-primary hover:scale-105 cursor-pointer" />
+            <FaYoutube className="hover:text-primary hover:scale-105 cursor-pointer" />
+            <FaInstagram className="hover:text-primary hover:scale-105 cursor-pointer" />
+            <FaTiktok className="hover:text-primary hover:scale-105 cursor-pointer" />
           </div>
         </div>
 
         {/* Accordions for mobile */}
         <div className="md:hidden col-span-3 space-y-4 ">
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="quicklink">
+            <AccordionItem value="quicklink" className="border-dark-border dark:border-dark-border">
               <AccordionTrigger>Quick Link</AccordionTrigger>
               <AccordionContent>
                 <ul className="space-y-2 text-sm text-gray-300">
-                  <li>My Account</li>
-                  <li>My Cart</li>
-                  <li>Wishlist</li>
-                  <li>Gift Card</li>
-                  <li>Need Help?</li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/shop">Shop</Link>
+                  </li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/cart">My Cart</Link>
+                  </li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/wishlist">Wishlist</Link>
+                  </li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="information">
+            <AccordionItem value="information" className="border-dark-border dark:border-dark-border">
               <AccordionTrigger>Information</AccordionTrigger>
               <AccordionContent>
                 <ul className="space-y-2 text-sm text-gray-300">
-                  <li>About us</li>
-                  <li>Contact</li>
-                  <li>Blogs</li>
-                  <li>Size Chart</li>
-                  <li>FAQ</li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/about">About us</Link>
+                  </li>
+                  <li className="hover:text-primary  transition duration-500 font-medium">
+                    <Link to="/contact-us">Contact us</Link>
+                  </li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/faq">FAQ</Link>
+                  </li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="policies">
+            <AccordionItem value="policies" className="border-dark-border dark:border-dark-border">
               <AccordionTrigger>Policies</AccordionTrigger>
               <AccordionContent>
                 <ul className="space-y-2 text-sm text-gray-300">
-                  <li>Privacy Policy</li>
-                  <li>Refund Policy</li>
-                  <li>Terms of Service</li>
-                  <li>Shipping Policy</li>
-                  <li>Contact Information</li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/privacy-policy">Privacy Policy</Link>
+                  </li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/shipping-policy">Shipping Policy</Link>
+                  </li>
+                  <li className="hover:text-primary transition duration-500 font-medium">
+                    <Link to="/terms-of-service">Terms of Service</Link>
+                  </li>
                 </ul>
               </AccordionContent>
             </AccordionItem>

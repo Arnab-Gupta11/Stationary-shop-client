@@ -4,7 +4,7 @@ import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { useCurrentUser } from "@/redux/features/auth/authSlice";
 import { MdOutlineDeleteForever, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Section from "@/components/shared/Section";
 import { formatPrice } from "@/utils/formatePrice";
 import toast from "react-hot-toast";
@@ -34,6 +34,7 @@ import EmptyState from "@/components/shared/EmptyState";
 
 const CartPage = () => {
   const loginUser = useAppSelector(useCurrentUser);
+  const navigate = useNavigate();
   const [createOrder] = useCreateOrderMutation();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -100,6 +101,11 @@ const CartPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    if (loginUser?.role === "admin") {
+      navigate("/");
+    }
+  }, [loginUser, navigate]);
 
   return (
     <>

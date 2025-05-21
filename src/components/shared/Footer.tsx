@@ -12,6 +12,8 @@ import {
   FaPaypal,
   FaCcVisa,
 } from "react-icons/fa";
+import Logo from "./Logo";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -19,9 +21,9 @@ export default function Footer() {
       <div className="max-w-[90%] mx-auto flex flex-col bs:flex-row md:justify-between md:items-start gap-8">
         {/* About Section */}
         <div className="space-y-4 w-full md:w-1/2 bs:w-1/3">
-          <h2 className="text-lg font-semibold">About Us.</h2>
+          <Logo />
           <p className="text-sm text-gray-400">
-            Minimal E-Commerce is a dynamic and innovative online retail platform that offers a wide range of products to customers worldwide.
+            Notefy is a dynamic and innovative online stationary shop that offers a wide range of products to customers worldwide.
           </p>
           <div className="flex space-x-4 text-xl text-white">
             <FaFacebookF />
@@ -29,17 +31,6 @@ export default function Footer() {
             <FaYoutube />
             <FaInstagram />
             <FaTiktok />
-          </div>
-          <div>
-            <h3 className="font-semibold text-sm mt-4 mb-2">Guaranteed safe checkout</h3>
-            <div className="flex flex-wrap items-center gap-3 text-2xl text-gray-300">
-              <FaAmazonPay />
-              <FaApplePay />
-              <FaBitcoin />
-              <FaGooglePay />
-              <FaPaypal />
-              <FaCcVisa />
-            </div>
           </div>
         </div>
 
@@ -92,41 +83,53 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Link</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li>My Account</li>
-              <li>My Cart</li>
-              <li>Wishlist</li>
-              <li>Gift Card</li>
-              <li>Need Help?</li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/shop">Shop</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/cart">My Cart</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/wishlist">Wishlist</Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-4">Information</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li>About us</li>
-              <li>Contact</li>
-              <li>Blogs</li>
-              <li>Size Chart</li>
-              <li>FAQ</li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/about">About us</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/contact-us">Contact us</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/faq">FAQ</Link>
+              </li>
             </ul>
           </div>
 
-          <div className="">
+          <div>
             <h3 className="text-lg font-semibold mb-4">Policies</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li>Privacy Policy</li>
-              <li>Refund Policy</li>
-              <li>Terms of Service</li>
-              <li>Shipping Policy</li>
-              <li>Contact Information</li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/shipping-policy">Shipping Policy</Link>
+              </li>
+              <li className="hover:text-primary hover:scale-105 transition duration-500 font-medium">
+                <Link to="/terms-of-service">Terms of Service</Link>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
       {/* Bottom line */}
-      <div className="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
-        © 2025 <strong className="text-white">Minimalin</strong>. All rights reserved.
+      <div className="mt-10 border-t-2 border-dark-muted-bg pt-4 text-center text-sm text-gray-500">
+        © 2025 <strong className="text-white">Notefy</strong>. All rights reserved.
       </div>
     </footer>
   );

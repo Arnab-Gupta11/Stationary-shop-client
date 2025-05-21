@@ -38,6 +38,7 @@ import Wishlist from "@/pages/Wishlist/Wishlist";
 import FAQ from "@/pages/FAQ/FAQ";
 import ContactUs from "@/pages/ContactUs/ContactUs";
 import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
+import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "/wishlist",
         element: <Wishlist />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "/order/verification",

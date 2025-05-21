@@ -6,11 +6,20 @@ import { Button } from "@/components/ui/button";
 import { wishlistSelector } from "@/redux/features/wishlist/wishlistSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { MdFavoriteBorder } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import WishlistCard from "./WishlistCard";
+import { useCurrentUser } from "@/redux/features/auth/authSlice";
+import { useEffect } from "react";
 
 const Wishlist = () => {
   const wishlist = useAppSelector(wishlistSelector);
+  const user = useAppSelector(useCurrentUser);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user?.role === "admin") {
+      navigate("/");
+    }
+  }, [user, navigate]);
   return (
     <>
       <PageHeader title="Wishlist">

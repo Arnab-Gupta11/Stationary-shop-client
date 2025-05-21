@@ -1,9 +1,9 @@
-import lightLogo from "../../assets/images/logo/LightLogo.png";
+import logo from "../../assets/images/logo/logo.png";
 
 const Logo = () => {
   return (
     <div>
-      <img src={lightLogo} alt="logo" className="w-28 h-10" />
+      <img src={logo} alt="logo" className="w-28 h-10" />
     </div>
   );
 };

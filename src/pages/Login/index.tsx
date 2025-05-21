@@ -67,7 +67,11 @@ const LoginPage = () => {
         const user = verifyToken(res.data?.token) as TUser;
         dispatch(setUser({ user: user, token: res.data?.token }));
         toast.success(res?.message);
-        navigate("/");
+        if (data.email === "guest@gmail.com") {
+          navigate(location?.state ? location.state : "/");
+        } else {
+          navigate("/dashboard/admin/overview");
+        }
       }
     } catch (err: any) {
       toast.error(err?.data?.message);

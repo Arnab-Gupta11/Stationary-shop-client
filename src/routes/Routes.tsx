@@ -39,6 +39,7 @@ import FAQ from "@/pages/FAQ/FAQ";
 import ContactUs from "@/pages/ContactUs/ContactUs";
 import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
+import TermsAndServices from "@/pages/TermsAndServices/TermsAndServices";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "/terms-of-service",
+        element: <TermsAndServices />,
       },
       {
         path: "/order/verification",

@@ -1,20 +1,19 @@
-import RootLayout from "@/layouts/RootLayout";
-
-import AllProductsPage from "@/pages/AllProducts";
-import ProductDetails from "@/pages/ProductDetails/ProductDetails";
-import CartPage from "@/pages/Cart/Cart";
-import ErrorPage from "@/pages/ErrorPage";
-import HomePage from "@/pages/Home";
-import LoginPage from "@/pages/Login";
-import OrderVerification from "@/pages/OrderVerification/OrderVerification";
-import RegisterPage from "@/pages/Register";
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
 
-import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
+import RootLayout from "@/layouts/RootLayout";
+import ErrorPage from "@/pages/ErrorPage";
+
+import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoutes from "./UserRoutes";
-import About from "@/pages/About/About";
+
+import ProductDetails from "@/pages/ProductDetails/ProductDetails";
+import CartPage from "@/pages/Cart/Cart";
+import HomePage from "@/pages/Home";
+import LoginPage from "@/pages/Login";
+import RegisterPage from "@/pages/Register";
+import ManageProfile from "@/pages/Dashboard/User/ManageProfile/ManageProfile";
 import DashboardLayout from "@/layouts/Dashboard/DashboardLayout";
 import ManageProducts from "@/pages/Dashboard/Admin/products/ManageProducts";
 import Overview from "@/pages/Dashboard/Admin/overview/Overview";
@@ -33,15 +32,20 @@ import DeletedCategories from "@/pages/Dashboard/Admin/categories/DeletedCategor
 import ViewOrders from "@/pages/Dashboard/User/ViewOrders/ViewOrders";
 import CategoryProducts from "@/pages/CategoryProducts/CategoryProducts";
 import ManageOrders from "@/pages/Dashboard/Admin/orders/ManageOrders";
-import CompareProducts from "@/pages/CompareProducts/CompareProducts";
 import Wishlist from "@/pages/Wishlist/Wishlist";
-import FAQ from "@/pages/FAQ/FAQ";
-import ContactUs from "@/pages/ContactUs/ContactUs";
 import OverviewUser from "@/pages/Dashboard/User/OverviewUser/OverviewUser";
-import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
-import TermsAndServices from "@/pages/TermsAndServices/TermsAndServices";
-import ShippingPolicy from "@/pages/ShippingPolicy/ShippingPolicy";
 import ManageContactMessage from "@/pages/Dashboard/Admin/contact/ManageContactMessage";
+
+import { suspenseWrapper } from "./suspenseWrapper";
+import AllProductsPage from "@/pages/AllProducts";
+const About = lazy(() => import("@/pages/About/About"));
+const FAQ = lazy(() => import("@/pages/FAQ/FAQ"));
+const ContactUs = lazy(() => import("@/pages/ContactUs/ContactUs"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy/PrivacyPolicy"));
+const CompareProducts = lazy(() => import("@/pages/CompareProducts/CompareProducts"));
+const TermsAndServices = lazy(() => import("@/pages/TermsAndServices/TermsAndServices"));
+const ShippingPolicy = lazy(() => import("@/pages/ShippingPolicy/ShippingPolicy"));
+const OrderVerification = lazy(() => import("@/pages/OrderVerification/OrderVerification"));
 
 const router = createBrowserRouter([
   {
@@ -53,22 +57,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
       },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/faq",
-        element: <FAQ />,
-      },
-      {
-        path: "/contact-us",
-        element: <ContactUs />,
-      },
-      {
-        path: "/shop",
-        element: <AllProductsPage />,
-      },
+      { path: "/shop", element: <AllProductsPage /> },
       {
         path: "/category/:categoryId",
         element: <CategoryProducts />,
@@ -93,25 +82,30 @@ const router = createBrowserRouter([
         path: "/wishlist",
         element: <Wishlist />,
       },
+      { path: "/about", element: suspenseWrapper(<About />) },
+      {
+        path: "/faq",
+        element: suspenseWrapper(<FAQ />),
+      },
+      {
+        path: "/contact-us",
+        element: suspenseWrapper(<ContactUs />),
+      },
       {
         path: "/privacy-policy",
-        element: <PrivacyPolicy />,
+        element: suspenseWrapper(<PrivacyPolicy />),
       },
       {
         path: "/terms-of-service",
-        element: <TermsAndServices />,
+        element: suspenseWrapper(<TermsAndServices />),
       },
       {
         path: "/shipping-policy",
-        element: <ShippingPolicy />,
+        element: suspenseWrapper(<ShippingPolicy />),
       },
       {
         path: "/order/verification",
-        element: (
-          <PrivateRoute>
-            <OrderVerification />
-          </PrivateRoute>
-        ),
+        element: <PrivateRoute>{suspenseWrapper(<OrderVerification />)}</PrivateRoute>,
       },
     ],
   },

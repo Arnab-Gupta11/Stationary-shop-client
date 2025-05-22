@@ -15,81 +15,19 @@
 
 ## Project Overview
 
-The Stationery Shop is a web-based e-commerce platform that allows users to browse, search, and purchase stationery products. The application features secure authentication, an intuitive shopping cart system, and a robust admin dashboard for managing products and orders.
+Notefy is a web-based e-commerce platform built on a B2C (Business-to-Consumer) model, allowing individual customers to browse, search, and purchase a wide variety of stationery products. The platform offers a secure and user-friendly payment system, ensuring a smooth and safe shopping experience. Users can explore an extensive product catalog and place orders with ease. Meanwhile, the admin can efficiently manage product listings, orders, and overall business operations through an intuitive dashboard, enabling effective business management and revenue generation.
 
 ## Features
 
-### Public Routes
-
-#### Home Page
-
-- The home page is designed to engage users with an attractive **banner** showcasing special offers and promotions.
-- A **product carousel ** highlights top-selling items dynamically.
-- **Featured products** are displayed with a “View All” button, allowing users to explore the complete product catalog.
-- **Testimonials and blogs** are included to build trust and keep users informed.
-- A **footer section** provides essential links, social media icons, and store contact details.
-
-#### All Products Page
-
-- Users can **search for products** by title, author, or category for quick navigation.
-- Multiple **filter options** are available, including price range, category, and availability, to refine search results.
-- Products update **dynamically** based on search terms and applied filters.
-- Each product card includes the **product name, price, category**, and a **“View Details” button** leading to the product details page.
-
-#### Product Details Page
-
-- Displays **detailed product information**, including multiple images, descriptions, price, and stock availability.
-- Users can **add the product to their cart** directly from this page for a smooth shopping experience.
-
-#### About Page
-
-- Provides insights into the store’s **mission, values, and history** to establish brand identity.
-
----
-
-### Private Routes
-
-#### Cart Page
-
-- Users can **manage their cart** by adding or removing products.
-- The system ensures that **ordered quantities do not exceed available stock** to prevent overselling.
-- The cart page displays **product details, user details, and total price calculations** dynamically.
-- An **“Order Now” button** allows users to confirm and proceed with purchases.
-
-#### User Dashboard
-
-- Users can view their **order history** and track the **status of each order** (e.g., Pending, Shipped, Delivered).
-- Profile management includes options to **update default shipping addresses** for convenience.
-
-#### Admin Dashboard
-
-- Admins can **manage users**, including **activating or deactivating accounts** as needed.
-- Full **CRUD (Create, Read, Update, Delete) functionality** is available for managing products.
-- **Orders can be managed**, including updating their status from **Pending** to **Shipped** or **Delivered**.
-
-#### Authentication System
-
-- Users can **securely register and log in** using JWT-based authentication.
-- Upon registration, users are assigned **default roles** (e.g., customer, admin) to restrict access appropriately.
-- **Passwords are securely stored** using hashing algorithms for enhanced security.
-- The **logout feature** ensures session security by removing stored tokens.
-
-#### Access Token & Refresh Token Authentication (New Feature)
-
-- Implemented **access token and refresh token** for better security and authentication.
-- Upon login, users receive an **access token** (short-lived) and a **refresh token** (long-lived).
-- The **access token is used for API requests**, while the **refresh token helps generate a new access token** when the old one expires.
-- This system **enhances security** while ensuring a smooth user experience without frequent logins.
-
-#### Payment Integration
-
-- Integrated **SurjoPay, Stripe, or other payment gateways** for secure online transactions.
-
-#### Review & Rating System
-
-- Users can **leave reviews and rate products** based on their experience.
-- Each review includes **text feedback and a star rating system** to help future buyers.
-- Users have full control over their reviews, allowing them to **update or delete** their own feedback as needed.
+- **Dynamic Home Page:** An engaging and responsive home page featuring a promotional banner, a dynamic carousel showcasing top-selling products, and categorized sections for various product types including Best Sellers, Top Rated, and New Arrivals. The page also includes user testimonials to build trust and credibility, along with an informative footer containing active navigation links, contact details, and social media integration.
+- **Advanced Product Filtering:** Offers powerful search, dynamic filtering (by title, category, price range, and availability), and a flexible sorting system (e.g., by price, oldest or newest, asc or des order). Products update in real-time based on user input, enabling users to easily find and refine results to match their needs.
+- **Product Details Page:** Displays multiple product images, detailed descriptions, pricing, stock availability, and other key information to help users make informed purchasing decisions.
+- **Smart Shopping Tools:** Users can manage their cart with quantity validation, view total cost calculations, and securely proceed to checkout using the “Order Now” button. They can also compare multiple products to make informed choices and save their favorite items to a wishlist for future purchases.
+- **Admin Dashboard:** Admins can efficiently manage categories, brands, products, and users with full CRUD (Create, Read, Update, Delete) capabilities. They can also view and update order statuses at various stages. Additionally, an overview page provides a comprehensive summary of the shop’s performance and key metrics.
+- **User Dashboard:** Enables users to track order statuses, manage profile information, and view a personalized overview of their purchase history.
+- **Secure Authentication System:** Implements JWT-based login and registration with hashed passwords, role-based access control, and session management. Utilizes access and refresh tokens for enhanced security and seamless user sessions. Private and protected routes are enforced to restrict access based on user roles and authentication status.
+- **Secure Payment Integration:** Enables seamless online transactions via SurjoPay, with real-time payment verification to ensure successful and secure purchases.
+- **Review & Rating System:** Includes star ratings and editable user feedback. Users can view reviews from others to make informed decisions before purchasing.
 
 ## Technology Stack
 
@@ -98,7 +36,6 @@ The Stationery Shop is a web-based e-commerce platform that allows users to brow
 - Tailwind CSS
 - Redux Toolkit
 - Framer Motion
-- React Icons
 - Swiper.js
 - Shadcn Ui
 - Typscript

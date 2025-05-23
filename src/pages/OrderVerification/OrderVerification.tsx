@@ -25,7 +25,7 @@ export default function OrderVerification() {
 
   return isLoading ? (
     <div className="flex h-screen items-center justify-center">
-      <div className="text-lg font-semibold animate-pulse">Loading...</div>
+      <div className="text-lg text-light-secondary-text dark:text-dark-secondary-txt font-semibold animate-pulse">Loading...</div>
     </div>
   ) : (
     <motion.div
@@ -39,7 +39,7 @@ export default function OrderVerification() {
           Order Verification
         </h1>
         <Button>
-          <Link to={"/dashboard/users/view-orders"}>View Orders</Link>
+          <Link to={"/dashboard/user/view-orders"}>View Orders</Link>
         </Button>
       </div>
 
